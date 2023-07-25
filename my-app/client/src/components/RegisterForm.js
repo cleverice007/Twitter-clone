@@ -14,24 +14,25 @@ const RegisterForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('/auth/register', {
+      const response = await fetch('http://localhost:4000/auth/register ', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-  
-      // 檢查伺服器端返回的內容
-      const responseData = await response.text();
-      console.log('Response Data:', responseData);
-  
+      
+      if (!response.ok) {
+        throw new Error('註冊失敗');
+      }
+      
       const data = await response.json();
-      console.log(data);
+      console.log(data); // 成功註冊後的回應資料
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error.message);
     }
   };
+  
   
 
   return (
