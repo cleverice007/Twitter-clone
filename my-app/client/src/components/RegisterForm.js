@@ -21,22 +21,14 @@ const RegisterForm = () => {
         },
         body: JSON.stringify(formData),
       });
-      
-      if (!response.ok) {
-        throw new Error('註冊失敗');
-      }
-      
-      const data = await response.json();
-      console.log(data); // 成功註冊後的回應資料
-       // 清空表單數據
-       setFormData({
-        username: '',
-        password: '',
-      });
+  
     } catch (error) {
       console.error('Error:', error.message);
     }
   };
+  
+  
+  
   
   
 
