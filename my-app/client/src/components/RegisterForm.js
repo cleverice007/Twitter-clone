@@ -21,6 +21,8 @@ const RegisterForm = () => {
         },
         body: JSON.stringify(formData),
       });
+      window.location.href = 'http://localhost:3000/home';
+
   
     } catch (error) {
       console.error('Error:', error.message);

@@ -15,7 +15,6 @@ router.post('/register', async (req, res) => {
     try {
       const savedUser = await newUser.save();
       console.log('已儲存使用者：', savedUser);
-  
       res.redirect('http://localhost:3000/home'); 
     } catch (err) {
       console.error(err);
