@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');
 
-// 定義用戶模型
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
-  email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   profileImage: String,
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
@@ -11,10 +10,9 @@ const userSchema = new mongoose.Schema({
   tweets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tweet' }],
 });
 
-// 創建用戶模型
+userSchema.plugin(passportLocalMongoose);
 const User = mongoose.model('User', userSchema);
 
-// 導出用戶模型
 module.exports = User;
 
 

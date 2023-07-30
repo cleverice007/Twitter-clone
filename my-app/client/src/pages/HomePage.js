@@ -1,8 +1,21 @@
+
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const HomePage = () => {
   const [tweets, setTweets] = useState([]);
   const [recommendedUsers, setRecommendedUsers] = useState([]);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const username = params.get('username');
+
+  useEffect(() => {
+    if (username) {
+      toast.success(`Successfully Registered! Welcome back, ${username}`);
+    }
+  }, [username]);
+
 
   useEffect(() => {
     fetchTweets();
