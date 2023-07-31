@@ -17,7 +17,7 @@ const User = require('./models/user');
 
 
 const sessionConfig = {
-  secret: 'thisshouldbeabettersecret!',
+  secret: 'secret-key',
   resave: false,
   saveUninitialized: true,
   cookie: {

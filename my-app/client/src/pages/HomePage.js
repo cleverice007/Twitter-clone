@@ -1,25 +1,15 @@
-
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const HomePage = () => {
   const [tweets, setTweets] = useState([]);
   const [recommendedUsers, setRecommendedUsers] = useState([]);
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const username = params.get('username');
-
-  useEffect(() => {
-    if (username) {
-      toast.success(`Successfully Registered! Welcome back, ${username}`);
-    }
-  }, [username]);
-
 
   useEffect(() => {
     fetchTweets();
     fetchRecommendedUsers();
+    fetchFlashMessage();
   }, []);
 
   const fetchTweets = async () => {
@@ -48,9 +38,28 @@ const HomePage = () => {
     }
   };
 
+  const fetchFlashMessage = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/auth/flash-message');
+      if (!response.ok) {
+        throw new Error('Failed to get flash message');
+      }
+      const data = await response.json();
+      if (data.successMessage.length > 0) {
+        toast.success(data.successMessage[0]);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+      toast.error('Error: ' + error.message);
+    }
+  };
   return (
     <div>
+      {/* 將 ToastContainer 放在此處，這是顯示 Toast 的容器元件 */}
+      <ToastContainer />
+
       <h1>Welcome to Twitter Clone</h1>
+
       <h2>Tweets</h2>
       <ul>
         {tweets.map((tweet) => (
@@ -60,6 +69,7 @@ const HomePage = () => {
           </li>
         ))}
       </ul>
+
       <h2>Recommended Users</h2>
       <ul>
         {recommendedUsers.map((user) => (
@@ -74,3 +84,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
