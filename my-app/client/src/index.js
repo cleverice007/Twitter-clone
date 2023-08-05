@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css'; 
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage'; 
@@ -17,7 +15,6 @@ ReactDOM.createRoot(root).render(
       <Route path="/login" element={<LoginPage />} />
       <Route path="/home" element={<HomePage />} />
     </Routes>
-    <ToastContainer />
   </Router>
 );
 
