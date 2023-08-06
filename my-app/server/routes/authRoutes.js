@@ -9,7 +9,8 @@ const passport = require('passport');
 router.post('/register', authControllers.register);
 
 //登入
-router.post(passport.authenticate('local', { failureRedirect: '/login' }), authControllers.login)
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), authControllers.login);
+
 
 //登出
 router.get('/logout',authControllers.logout)

@@ -1,30 +1,67 @@
 import React, { useState } from 'react';
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch('http://localhost:4000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        credentials: 'include',
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.removeItem('username');
+        localStorage.setItem('username', data.username);
+        window.location.href = '/home';
+      } else {
+        const data = await response.json();
+        console.error('Login failed:', data.error);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+  
+  
+
+return (
+  <form onSubmit={handleSubmit}>
+    <div>
+      <label>Username:</label>
       <input
         type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
+        name="username"
+        value={formData.username}
+        onChange={handleChange}
       />
+    </div>
+    <div>
+      <label>Password:</label>
       <input
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
       />
-      <button type="submit">Login</button>
-    </form>
-  );
+    </div>
+    <button type="submit">Login</button>
+  </form>
+);
 };
 
 export default LoginForm;

@@ -10,17 +10,23 @@ module.exports.register = async (req, res) => {
   });
 
   try {
-    const savedUser = await newUser.save();
-    console.log('已儲存使用者：', savedUser);
+    const registeredUser = await User.register(newUser, password);
+    console.log('已儲存使用者：', registeredUser);
 
-    req.session.username = username; 
-    console.log('Username saved in session:', req.session.username);
-
-    req.session.save((err) => {
+    req.login(registeredUser, (err) => {
       if (err) {
         res.status(500).json({ error: '發生錯誤，請稍後再試。' });
       } else {
-        res.json({ redirect: '/home', username: username }); 
+        req.session.username = username;
+        console.log('Username saved in session:', req.session.username);
+
+        req.session.save((err) => {
+          if (err) {
+            res.status(500).json({ error: '發生錯誤，請稍後再試。' });
+          } else {
+            res.json({ redirect: '/home', username: username });
+          }
+        });
       }
     });
   } catch (err) {
@@ -28,7 +34,19 @@ module.exports.register = async (req, res) => {
   }
 };
 
+module.exports.login = (req, res) => {
+  const { username } = req.body;
+  const successMessage = 'welcome back! ${username}';
+  const redirectUrl = req.session.returnTo || '/home';
+  delete req.session.returnTo;
 
+  res.json({ successMessage, redirectUrl, username });
+};
+
+module.exports.logout = (req, res) => {
+  req.logout();
+  res.json({redirect: '/login'})
+}
 
 
 
