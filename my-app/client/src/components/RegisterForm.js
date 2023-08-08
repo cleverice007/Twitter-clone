@@ -39,6 +39,7 @@ const RegisterForm = () => {
   
 
   return (
+    <div className={styles.appContainer}>
     <form onSubmit={handleSubmit} className={styles.registerForm}> 
         <img src="/images/twitter-logo.png" className={styles.twitterLogo} alt="Twitter Logo" />
         <h1 className={styles.heading}>Register</h1>
@@ -64,6 +65,7 @@ const RegisterForm = () => {
         </div>
         <button type="submit" className={styles.submitButton}>Login</button>
     </form>
+    </div>
   );
 };
 

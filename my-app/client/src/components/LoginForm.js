@@ -42,6 +42,7 @@ const LoginForm = () => {
   
 
   return (
+    <div className={styles.appContainer}>
     <form onSubmit={handleSubmit} className={styles.loginForm}> 
         <img src="/images/twitter-logo.png" className={styles.twitterLogo} alt="Twitter Logo" />
         <h1 className={styles.heading}>Login</h1>
@@ -67,6 +68,7 @@ const LoginForm = () => {
         </div>
         <button type="submit" className={styles.submitButton}>Login</button>
     </form>
+    </div>
 );
 };
 
