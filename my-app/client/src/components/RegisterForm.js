@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../css/RegisterForm.css';
+import styles from '../css/RegisterForm.module.css';
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -38,31 +38,33 @@ const RegisterForm = () => {
   };
   
 
-return (
-  <form onSubmit={handleSubmit} className="register-form"> 
-      <img src="/images/twitter-logo.png"  className="twitter-logo" />
-      <h1>Register </h1>
-    <div className="form-group">
-      <label>Username：</label>
-      <input
-        type="text"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-      />
-    </div>
-    <div className="form-group">
-      <label>Password：</label>
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
-    </div>
-    <button type="submit">Register</button>
-  </form>
-);
+  return (
+    <form onSubmit={handleSubmit} className={styles.registerForm}> 
+        <img src="/images/twitter-logo.png" className={styles.twitterLogo} alt="Twitter Logo" />
+        <h1 className={styles.heading}>Register</h1>
+        <div className={styles.formGroup}>
+            <label className={styles.label}>Username：</label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              className={styles.input}
+            />
+        </div>
+        <div className={styles.formGroup}>
+            <label className={styles.label}>Password：</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className={styles.input}
+            />
+        </div>
+        <button type="submit" className={styles.submitButton}>Login</button>
+    </form>
+  );
 };
 
 export default RegisterForm;

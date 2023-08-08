@@ -6,7 +6,7 @@ body {
   background-color: rgb(8,160,233);
 }
 
-.register-form {
+.registerForm {
   width: 300px;
   height: 500px;
   padding: 20px;
@@ -15,27 +15,27 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.twitter-logo {
+.twitterLogo {
   display: block;
   margin: 0 auto;
   width: 15%;
   height: auto;
 }
 
-.h1 {
+.heading {
   margin-top: 30px;
 }
 
-.form-group {
+.formGroup {
   margin-bottom: 30px;
 }
 
-label {
+.label {
   font-weight: bold;
   font-size: 20px;
 }
 
-input {
+.input {
   width: 80%;
   padding: 8px;
   margin-top: 5px;
@@ -43,7 +43,7 @@ input {
   border-radius: 4px;
 }
 
-button {
+.submitButton {
   padding: 15px 120px;
   background-color: #1da1f2;
   color: #fff;
@@ -53,6 +53,6 @@ button {
   margin-top:50px ;
 }
 
-button:hover {
+.submitButton:hover {
   background-color: #1991db;
 }
