@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const authRoutes = require('./routes/authRoutes'); 
 const session = require('express-session');
 const flash = require('connect-flash')
 const passport = require('passport');
@@ -18,6 +17,8 @@ app.use(cors({
 const mongoose = require('mongoose');
 const User = require('./models/user');
 
+
+// session config
 const sessionConfig = {
   secret: 'secret-key',
   resave: false,
@@ -34,6 +35,8 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 app.use(flash());
 
+
+// passport config
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -53,7 +56,15 @@ db.once('open', () => {
   console.log('已成功連線至 MongoDB');
 });
 
+
+
+//使用得到的路由
+const authRoutes = require('./routes/authRoutes'); 
+const tweetRoutes = require('./routes/tweetRoutes');
+
+
 app.use('/auth', authRoutes); 
+app.use(tweetRoutes);
 
 app.listen(4000, () => {
   console.log('伺服器運行在 http://localhost:4000');
