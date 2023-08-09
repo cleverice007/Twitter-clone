@@ -43,7 +43,6 @@ const HomePage = () => {
 
   const handlePostTweet = (tweetText) => {
     console.log("Posted tweet:", tweetText);
-    // You can add more logic here to send the tweet to the backend, for example.
   };
   
 
@@ -55,9 +54,12 @@ const HomePage = () => {
         <TweetBox onPost={handlePostTweet} />
         <Tweets tweets={tweets} />
       </div>
-      <RecommendedUsers users={recommendedUsers} />
+      <div className={styles.recommendedUsersWrapper}>
+        <RecommendedUsers users={recommendedUsers} />
+      </div>
     </div>
-  );
-};
+);
+  };
+
 
 export default HomePage;
