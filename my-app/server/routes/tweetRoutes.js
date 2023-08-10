@@ -5,6 +5,6 @@ const { getTweets, createTweet } = require('../controllers/tweet');  // 引入co
 
 // 設置相對應的路由
 router.get('/tweets', getTweets);  // 獲取貼文的路由
-router.post('/tweet', createTweet);  // 創建新貼文的路由
+router.post('/createTweet', createTweet);  // 創建新貼文的路由
 
 module.exports = router;

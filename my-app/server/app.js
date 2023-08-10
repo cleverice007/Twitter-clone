@@ -64,7 +64,7 @@ const tweetRoutes = require('./routes/tweetRoutes');
 
 
 app.use('/auth', authRoutes); 
-app.use(tweetRoutes);
+app.use('/tweets',tweetRoutes);
 
 app.listen(4000, () => {
   console.log('伺服器運行在 http://localhost:4000');

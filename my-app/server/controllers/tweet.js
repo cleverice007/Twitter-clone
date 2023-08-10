@@ -27,11 +27,20 @@ module.exports.getTweets = async (req, res) => {
     }
 };
 
-
 module.exports.createTweet = async (req, res) => {
     try {
-        const author = req.user._id;  
+        // 檢查 req.user 和 content 是否存在
+        if (!req.user || !req.user._id) {
+            return res.status(400).json({ message: 'User not authenticated' });
+        }
+        
         const { content } = req.body;
+
+        if (!content || !content.trim()) {
+            return res.status(400).json({ message: 'Content is required and should not be empty' });
+        }
+
+        const author = req.user._id;  
 
         const newTweet = new Tweet({
             author,
@@ -48,6 +57,9 @@ module.exports.createTweet = async (req, res) => {
 
         res.json(savedTweet);
     } catch (error) {
-        res.status(500).json({ message: 'Failed to create tweet' });
+        console.error('Error while creating tweet:', error);  // log the error for debugging
+        res.status(500).json({ message: 'Failed to create tweet', error: error.message });
     }
 };
+
+
