@@ -1,5 +1,6 @@
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const secretKey = 'your-secret-key'; // 自訂的密鑰，請保持安全
 
 module.exports.register = async (req, res) => {
   const { username, password } = req.body;
@@ -13,22 +14,9 @@ module.exports.register = async (req, res) => {
     const registeredUser = await User.register(newUser, password);
     console.log('已儲存使用者：', registeredUser);
 
-    req.login(registeredUser, (err) => {
-      if (err) {
-        res.status(500).json({ error: '發生錯誤，請稍後再試。' });
-      } else {
-        req.session.username = username;
-        console.log('Username saved in session:', req.session.username);
+    const token = jwt.sign({ user_id: registeredUser._id }, secretKey);
 
-        req.session.save((err) => {
-          if (err) {
-            res.status(500).json({ error: '發生錯誤，請稍後再試。' });
-          } else {
-            res.json({ redirect: '/home', username: username });
-          }
-        });
-      }
-    });
+    res.json({ redirect: '/home', token });
   } catch (err) {
     res.status(500).json({ error: '發生錯誤，請稍後再試。' });
   }
@@ -36,12 +24,13 @@ module.exports.register = async (req, res) => {
 
 module.exports.login = (req, res) => {
   const { username } = req.body;
-  const successMessage = 'welcome back! ${username}';
-  const redirectUrl = req.session.returnTo || '/home';
-  delete req.session.returnTo;
+  const successMessage = `welcome back! ${username}`;
 
-  res.json({ successMessage, redirectUrl, username });
+  const token = jwt.sign({ user_id: req.user._id }, secretKey);
+
+  res.json({ successMessage, token });
 };
+
 
 module.exports.logout = (req, res) => {
   req.logout();

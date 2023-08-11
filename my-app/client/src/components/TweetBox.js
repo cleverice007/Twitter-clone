@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from '../css/TweetBox.module.css';
 
-const TweetBox = ({ onPost }) => {
+const TweetBox = ({ token }) => { // 將用戶的 JWT 令牌作為參數傳遞進來
   const [tweetInput, setTweetInput] = useState("");
 
   const handlePost = async () => {
@@ -15,9 +15,12 @@ const TweetBox = ({ onPost }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // 在請求標頭中加入 JWT 令牌
         },
-        body: JSON.stringify({ content: tweetInput })
+        body: JSON.stringify({ content: tweetInput }),
+        credentials: 'include'
       });
+      
       
       if (!response.ok) {
         const errorData = await response.json();
@@ -27,7 +30,6 @@ const TweetBox = ({ onPost }) => {
 
 
       const data = await response.json();
-      onPost(data);  // Inform the parent about the new tweet
       setTweetInput("");
     } catch (error) {
       console.error('Error:', error.message);

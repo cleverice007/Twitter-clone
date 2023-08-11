@@ -41,17 +41,12 @@ const HomePage = () => {
     }
   };
 
-  const handlePostTweet = (tweetText) => {
-    console.log("Posted tweet:", tweetText);
-  };
-  
-
   return (
     <div className={styles.container}>
       <Sidebar />
       <div className={styles.tweets}>
         <h1>Welcome {username ? username : 'to Twitter Clone'}</h1>
-        <TweetBox onPost={handlePostTweet} />
+        <TweetBox  token={token} />
         <Tweets tweets={tweets} />
       </div>
       <div className={styles.recommendedUsersWrapper}>

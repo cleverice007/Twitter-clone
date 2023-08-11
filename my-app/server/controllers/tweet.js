@@ -1,4 +1,6 @@
 const Tweet = require('../models/tweet');
+const jwt = require('jsonwebtoken');
+const secretKey = 'your-secret-key';
 
 module.exports.getTweets = async (req, res) => {
     try {
@@ -29,18 +31,15 @@ module.exports.getTweets = async (req, res) => {
 
 module.exports.createTweet = async (req, res) => {
     try {
-        // 檢查 req.user 和 content 是否存在
-        if (!req.user || !req.user._id) {
-            return res.status(400).json({ message: 'User not authenticated' });
-        }
-        
+        const token = req.header('Authorization').replace('Bearer ', '');
+        const decoded = jwt.verify(token, secretKey);
+        const author = decoded.user_id; // 取得目前登入的用戶ID
+
         const { content } = req.body;
 
         if (!content || !content.trim()) {
             return res.status(400).json({ message: 'Content is required and should not be empty' });
         }
-
-        const author = req.user._id;  
 
         const newTweet = new Tweet({
             author,
@@ -57,7 +56,7 @@ module.exports.createTweet = async (req, res) => {
 
         res.json(savedTweet);
     } catch (error) {
-        console.error('Error while creating tweet:', error);  // log the error for debugging
+        console.error('Error while creating tweet:', error);
         res.status(500).json({ message: 'Failed to create tweet', error: error.message });
     }
 };
