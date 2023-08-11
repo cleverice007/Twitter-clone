@@ -27,6 +27,9 @@ const RegisterForm = () => {
       if (response.ok) {
         const data = await response.json();
         window.location.href = '/home';
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
       } else {
         const data = await response.json();

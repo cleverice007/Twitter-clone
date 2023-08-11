@@ -28,6 +28,8 @@ const LoginForm = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.removeItem('username');
+        localStorage.removeItem('token');
+        localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
         window.location.href = '/home';
       } else {

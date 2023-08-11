@@ -7,6 +7,7 @@ import RecommendedUsers from '../components/RecommendedUsers';
 
 const HomePage = () => {
   const username = localStorage.getItem('username');
+  const token = localStorage.getItem('token');
   const [tweets, setTweets] = useState([]);
   const [recommendedUsers, setRecommendedUsers] = useState([]);
 
