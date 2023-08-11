@@ -16,7 +16,7 @@ module.exports.register = async (req, res) => {
 
     const token = jwt.sign({ user_id: registeredUser._id }, secretKey);
 
-    res.json({ redirect: '/home', token });
+    res.json({ redirect: '/home', token, username: registeredUser.username }); // 返回使用者名稱
   } catch (err) {
     res.status(500).json({ error: '發生錯誤，請稍後再試。' });
   }
@@ -28,8 +28,9 @@ module.exports.login = (req, res) => {
 
   const token = jwt.sign({ user_id: req.user._id }, secretKey);
 
-  res.json({ successMessage, token });
+  res.json({ successMessage, token, username }); // 返回使用者名稱
 };
+
 
 
 module.exports.logout = (req, res) => {
