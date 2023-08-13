@@ -24,7 +24,7 @@ module.exports.getTweets = async (req, res) => {
         }).populate('author').sort({ createdAt: -1 });
 
 
-        res.json(userTweets, followersTweets);
+        res.json({ userTweets, followersTweets });
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
     }

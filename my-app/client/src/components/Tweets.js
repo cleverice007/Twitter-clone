@@ -11,7 +11,7 @@ const Tweets = () => {
 
   const fetchTweets = async () => {
     try {
-      const response = await fetch('http://localhost:4000/getTweets', {
+      const response = await fetch('http://localhost:4000/tweets/getTweets', {
         headers: {
           'Authorization': `Bearer ${token}`
         },
@@ -37,7 +37,7 @@ const Tweets = () => {
         {tweets.map((tweet) => (
           <li key={tweet._id}>
             <p>{tweet.content}</p>
-            <p>Author: {tweet.author}</p>
+            <p>Author: {tweet.author.username}</p> {/* 提取用戶名 */}
           </li>
         ))}
       </ul>
