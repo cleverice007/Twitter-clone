@@ -5,8 +5,10 @@ const secretKey = 'your-secret-key';
 
 module.exports.getTweets = async (req, res) => {
     try {
-        const userId = req.user._id;  // 取得目前登入的用戶ID
-
+        const token = req.header('Authorization').replace('Bearer ', '');
+        const decoded = jwt.verify(token, secretKey);
+        const userId = decoded.user_id; // 取得目前登入的用戶ID
+        
         // 查詢用戶自己的貼文
         const userTweets = await Tweet.find({ author: userId })
             .populate('author')
@@ -21,10 +23,8 @@ module.exports.getTweets = async (req, res) => {
             author: { $in: followersIds }
         }).populate('author').sort({ createdAt: -1 });
 
-        res.json({
-            userTweets,
-            followersTweets
-        });
+
+        res.json(userTweets, followersTweets);
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
     }

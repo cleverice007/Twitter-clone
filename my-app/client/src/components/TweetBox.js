@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from '../css/TweetBox.module.css';
 
-const TweetBox = ({ token }) => { // 將用戶的 JWT 令牌作為參數傳遞進來
+const TweetBox = () => { 
   const [tweetInput, setTweetInput] = useState("");
 
   const handlePost = async () => {
@@ -11,6 +11,7 @@ const TweetBox = ({ token }) => { // 將用戶的 JWT 令牌作為參數傳遞�
     }
 
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch('http://localhost:4000/tweets/createTweet', {
         method: 'POST',
         headers: {
