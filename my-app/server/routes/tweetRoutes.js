@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/user');
+const Tweet = require('../models/tweet');
 
 const { getTweets, createTweet } = require('../controllers/tweet');  // 引入controllers目錄中的tweet.js裡的函數
 

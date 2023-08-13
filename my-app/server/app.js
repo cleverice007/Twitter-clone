@@ -16,7 +16,7 @@ app.use(cors({
 
 const mongoose = require('mongoose');
 const User = require('./models/user');
-
+const Tweet = require('./models/tweet'); 
 
 // session config
 const sessionConfig = {
@@ -45,7 +45,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // 連接到 MongoDB
-mongoose.connect('mongodb://localhost/user', {
+mongoose.connect('mongodb://localhost/twitterclone', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

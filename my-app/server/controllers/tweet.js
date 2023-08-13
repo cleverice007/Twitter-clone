@@ -1,4 +1,5 @@
 const Tweet = require('../models/tweet');
+const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const secretKey = 'your-secret-key';
 
