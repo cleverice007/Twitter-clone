@@ -62,4 +62,53 @@ module.exports.createTweet = async (req, res) => {
     }
 };
 
+// 新增評論
+module.exports.addComment = async (req, res) => {
+  try {
+    const { tweetId, content } = req.body;
 
+    // 尋找該貼文
+    const tweet = await Tweet.findById(tweetId);
+
+    if (!tweet) {
+      return res.status(404).json({ message: 'Tweet not found' });
+    }
+
+    // 新增評論
+    tweet.comments.push({ userId: req.user_id, content });
+    await tweet.save();
+
+    res.json({ message: 'Comment added successfully' });
+  } catch (error) {
+    console.error('Error while adding comment:', error);
+    res.status(500).json({ message: 'Failed to add comment', error: error.message });
+  }
+};
+
+// 貼文點贊
+module.exports.likeTweet = async (req, res) => {
+  try {
+    const { tweetId } = req.body;
+
+    // 尋找該貼文
+    const tweet = await Tweet.findById(tweetId);
+
+    if (!tweet) {
+      return res.status(404).json({ message: 'Tweet not found' });
+    }
+
+    // 檢查是否已經點贊過
+    if (tweet.likes.includes(req.user_id)) {
+      return res.status(400).json({ message: 'Tweet already liked' });
+    }
+
+    // 新增點贊
+    tweet.likes.push(req.user_id);
+    await tweet.save();
+
+    res.json({ message: 'Tweet liked successfully' });
+  } catch (error) {
+    console.error('Error while liking tweet:', error);
+    res.status(500).json({ message: 'Failed to like tweet', error: error.message });
+  }
+};

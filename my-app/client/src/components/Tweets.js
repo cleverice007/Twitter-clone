@@ -37,7 +37,9 @@ const Tweets = () => {
         {tweets.map((tweet) => (
           <li key={tweet._id}>
             <p>{tweet.content}</p>
-            <p>Author: {tweet.author.username}</p> {/* 提取用戶名 */}
+            <p>Author: {tweet.author.username}</p>
+            <p>Likes: {tweet.likes.length}</p> {/* 顯示按讚數 */}
+            <p>Comments: {tweet.comments.length}</p> {/* 顯示評論數 */}
           </li>
         ))}
       </ul>
