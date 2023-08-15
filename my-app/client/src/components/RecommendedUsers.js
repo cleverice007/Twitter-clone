@@ -1,5 +1,8 @@
 import styles from '../css/RecommendedUsers.module.css';
 
+
+  // 推薦先暫時根據創建帳號順序，做前10名的推薦
+
 const RecommendedUsers = ({ users }) => {
   return (
     <div className={styles.recommendedUsers}>

@@ -9,20 +9,34 @@ const ProfilePage = () => {
 
   // Define the image URLs and introduction
   const avatarUrl = '/images/mason.jpg';
+  const backgroundImageUrl = '/images/background.jpg';
   const introduction = 'i major in finance, i try to code for 3 months .';
+
 
   return (
     <div className={styles.profileContainer}>
       {/* Sidebar */}
       <Sidebar />
-
+      
       {/* Profile Info */}
       <div className={styles.profileInfo}>
-        {/* Avatar */}
-        <div className={styles.avatarContainer}>
-          <div className={styles.avatar} style={{ backgroundImage: `url(${avatarUrl})` }}></div>
+        {/* Profile Info Upper */}
+        <div className={styles.profileInfoUpper}>
+          {/* Background Image */}
+          <div className={styles.backgroundImage} style={{ backgroundImage: `url(${backgroundImageUrl})` }}></div>
+  
+          {/* Avatar and Edit Button */}
+          <div className={styles.avatarEditContainer}>
+            {/* Avatar */}
+            <div className={styles.avatarContainer}>
+              <div className={styles.avatar} style={{ backgroundImage: `url(${avatarUrl})` }}></div>
+            </div>
+  
+            {/* Edit Profile Button */}
+            <button className={styles.editButton}>編輯個人資料</button>
+          </div>
         </div>
-        
+  
         {/* Introduction */}
         <div className={styles.introduction}>
           <h2>{username ? `@${username}` : 'Welcome to Twitter Clone'}</h2>
@@ -32,17 +46,24 @@ const ProfilePage = () => {
             <p>Following: 50</p>
           </div>
         </div>
+        
+        {/* Tweet Section */}
+        <div className={styles.tweets}>
+          <h1>Welcome {username ? username : 'to Twitter Clone'}</h1>
+          <TweetBox />
+          <Tweets tweets />
+        </div>
+      </div>
       
-
-      {/* Tweet Section */}
-      <div className={styles.tweets}>
-        <h1>Welcome {username ? username : 'to Twitter Clone'}</h1>
-        <TweetBox />
-        <Tweets tweets />
+      {/* Recommended Users */}
+      <div className={styles.recommendedUsersWrapper}>
+        {/* Display recommended users */}
       </div>
     </div>
-    </div>
   );
+  
+
 };
+
 
 export default ProfilePage;
