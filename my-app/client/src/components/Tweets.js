@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../css/Tweets.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
+
 
 const Tweets = () => {
   const [tweets, setTweets] = useState([]);
@@ -30,21 +33,38 @@ const Tweets = () => {
     }
   };
 
+  const handleComment = async (tweetId) => {
+  };
+
+
+  const handleLike = async (tweetId) => {
+
+  }
+
   return (
     <div className={styles.tweets}>
-      <h2>Tweets</h2>
+      <h2>貼文</h2>
       <ul>
         {tweets.map((tweet) => (
           <li key={tweet._id}>
             <p>{tweet.content}</p>
-            <p>Author: {tweet.author.username}</p>
-            <p>Likes: {tweet.likes.length}</p> {/* 顯示按讚數 */}
-            <p>Comments: {tweet.comments.length}</p> {/* 顯示評論數 */}
+            <p>作者：{tweet.author.username}</p>
+            <div className={styles.iconContainer}>
+              <button className={styles.iconButton} onClick={() => handleLike(tweet._id)}>
+                <FontAwesomeIcon icon={faHeart} className={styles.icon} />
+                {tweet.likes.length}
+              </button>
+              <button className={styles.iconButton} onClick={() => handleComment(tweet._id)}>
+                <FontAwesomeIcon icon={faComment} className={styles.icon} />
+                {tweet.comments.length}
+              </button>
+            </div>
           </li>
         ))}
       </ul>
     </div>
   );
+
 }
 
 export default Tweets;

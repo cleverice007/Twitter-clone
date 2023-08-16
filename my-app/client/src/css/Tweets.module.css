@@ -3,3 +3,18 @@
     padding: 10px;
   }
   
+.iconContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+
+
+

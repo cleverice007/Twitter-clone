@@ -66,6 +66,9 @@ module.exports.createTweet = async (req, res) => {
 module.exports.addComment = async (req, res) => {
   try {
     const { tweetId, content } = req.body;
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, secretKey);
+    const userId = decoded.user_id; // 取得目前登入的用戶ID
 
     // 尋找該貼文
     const tweet = await Tweet.findById(tweetId);
@@ -75,7 +78,7 @@ module.exports.addComment = async (req, res) => {
     }
 
     // 新增評論
-    tweet.comments.push({ userId: req.user_id, content });
+    tweet.comments.push({ userId, content });
     await tweet.save();
 
     res.json({ message: 'Comment added successfully' });
@@ -85,10 +88,13 @@ module.exports.addComment = async (req, res) => {
   }
 };
 
-// 貼文點贊
+// 貼文點讚
 module.exports.likeTweet = async (req, res) => {
   try {
     const { tweetId } = req.body;
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, secretKey);
+    const userId = decoded.user_id; // 獲得目前登入的使用者ID
 
     // 尋找該貼文
     const tweet = await Tweet.findById(tweetId);
@@ -98,12 +104,12 @@ module.exports.likeTweet = async (req, res) => {
     }
 
     // 檢查是否已經點贊過
-    if (tweet.likes.includes(req.user_id)) {
+    if (tweet.likes.includes(userId)) {
       return res.status(400).json({ message: 'Tweet already liked' });
     }
 
     // 新增點贊
-    tweet.likes.push(req.user_id);
+    tweet.likes.push(userId);
     await tweet.save();
 
     res.json({ message: 'Tweet liked successfully' });
