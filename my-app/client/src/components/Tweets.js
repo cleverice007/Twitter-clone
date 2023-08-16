@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styles from '../css/Tweets.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-modal'; 
 
 
 const Tweets = () => {
   const [tweets, setTweets] = useState([]);
+  const [showCommentModal, setShowCommentModal] = useState(false);
+  const [selectedTweet, setSelectedTweet] = useState(null);
+  const [commentText, setCommentText] = useState('');
+
+
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -33,13 +39,37 @@ const Tweets = () => {
     }
   };
 
-  const handleComment = async (tweetId) => {
+  const handleCommentButtonClick = (tweetId) => {
+    setSelectedTweet(tweetId);
+    setShowCommentModal(true);
+  };
+  
+
+  const handleCloseModal = () => {
+    setSelectedTweet(null);
+    setShowCommentModal(false);
+    setCommentText('');
   };
 
+  const handleCommentSubmit = () => {
+    if (!commentText.trim()) {
+      console.error('Comment content is empty');
+      return;
+    }
 
-  const handleLike = async (tweetId) => {
+    // 發送評論內容到後端，處理邏輯
 
-  }
+    // 重置評論文本框
+    setCommentText('');
+    // 關閉 modal
+    setShowCommentModal(false);
+  };
+
+  const handleLike = async (tweetId) => {}
+
+
+
+const handleComment = async (tweetId) => {}
 
   return (
     <div className={styles.tweets}>
@@ -54,7 +84,7 @@ const Tweets = () => {
                 <FontAwesomeIcon icon={faHeart} className={styles.icon} />
                 {tweet.likes.length}
               </button>
-              <button className={styles.iconButton} onClick={() => handleComment(tweet._id)}>
+              <button className={styles.iconButton} onClick={() => handleCommentButtonClick(tweet._id)}>
                 <FontAwesomeIcon icon={faComment} className={styles.icon} />
                 {tweet.comments.length}
               </button>
@@ -62,6 +92,22 @@ const Tweets = () => {
           </li>
         ))}
       </ul>
+       {/* Comment Modal */}
+       <Modal
+        isOpen={showCommentModal}
+        onRequestClose={handleCloseModal}
+        contentLabel="Comment Modal"
+      >
+        <h3>內容</h3>
+        <p>{selectedTweet && selectedTweet.content}</p>
+        <h3>評論</h3>
+        <textarea
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+        />
+        <button onClick={handleCommentSubmit}>提交評論</button>
+        <button onClick={handleCloseModal}>關閉</button>
+      </Modal>
     </div>
   );
 
