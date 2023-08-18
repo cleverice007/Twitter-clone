@@ -40,9 +40,11 @@ const Tweets = () => {
   };
 
   const handleCommentButtonClick = (tweetId) => {
-    setSelectedTweet(tweetId);
+    const selectedTweet = tweets.find(tweet => tweet._id === tweetId);
+    setSelectedTweet(selectedTweet);
     setShowCommentModal(true);
   };
+
 
 
   const handleCloseModal = () => {
@@ -51,19 +53,41 @@ const Tweets = () => {
     setCommentText('');
   };
 
-  const handleCommentSubmit = () => {
+  const handleCommentSubmit = async () => {
     if (!commentText.trim()) {
       console.error('Comment content is empty');
       return;
     }
 
-    // 發送評論內容到後端，處理邏輯
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:4000/tweets/addComment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          tweetId: selectedTweet._id,
+          content: commentText
+        }),
+        credentials: 'include'
+      });
 
-    // 重置評論文本框
-    setCommentText('');
-    // 關閉 modal
-    setShowCommentModal(false);
+      if (!response.ok) {
+        console.error('Server Error');
+        return;
+      }
+
+      // 重置評論文本框
+      setCommentText('');
+      // 關閉 modal
+      setShowCommentModal(false);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
   };
+
 
   const handleLike = async (tweetId) => { }
 
@@ -99,8 +123,13 @@ const Tweets = () => {
         contentLabel="Comment Modal"
       >
         <h3>內容</h3>
-        <p>{selectedTweet && tweets.find(tweet => tweet._id === selectedTweet)?.content}</p>
+        <p>{selectedTweet?.content}</p>
         <h3>評論</h3>
+        <div>
+          {selectedTweet.comments.map((comment, index) => (
+            <p key={index}>{comment.content}</p>
+          ))}
+        </div>
         <textarea
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
@@ -108,6 +137,7 @@ const Tweets = () => {
         <button onClick={handleCommentSubmit}>提交評論</button>
         <button onClick={handleCloseModal}>關閉</button>
       </Modal>
+
     </div>
   );
 
