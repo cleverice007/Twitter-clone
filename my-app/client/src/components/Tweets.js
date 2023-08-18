@@ -10,6 +10,8 @@ const Tweets = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [selectedTweet, setSelectedTweet] = useState(null);
   const [commentText, setCommentText] = useState('');
+  const [commentUsername, setCommentUsername] = useState('');
+
 
 
   const token = localStorage.getItem('token');
@@ -70,7 +72,7 @@ const Tweets = () => {
         body: JSON.stringify({
           tweetId: selectedTweet._id,
           content: commentText,
-          createdAt: new Date() 
+          createdAt: new Date()
         }),
         credentials: 'include'
       });
@@ -79,6 +81,8 @@ const Tweets = () => {
         console.error('Server Error');
         return;
       }
+      const responseData = await response.json();
+      setCommenUsername(responseData.comment_username);
 
       // 重置評論文本框
       setCommentText('');
@@ -119,29 +123,35 @@ const Tweets = () => {
       </ul>
       {/* Comment Modal */}
       <Modal
-  isOpen={showCommentModal}
-  onRequestClose={handleCloseModal}
-  contentLabel="Comment Modal"
->
-  <h3>內容</h3>
-  <p>{selectedTweet?.content}</p>
-  <h3>評論</h3>
-  <div>
-    {selectedTweet && selectedTweet.comments.map((comment, index) => (
-      <div key={index}>
-        <p>{comment.content}</p>
-        <p>評論者：{comment.username}</p> 
-        <p>評論時間：{comment.createdAt}</p> 
-      </div>
-    ))}
-  </div>
-  <textarea
-    value={commentText}
-    onChange={(e) => setCommentText(e.target.value)}
-  />
-  <button onClick={handleCommentSubmit}>提交評論</button>
-  <button onClick={handleCloseModal}>關閉</button>
-</Modal>
+        isOpen={showCommentModal}
+        onRequestClose={handleCloseModal}
+        contentLabel="Comment Modal"
+      >
+        <h3>內容</h3>
+        <p>{selectedTweet?.content}</p>
+        <h3>評論</h3>
+        <div>
+          {selectedTweet && selectedTweet.comments.map((comment, index) => (
+            <div key={index}>
+              <p>{comment.content}</p>
+              <p>評論者：{commentUsername}</p>
+              <p>評論時間：{new Date(comment.createdAt).toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric'
+              })}</p>
+            </div>
+          ))}
+        </div>
+        <textarea
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+        />
+        <button onClick={handleCommentSubmit}>提交評論</button>
+        <button onClick={handleCloseModal}>關閉</button>
+      </Modal>
 
 
     </div>
