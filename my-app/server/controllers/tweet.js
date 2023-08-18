@@ -77,8 +77,11 @@ module.exports.addComment = async (req, res) => {
       return res.status(404).json({ message: 'Tweet not found' });
     }
 
-    // 新增評論
-    tweet.comments.push({ userId, content });
+    // 取得評論者的使用者名稱
+    const user = await User.findById(userId);
+
+    // 新增評論，包含使用者名稱和評論時間
+    tweet.comments.push({ userId, content, username: user.username, createdAt: new Date() });
     await tweet.save();
 
     res.json({ message: 'Comment added successfully' });
@@ -87,6 +90,7 @@ module.exports.addComment = async (req, res) => {
     res.status(500).json({ message: 'Failed to add comment', error: error.message });
   }
 };
+
 
 
 // 貼文點讚

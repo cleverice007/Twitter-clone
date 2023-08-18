@@ -69,7 +69,8 @@ const Tweets = () => {
         },
         body: JSON.stringify({
           tweetId: selectedTweet._id,
-          content: commentText
+          content: commentText,
+          createdAt: new Date() 
         }),
         credentials: 'include'
       });
@@ -118,25 +119,29 @@ const Tweets = () => {
       </ul>
       {/* Comment Modal */}
       <Modal
-        isOpen={showCommentModal}
-        onRequestClose={handleCloseModal}
-        contentLabel="Comment Modal"
-      >
-        <h3>內容</h3>
-        <p>{selectedTweet?.content}</p>
-        <h3>評論</h3>
-        <div>
-          {selectedTweet && selectedTweet.comments.map((comment, index) => (
-            <p key={index}>{comment.content}</p>
-          ))}
-        </div>
-        <textarea
-          value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
-        />
-        <button onClick={handleCommentSubmit}>提交評論</button>
-        <button onClick={handleCloseModal}>關閉</button>
-      </Modal>
+  isOpen={showCommentModal}
+  onRequestClose={handleCloseModal}
+  contentLabel="Comment Modal"
+>
+  <h3>內容</h3>
+  <p>{selectedTweet?.content}</p>
+  <h3>評論</h3>
+  <div>
+    {selectedTweet && selectedTweet.comments.map((comment, index) => (
+      <div key={index}>
+        <p>{comment.content}</p>
+        <p>評論者：{comment.username}</p> 
+        <p>評論時間：{comment.createdAt}</p> 
+      </div>
+    ))}
+  </div>
+  <textarea
+    value={commentText}
+    onChange={(e) => setCommentText(e.target.value)}
+  />
+  <button onClick={handleCommentSubmit}>提交評論</button>
+  <button onClick={handleCloseModal}>關閉</button>
+</Modal>
 
 
     </div>
