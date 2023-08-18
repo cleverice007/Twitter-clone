@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '../css/Tweets.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
-import Modal from 'react-modal'; 
+import Modal from 'react-modal';
 
 
 const Tweets = () => {
@@ -43,7 +43,7 @@ const Tweets = () => {
     setSelectedTweet(tweetId);
     setShowCommentModal(true);
   };
-  
+
 
   const handleCloseModal = () => {
     setSelectedTweet(null);
@@ -65,11 +65,11 @@ const Tweets = () => {
     setShowCommentModal(false);
   };
 
-  const handleLike = async (tweetId) => {}
+  const handleLike = async (tweetId) => { }
 
 
 
-const handleComment = async (tweetId) => {}
+  const handleComment = async (tweetId) => { }
 
   return (
     <div className={styles.tweets}>
@@ -92,14 +92,14 @@ const handleComment = async (tweetId) => {}
           </li>
         ))}
       </ul>
-       {/* Comment Modal */}
-       <Modal
+      {/* Comment Modal */}
+      <Modal
         isOpen={showCommentModal}
         onRequestClose={handleCloseModal}
         contentLabel="Comment Modal"
       >
         <h3>內容</h3>
-        <p>{selectedTweet && selectedTweet.content}</p>
+        <p>{selectedTweet && tweets.find(tweet => tweet._id === selectedTweet)?.content}</p>
         <h3>評論</h3>
         <textarea
           value={commentText}
