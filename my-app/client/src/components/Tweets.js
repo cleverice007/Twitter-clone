@@ -126,7 +126,7 @@ const Tweets = () => {
         <p>{selectedTweet?.content}</p>
         <h3>評論</h3>
         <div>
-          {selectedTweet.comments.map((comment, index) => (
+          {selectedTweet && selectedTweet.comments.map((comment, index) => (
             <p key={index}>{comment.content}</p>
           ))}
         </div>
@@ -137,6 +137,7 @@ const Tweets = () => {
         <button onClick={handleCommentSubmit}>提交評論</button>
         <button onClick={handleCloseModal}>關閉</button>
       </Modal>
+
 
     </div>
   );
