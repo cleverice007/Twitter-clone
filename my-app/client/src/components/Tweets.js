@@ -10,7 +10,6 @@ const Tweets = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [selectedTweet, setSelectedTweet] = useState(null);
   const [commentText, setCommentText] = useState('');
-  const [liked, setLiked] = useState(false);
 
 
 
@@ -29,18 +28,20 @@ const Tweets = () => {
         },
         credentials: 'include'
       });
-
+  
       if (!response.ok) {
         console.error('Server Error');
         return;
       }
-
+  
       const data = await response.json();
-      setTweets(data.userTweets);
+      const initialTweets = data.userTweets.map(tweet => ({ ...tweet, isLiked: false })); // 初始時每則貼文都設定為未按讚
+      setTweets(initialTweets);
     } catch (error) {
       console.error('Error:', error.message);
     }
   };
+  
 
   const handleCommentButtonClick = (tweetId) => {
     const selectedTweet = tweets.find(tweet => tweet._id === tweetId);
@@ -91,7 +92,6 @@ const Tweets = () => {
     }
   };
 
- 
   const handleLike = async (tweetId) => {
     try {
       const token = localStorage.getItem('token');
@@ -110,12 +110,16 @@ const Tweets = () => {
         return;
       }
   
+      // 從後端獲取按讚狀態
+      const successResponse = await response.json();
+      const isLiked = successResponse.isLiked;
+  
       // 更新按讚狀態
       setTweets(prevTweets => {
         return prevTweets.map(tweet => {
           if (tweet._id === tweetId) {
-            // 如果該貼文已經按過讚，則取消按讚；反之，按讚
-            return { ...tweet, isLiked: !tweet.isLiked };
+            // 根據後端回傳的 isLiked 狀態更新按讚狀態
+            return { ...tweet, isLiked };
           }
           return tweet;
         });
@@ -124,10 +128,6 @@ const Tweets = () => {
       console.error('Error:', error.message);
     }
   };
-  
-  
-
-
   const handleComment = async (tweetId) => { }
 
   return (
