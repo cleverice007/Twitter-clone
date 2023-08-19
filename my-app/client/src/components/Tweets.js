@@ -10,7 +10,6 @@ const Tweets = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [selectedTweet, setSelectedTweet] = useState(null);
   const [commentText, setCommentText] = useState('');
-  const [commentUsername, setCommentUsername] = useState('');
 
 
 
@@ -63,14 +62,13 @@ const Tweets = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:4000/tweets/addComment', {
+      const response = await fetch(`http://localhost:4000/tweets/${selectedTweet._id}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          tweetId: selectedTweet._id,
           content: commentText,
           createdAt: new Date()
         }),
@@ -81,8 +79,6 @@ const Tweets = () => {
         console.error('Server Error');
         return;
       }
-      const responseData = await response.json();
-      setCommenUsername(responseData.comment_username);
 
       // 重置評論文本框
       setCommentText('');
@@ -92,6 +88,7 @@ const Tweets = () => {
       console.error('Error:', error.message);
     }
   };
+
 
 
   const handleLike = async (tweetId) => { }
@@ -108,6 +105,15 @@ const Tweets = () => {
           <li key={tweet._id}>
             <p>{tweet.content}</p>
             <p>作者：{tweet.author.username}</p>
+            <p>
+              {new Date(tweet.createdAt).toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric'
+              })}
+            </p>
             <div className={styles.iconContainer}>
               <button className={styles.iconButton} onClick={() => handleLike(tweet._id)}>
                 <FontAwesomeIcon icon={faHeart} className={styles.icon} />
@@ -134,7 +140,7 @@ const Tweets = () => {
           {selectedTweet && selectedTweet.comments.map((comment, index) => (
             <div key={index}>
               <p>{comment.content}</p>
-              <p>評論者：{commentUsername}</p>
+              <p>評論者：{comment.userId.username}</p>
               <p>評論時間：{new Date(comment.createdAt).toLocaleString('en-US', {
                 year: 'numeric',
                 month: 'short',

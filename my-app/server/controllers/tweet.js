@@ -4,31 +4,41 @@ const jwt = require('jsonwebtoken');
 const secretKey = 'your-secret-key';
 
 module.exports.getTweets = async (req, res) => {
-    try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-        const decoded = jwt.verify(token, secretKey);
-        const userId = decoded.user_id; // 取得目前登入的用戶ID
-        
-        // 查詢用戶自己的貼文
-        const userTweets = await Tweet.find({ author: userId })
-            .populate('author')
-            .sort({ createdAt: -1 });
+  try {
+      const token = req.header('Authorization').replace('Bearer ', '');
+      const decoded = jwt.verify(token, secretKey);
+      const userId = decoded.user_id; // 取得目前登入的用戶ID
+      
+      // 查詢用戶自己的貼文
+      const userTweets = await Tweet.find({ author: userId })
+          .populate('author')
+          .populate({
+              path: 'comments.userId',
+              select: 'username'
+          })
+          .sort({ createdAt: -1 });
 
-        // 獲得用戶的跟隨者ID列表
-        const user = await User.findById(userId);
-        const followersIds = user.followers;
+      // 獲得用戶的跟隨者ID列表
+      const user = await User.findById(userId);
+      const followersIds = user.followers;
 
-        // 查詢跟隨者的貼文
-        const followersTweets = await Tweet.find({
-            author: { $in: followersIds }
-        }).populate('author').sort({ createdAt: -1 });
+      // 查詢跟隨者的貼文
+      const followersTweets = await Tweet.find({
+          author: { $in: followersIds }
+      }).populate('author')
+      .populate({
+          path: 'comments.userId',
+          select: 'username'
+      })
+      .sort({ createdAt: -1 });
 
-
-        res.json({ userTweets, followersTweets });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error' });
-    }
+      res.json({ userTweets, followersTweets });
+  } catch (error) {
+      res.status(500).json({ message: 'Server error' });
+  }
 };
+
+
 
 module.exports.createTweet = async (req, res) => {
     try {
