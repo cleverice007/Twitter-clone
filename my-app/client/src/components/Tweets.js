@@ -10,6 +10,8 @@ const Tweets = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [selectedTweet, setSelectedTweet] = useState(null);
   const [commentText, setCommentText] = useState('');
+  const [liked, setLiked] = useState(false);
+
 
 
 
@@ -89,10 +91,41 @@ const Tweets = () => {
     }
   };
 
-
-
-  const handleLike = async (tweetId) => { }
-
+ 
+  const handleLike = async (tweetId) => {
+    try {
+      const token = localStorage.getItem('token');
+  
+      // 發送按讚請求到後端
+      const response = await fetch(`http://localhost:4000/tweets/like/${tweetId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+  
+      if (!response.ok) {
+        console.error('Server Error');
+        return;
+      }
+  
+      // 更新按讚狀態
+      setTweets(prevTweets => {
+        return prevTweets.map(tweet => {
+          if (tweet._id === tweetId) {
+            // 如果該貼文已經按過讚，則取消按讚；反之，按讚
+            return { ...tweet, isLiked: !tweet.isLiked };
+          }
+          return tweet;
+        });
+      });
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+  
+  
 
 
   const handleComment = async (tweetId) => { }
