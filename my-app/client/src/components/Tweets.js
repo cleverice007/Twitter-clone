@@ -148,7 +148,10 @@ const Tweets = () => {
               })}
             </p>
             <div className={styles.iconContainer}>
-              <button className={styles.iconButton} onClick={() => handleLike(tweet._id)}>
+              <button
+                className={`${styles.iconButton} ${tweet.isLiked ? styles.liked : ''}`}
+                onClick={() => handleLike(tweet._id)}
+              >
                 <FontAwesomeIcon icon={faHeart} className={styles.icon} />
                 {tweet.likes.length}
               </button>
@@ -159,7 +162,7 @@ const Tweets = () => {
             </div>
           </li>
         ))}
-      </ul>
+      </ul>  
       {/* Comment Modal */}
       <Modal
         isOpen={showCommentModal}
