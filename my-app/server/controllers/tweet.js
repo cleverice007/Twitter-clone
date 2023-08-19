@@ -102,32 +102,37 @@ module.exports.addComment = async (req, res) => {
 
 
 // 貼文點讚
-module.exports.toggleLike = async (req,res) => {
+module.exports.toggleLike = async (req, res) => {
   try {
-    // 尋找該貼文
-    const tweetId = req.body;
+    const { tweetId } = req.params; 
     const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, secretKey);
     const userId = decoded.user_id; // 取得目前登入的用戶ID
+
+    // 尋找該貼文
     const tweet = await Tweet.findById(tweetId);
 
     if (!tweet) {
-      return false;
+      return res.status(404).json({ message: 'Tweet not found' });
     }
 
     // 檢查是否已經點贊過
-    if (tweet.likes.includes(userId)) {
-      return false;
+    const isLiked = tweet.likes.includes(userId);
+
+    if (isLiked) {
+      // 如果已按過讚，則取消按讚
+      tweet.likes.pull(userId);
+    } else {
+      // 如果未按過讚，則添加按讚
+      tweet.likes.push(userId);
     }
 
-    // 新增點贊
-    tweet.likes.push(userId);
     await tweet.save();
 
-    return true;
+    res.json({ message: 'Like toggled successfully', isLiked }); // 返回 isLiked 的狀態
   } catch (error) {
-    console.error('Error while liking tweet:', error);
-    return false;
+    console.error('Error while toggling like:', error);
+    res.status(500).json({ message: 'Failed to toggle like', error: error.message });
   }
 };
 
