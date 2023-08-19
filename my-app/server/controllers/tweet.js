@@ -129,7 +129,7 @@ module.exports.toggleLike = async (req, res) => {
 
     await tweet.save();
 
-    res.json({ message: 'Like toggled successfully', isLiked }); // 返回 isLiked 的狀態
+    res.json({ message: 'Like toggled successfully', isLiked: !isLiked }); // 返回切換後的 isLiked 的狀態
   } catch (error) {
     console.error('Error while toggling like:', error);
     res.status(500).json({ message: 'Failed to toggle like', error: error.message });

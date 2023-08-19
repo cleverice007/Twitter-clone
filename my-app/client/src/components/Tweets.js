@@ -110,16 +110,12 @@ const Tweets = () => {
         return;
       }
   
-      // 從後端獲取按讚狀態
-      const successResponse = await response.json();
-      const isLiked = successResponse.isLiked;
-  
       // 更新按讚狀態
       setTweets(prevTweets => {
         return prevTweets.map(tweet => {
           if (tweet._id === tweetId) {
-            // 根據後端回傳的 isLiked 狀態更新按讚狀態
-            return { ...tweet, isLiked };
+            // 切換按讚狀態
+            return { ...tweet, isLiked: !tweet.isLiked };
           }
           return tweet;
         });
@@ -128,6 +124,7 @@ const Tweets = () => {
       console.error('Error:', error.message);
     }
   };
+  
   const handleComment = async (tweetId) => { }
 
   return (
