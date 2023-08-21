@@ -1,22 +1,51 @@
-import styles from '../css/RecommendedUsers.module.css';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import userCardStyles from '../css/RecommendedUsers.module.css'; 
 
+const RecommendedUsers = () => {
+  const [recommendedUsers, setRecommendedUsers] = useState([]);
 
-  // 推薦先暫時根據創建帳號順序，做前10名的推薦
+  useEffect(() => {
+    fetchRecommendedUsers();
+  }, []);
 
-const RecommendedUsers = ({ users }) => {
+  const fetchRecommendedUsers = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:4000/recommend/recommend-users', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        console.error('Server Error');
+        return;
+      }
+
+      const data = await response.json();
+      setRecommendedUsers(data.recommendedUsers);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
   return (
-    <div className={styles.recommendedUsers}>
-      <h2>Recommended Users</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user._id}>
-            <p>{user.username}</p>
-            <p>Name: {user.name}</p>
-          </li>
+    <div>
+      <h2 className={userCardStyles.title}>推薦用戶</h2>
+      <div className={`${userCardStyles['recommended-users-container']} ${userCardStyles.container}`}>
+        {recommendedUsers.map(user => (
+          <div key={user._id} className={`${userCardStyles['user-card']} ${userCardStyles.userCard}`}>
+            <img src={user.profileImage} alt={`Profile of ${user.username}`} />
+            <h3>{user.username}</h3>
+            <p>{user.followers.length} Followers</p>
+            <Link to={`/user/${user._id}`}>查看個人頁面</Link>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
-}
+};
 
 export default RecommendedUsers;

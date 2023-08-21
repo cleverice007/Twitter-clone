@@ -61,10 +61,14 @@ db.once('open', () => {
 //使用得到的路由
 const authRoutes = require('./routes/authRoutes'); 
 const tweetRoutes = require('./routes/tweetRoutes');
+const recommendRoutes = require('./routes/recommendRoutes');
+
 
 
 app.use('/auth', authRoutes); 
 app.use('/tweets',tweetRoutes);
+app.use('/recommend',recommendRoutes);
+
 
 app.listen(4000, () => {
   console.log('伺服器運行在 http://localhost:4000');

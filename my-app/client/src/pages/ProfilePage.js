@@ -3,6 +3,7 @@ import styles from '../css/ProfilePage.module.css';
 import Sidebar from '../components/Sidebar';
 import TweetBox from '../components/TweetBox';
 import Tweets from '../components/Tweets';
+import RecommendedUsers from '../components/RecommendedUsers';
 
 const ProfilePage = () => {
   const username = localStorage.getItem('username');
@@ -57,6 +58,7 @@ const ProfilePage = () => {
       
       {/* Recommended Users */}
       <div className={styles.recommendedUsersWrapper}>
+        <RecommendedUsers />
         {/* Display recommended users */}
       </div>
     </div>

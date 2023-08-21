@@ -9,49 +9,10 @@ module.exports.recommendUsers = async (req, res) => {
       const decoded = jwt.verify(token, secretKey);
       const userId = decoded.user_id; // 取得目前登入的用戶ID
   
-      // 查詢目前使用者的資訊，包括正在追蹤的人和他們的貼文
-      const currentUser = await User.findById(userId)
-        .populate('following', 'username followers')
-        .populate({
-          path: 'tweets',
-          populate: {
-            path: 'author',
-            select: 'username'
-          }
-        });
-  
-      if (!currentUser) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      // 排序追蹤的人根據追蹤者人數
-      const sortedFollowing = currentUser.following.sort((a, b) => b.followers.length - a.followers.length);
-  
-      // 取出排序後的追蹤的人的貼文
-      const followingTweets = [];
-      sortedFollowing.forEach(user => {
-        followingTweets.push(...user.tweets);
-      });
-  
-      // 根據貼文的作者，計算每個使用者的推薦指數
-      const userRecommendations = {};
-      followingTweets.forEach(tweet => {
-        const authorId = tweet.author._id.toString();
-        if (authorId !== userId) {
-          if (!userRecommendations[authorId]) {
-            userRecommendations[authorId] = 1;
-          } else {
-            userRecommendations[authorId]++;
-          }
-        }
-      });
-  
-      // 將推薦指數降序排序
-      const sortedRecommendations = Object.keys(userRecommendations)
-        .sort((a, b) => userRecommendations[b] - userRecommendations[a]);
-  
-      // 查詢每個推薦使用者的資訊
-      const recommendedUsers = await User.find({ _id: { $in: sortedRecommendations } }, 'username profileImage');
+      // 查詢 followers 最多的前十名用戶（排除自己）
+      const recommendedUsers = await User.find({ _id: { $ne: userId } }, 'username profileImage followers')
+        .sort({ followers: -1 })
+        .limit(10);
   
       res.json({ recommendedUsers });
     } catch (error) {
