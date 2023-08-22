@@ -40,7 +40,7 @@ const RecommendedUsers = () => {
             <img src={user.profileImage} alt={`Profile of ${user.username}`} />
             <h3>{user.username}</h3>
             <p>{user.followers.length} Followers</p>
-            <Link to={`/user/${user._id}`}>查看個人頁面</Link>
+            <Link to={`/profile/${user._id}`}>查看個人頁面</Link>
           </div>
         ))}
       </div>
