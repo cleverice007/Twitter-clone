@@ -38,6 +38,26 @@ module.exports.getTweets = async (req, res) => {
   }
 };
 
+module.exports.getOtherTweets = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // 查詢特定用戶的貼文
+    const otherUserTweets = await Tweet.find({ author: userId })
+      .populate('author')
+      .populate({
+        path: 'comments.userId',
+        select: 'username'
+      })
+      .sort({ createdAt: -1 });
+
+    res.json({ otherUserTweets });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
 
 
 module.exports.createTweet = async (req, res) => {
