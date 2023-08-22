@@ -3,6 +3,7 @@ import styles from '../css/Tweets.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
+import { useLocation } from 'react-router-dom';
 
 
 const Tweets = () => {
@@ -10,6 +11,7 @@ const Tweets = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [selectedTweet, setSelectedTweet] = useState(null);
   const [commentText, setCommentText] = useState('');
+  const location = useLocation();
 
 
 
@@ -17,8 +19,13 @@ const Tweets = () => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetchTweets();
-  }, []);
+    if (location.pathname === '/profile') {
+      fetchTweets();
+    } else if (location.pathname.startsWith('/profile/')) {
+      const userId = location.pathname.split('/').pop();
+      fetchOtherTweets(userId);
+    }
+  }, [location.pathname]);
 
   const fetchTweets = async () => {
     try {
@@ -125,7 +132,24 @@ const Tweets = () => {
     }
   };
   
-  const handleComment = async (tweetId) => { }
+  const fetchOtherTweets = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:4000/tweets/${userId}`);
+  
+      if (!response.ok) {
+        console.error('Server Error');
+        return;
+      }
+  
+      const data = await response.json();
+      const otherUserTweets = data.userTweets.map(tweet => ({ ...tweet, isLiked: false }));
+      setTweets(otherUserTweets);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+  
+
 
   return (
     <div className={styles.tweets}>

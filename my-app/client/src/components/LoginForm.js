@@ -31,7 +31,7 @@ const LoginForm = () => {
         localStorage.removeItem('token');
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
-        window.location.href = '/home';
+        window.location.href = '/profile';
       } else {
         const data = await response.json();
         console.error('Login failed:', data.error);
