@@ -64,7 +64,7 @@ const Tweets = () => {
     setCommentText('');
   };
 
-  const handleCommentSubmit = async () => {
+  const handleCommentSubmit = async (tweetId) => {
     if (!commentText.trim()) {
       console.error('Comment content is empty');
       return;
@@ -72,7 +72,7 @@ const Tweets = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:4000/tweets/${selectedTweet._id}/comments`, {
+      const response = await fetch(`http://localhost:4000/tweets/${tweetId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -212,7 +212,7 @@ const Tweets = () => {
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
         />
-        <button onClick={handleCommentSubmit}>提交評論</button>
+        <button onClick={() =>handleCommentSubmit(selectedTweet._id)}>提交評論</button>
         <button onClick={handleCloseModal}>關閉</button>
       </Modal>
 

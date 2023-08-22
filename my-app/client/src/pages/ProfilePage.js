@@ -4,10 +4,11 @@ import Sidebar from '../components/Sidebar';
 import TweetBox from '../components/TweetBox';
 import Tweets from '../components/Tweets';
 import RecommendedUsers from '../components/RecommendedUsers';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useParams } from 'react-router-dom';
 
 const ProfilePage = () => {
   const location = useLocation();
+  const { userId } = useParams();
   const username = localStorage.getItem('username');
 
   // Define the image URLs and introduction

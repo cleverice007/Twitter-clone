@@ -95,7 +95,8 @@ module.exports.createTweet = async (req, res) => {
 // 新增評論
 module.exports.addComment = async (req, res) => {
   try {
-    const { tweetId, content, createdAt } = req.body;
+    const { tweetId } = req.params; 
+    const { content, createdAt } = req.body;
     const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, secretKey);
     const userId = decoded.user_id; // 取得目前登入的用戶ID
@@ -111,7 +112,7 @@ module.exports.addComment = async (req, res) => {
     tweet.comments.push({ userId, content, createdAt });
     await tweet.save();
 
-    res.json({ message: 'Comment added successfully', comment_username:username });
+    res.json({ message: 'Comment added successfully'});
   } catch (error) {
     console.error('Error while adding comment:', error);
     res.status(500).json({ message: 'Failed to add comment', error: error.message });
