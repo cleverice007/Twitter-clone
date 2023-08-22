@@ -4,8 +4,10 @@ import Sidebar from '../components/Sidebar';
 import TweetBox from '../components/TweetBox';
 import Tweets from '../components/Tweets';
 import RecommendedUsers from '../components/RecommendedUsers';
+import { useLocation } from 'react-router-dom';
 
 const ProfilePage = () => {
+  const location = useLocation();
   const username = localStorage.getItem('username');
 
   // Define the image URLs and introduction
@@ -18,26 +20,26 @@ const ProfilePage = () => {
     <div className={styles.profileContainer}>
       {/* Sidebar */}
       <Sidebar />
-      
+
       {/* Profile Info */}
       <div className={styles.profileInfo}>
         {/* Profile Info Upper */}
         <div className={styles.profileInfoUpper}>
           {/* Background Image */}
           <div className={styles.backgroundImage} style={{ backgroundImage: `url(${backgroundImageUrl})` }}></div>
-  
+
           {/* Avatar and Edit Button */}
           <div className={styles.avatarEditContainer}>
             {/* Avatar */}
             <div className={styles.avatarContainer}>
               <div className={styles.avatar} style={{ backgroundImage: `url(${avatarUrl})` }}></div>
             </div>
-  
+
             {/* Edit Profile Button */}
             <button className={styles.editButton}>編輯個人資料</button>
           </div>
         </div>
-  
+
         {/* Introduction */}
         <div className={styles.introduction}>
           <h2>{username ? `@${username}` : 'Welcome to Twitter Clone'}</h2>
@@ -47,15 +49,16 @@ const ProfilePage = () => {
             <p>Following: 50</p>
           </div>
         </div>
-        
+
         {/* Tweet Section */}
         <div className={styles.tweets}>
           <h1>Welcome {username ? username : 'to Twitter Clone'}</h1>
-          <TweetBox />
+          {location.pathname.startsWith('/profile/') ? null : <TweetBox />}
           <Tweets tweets />
         </div>
+
       </div>
-      
+
       {/* Recommended Users */}
       <div className={styles.recommendedUsersWrapper}>
         <RecommendedUsers />
@@ -63,7 +66,7 @@ const ProfilePage = () => {
       </div>
     </div>
   );
-  
+
 
 };
 
