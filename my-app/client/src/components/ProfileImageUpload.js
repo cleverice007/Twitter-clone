@@ -2,38 +2,37 @@ import React, { useState } from 'react';
 import styles from '../css/ProfileImageUpload.module.css'; 
 
 function ProfileImageUpload() {
-    const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
+    const [profileImageUrl, setProfileImageUrl] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
             const imageUrl = URL.createObjectURL(file);
+            setProfileImageUrl(imageUrl);
             setSelectedImage(file);
-            setBackgroundImageUrl(imageUrl);
         }
     };
 
     const handleImageUpload = () => {
         // TODO: Implement the image upload logic here
-        if (selectedImage) {
-            console.log('Uploading image:', selectedImage);
-            // You can send the selectedImage to the server for uploading
-        }
+        
     };
 
     return (
         <div className={styles.profileImageUpload}>
-            <div
-                className={styles.backgroundImage}
-                style={{ backgroundImage: `url(${backgroundImageUrl})` }}
-            ></div>
+            {profileImageUrl && (
+                <div
+                    className={styles.profileImage}
+                    style={{ backgroundImage: `url(${profileImageUrl})` }}
+                ></div>
+            )}
             <input
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
                 className={styles.input}
-                id="profileImage" 
+                id="profileImage"
             />
 
             <label htmlFor="profileImage" className={styles.uploadButton}>
@@ -49,4 +48,5 @@ function ProfileImageUpload() {
 }
 
 export default ProfileImageUpload;
+
 
