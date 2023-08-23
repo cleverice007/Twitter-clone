@@ -1,11 +1,11 @@
 import React from 'react';
-import ProfileForm from './ProfileForm';
+import EditProfileForm from '../components/EditProfileForm';
 
 function EditProfilePage() {
   return (
     <div>
       <h1>Edit Profile</h1>
-      <ProfileForm />
+      <EditProfileForm />
     </div>
   );
 }
