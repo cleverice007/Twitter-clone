@@ -22,8 +22,8 @@ const Tweets = () => {
     if (location.pathname === '/profile') {
       fetchTweets();
     } else if (location.pathname.startsWith('/profile/')) {
-      const userId = location.pathname.split('/').pop();
-      fetchOtherTweets(userId);
+      const username = location.pathname.split('/').pop();
+      fetchOtherTweets(username);
     }
   }, [location.pathname]);
 
@@ -132,9 +132,9 @@ const Tweets = () => {
     }
   };
   
-  const fetchOtherTweets = async (userId) => {
+  const fetchOtherTweets = async (username) => {
     try {
-      const response = await fetch(`http://localhost:4000/tweets/${userId}`);
+      const response = await fetch(`http://localhost:4000/tweets/${username}`);
   
       if (!response.ok) {
         console.error('Server Error');
@@ -142,7 +142,7 @@ const Tweets = () => {
       }
   
       const data = await response.json();
-      const otherUserTweets = data.userTweets.map(tweet => ({ ...tweet, isLiked: false }));
+      const otherUserTweets = data.otherUserTweets.map(tweet => ({ ...tweet, isLiked: false }));
       setTweets(otherUserTweets);
     } catch (error) {
       console.error('Error:', error.message);

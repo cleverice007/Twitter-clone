@@ -40,10 +40,17 @@ module.exports.getTweets = async (req, res) => {
 
 module.exports.getOtherTweets = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { username } = req.params;
+
+    // 查詢特定使用者
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
     // 查詢特定用戶的貼文
-    const otherUserTweets = await Tweet.find({ author: userId })
+    const otherUserTweets = await Tweet.find({ author: user._id })
       .populate('author')
       .populate({
         path: 'comments.userId',
@@ -56,6 +63,7 @@ module.exports.getOtherTweets = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 
 

@@ -7,7 +7,7 @@ const { getTweets, createTweet,addComment,toggleLike , getOtherTweets} = require
 
 // 設置相對應的路由
 router.get('/getTweets', getTweets);  // 獲取貼文的路由
-router.get('/:userId', getOtherTweets) // 獲取其他用戶貼文的路由
+router.get('/:username', getOtherTweets) // 獲取其他用戶貼文的路由
 router.post('/createTweet', createTweet);  // 創建新貼文的路由
 router.post('/:tweetId/comments',addComment) // 在貼文底下評論的路由
 router.post('/like/:tweetId',toggleLike) //貼文按讚
