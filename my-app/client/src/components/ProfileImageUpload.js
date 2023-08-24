@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../css/ProfileImageUpload.module.css'; 
+import styles from '../css/ProfileImageUpload.module.css';
 
 function ProfileImageUpload() {
     const [profileImageUrl, setProfileImageUrl] = useState('');
@@ -16,16 +16,16 @@ function ProfileImageUpload() {
 
     const handleImageUpload = () => {
         // TODO: Implement the image upload logic here
-        
-    };
 
+    };
     return (
         <div className={styles.profileImageUpload}>
             {profileImageUrl && (
-                <div
+                <img
+                    src={profileImageUrl}
+                    alt="Profile"
                     className={styles.profileImage}
-                    style={{ backgroundImage: `url(${profileImageUrl})` }}
-                ></div>
+                />
             )}
             <input
                 type="file"
@@ -34,7 +34,7 @@ function ProfileImageUpload() {
                 className={styles.input}
                 id="profileImage"
             />
-
+    
             <label htmlFor="profileImage" className={styles.uploadButton}>
                 Upload Image
             </label>
@@ -45,6 +45,7 @@ function ProfileImageUpload() {
             )}
         </div>
     );
+    
 }
 
 export default ProfileImageUpload;
