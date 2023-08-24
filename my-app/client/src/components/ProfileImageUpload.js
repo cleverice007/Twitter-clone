@@ -1,18 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../css/ProfileImageUpload.module.css';
 
-function ProfileImageUpload() {
-    const [profileImageUrl, setProfileImageUrl] = useState('');
-    const [selectedImage, setSelectedImage] = useState(null);
+function ProfileImageUpload(onImageChange,profileImageUrl) {
 
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setProfileImageUrl(imageUrl);
-            setSelectedImage(file);
-        }
-    };
 
     
     return (
@@ -27,7 +17,7 @@ function ProfileImageUpload() {
             <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange}
+                onChange={onImageChange}
                 className={styles.input}
                 id="profileImage"
             />

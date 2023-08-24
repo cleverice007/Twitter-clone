@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
 import styles from '../css/BackgroundImageUpload.module.css';
 
-function BackgroundImageUpload() {
-        const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
-        const [selectedImage, setSelectedImage] = useState(null);
+function BackgroundImageUpload(onImageChange,backgroundImageUrl) {
     
-        const handleImageChange = (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const imageUrl = URL.createObjectURL(file);
-                setBackgroundImageUrl(imageUrl);
-                setSelectedImage(file);
-            }
-        };
-    
+  
         return (
             <div className={styles.profileImageUpload}>
                 {backgroundImageUrl && (
@@ -26,7 +16,7 @@ function BackgroundImageUpload() {
                 <input
                     type="file"
                     accept="image/*"
-                    onChange={handleImageChange}
+                    onChange={onImageChange}
                     className={styles.input}
                     id="backgroundImage"
                 />
