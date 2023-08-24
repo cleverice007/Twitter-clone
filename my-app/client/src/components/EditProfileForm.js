@@ -16,7 +16,13 @@ function EditProfileForm() {
       <BackgroundImageUpload />
 
       <h2>Introduction</h2>
-
+      <textarea
+      name="introduction"
+      rows="4" 
+      cols="50" 
+      placeholder="Introduce yourself..."
+    />
+     <input type="submit" value="Submit" />
     </form>
   );
 }
