@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styles from '../css/ProfileImageUpload.module.css';
 
-function ProfileImageUpload(onImageChange,profileImageUrl) {
+function ProfileImageUpload(onImageChange, profileImageUrl) {
 
 
-    
+
     return (
         <div className={styles.profileImageUpload}>
             {profileImageUrl && (
@@ -21,14 +21,14 @@ function ProfileImageUpload(onImageChange,profileImageUrl) {
                 className={styles.input}
                 id="profileImage"
             />
-    
+
             <label htmlFor="profileImage" className={styles.uploadButton}>
                 Upload Image
             </label>
-          
+
         </div>
     );
-    
+
 }
 
 export default ProfileImageUpload;
