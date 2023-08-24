@@ -14,10 +14,7 @@ function ProfileImageUpload() {
         }
     };
 
-    const handleImageUpload = () => {
-        // TODO: Implement the image upload logic here
-
-    };
+    
     return (
         <div className={styles.profileImageUpload}>
             {profileImageUrl && (
@@ -38,11 +35,7 @@ function ProfileImageUpload() {
             <label htmlFor="profileImage" className={styles.uploadButton}>
                 Upload Image
             </label>
-            {selectedImage && (
-                <button className={styles.uploadButton} onClick={handleImageUpload}>
-                    Confirm Upload
-                </button>
-            )}
+          
         </div>
     );
     

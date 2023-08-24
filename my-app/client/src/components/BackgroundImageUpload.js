@@ -14,10 +14,6 @@ function BackgroundImageUpload() {
             }
         };
     
-        const handleImageUpload = () => {
-            // TODO: Implement the image upload logic here
-    
-        };
         return (
             <div className={styles.profileImageUpload}>
                 {backgroundImageUrl && (
@@ -38,11 +34,7 @@ function BackgroundImageUpload() {
                 <label htmlFor="backgroundImage" className={styles.uploadButton}>
                     Upload Image
                 </label>
-                {selectedImage && (
-                    <button className={styles.uploadButton} onClick={handleImageUpload}>
-                        Confirm Upload
-                    </button>
-                )}
+               
             </div>
         );
         
