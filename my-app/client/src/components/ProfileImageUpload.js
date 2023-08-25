@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import styles from '../css/ProfileImageUpload.module.css';
 
-function ProfileImageUpload(onImageChange, profileImageUrl) {
+function ProfileImageUpload(props) {
+    const { onImageChange, profileImageUrl } = props;
 
 
 
     return (
         <div className={styles.profileImageUpload}>
-            {profileImageUrl && (
+            { profileImageUrl ? ( 
                 <img
                     src={profileImageUrl}
                     alt="Profile"
-                    className={styles.profileImage}
+                    className={styles.backgroundImage}
                 />
-            )}
+            ) : null}
             <input
                 type="file"
                 accept="image/*"

@@ -3,8 +3,8 @@ import ProfileImageUpload from './ProfileImageUpload';
 import BackgroundImageUpload from './BackgroundImageUpload';
 
 function EditProfileForm() {
-  const [profileImageURL, setProfileImageURL] = useState('');
-  const [backgroundImageURL, setBackgroundImageURL] = useState('');
+  const [profileImageURL, setProfileImageURL] = useState(null);
+  const [backgroundImageURL, setBackgroundImageURL] = useState(null);
 
   const handleProfileImageChange = (event) => {
     const file = event.target.files[0];
