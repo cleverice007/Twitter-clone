@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import styles from '../css/ProfilePage.module.css';
 import Sidebar from '../components/Sidebar';
 import TweetBox from '../components/TweetBox';
@@ -9,12 +9,43 @@ import { useLocation} from 'react-router-dom';
 const ProfilePage = () => {
   const location = useLocation();
  // const { otherUsername } = useParams();
-  const username = localStorage.getItem('username');
+ const [profileImageUrl, setProfileImageUrl] = useState('');
+ const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
+ const [introduction, setIntroduction] = useState('');
 
-  // Define the image URLs and introduction
-  const avatarUrl = '/images/mason.jpg';
-  const backgroundImageUrl = '/images/background.jpg';
-  const introduction = 'i major in finance, i try to code for 3 months .';
+  const username = localStorage.getItem('username');
+  const token = localStorage.getItem('token'); 
+  
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/auth/profile`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}` // 如果需要的話
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setProfileImageUrl(data.profileImage);
+        setBackgroundImageUrl(data.backgroundImage);
+        setIntroduction(data.introduction);
+  
+      } else {
+        // 處理錯誤情況
+        console.error('Error fetching profile:', await response.text());
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchUserProfile();
+  }, []); 
+
+  
 
 
   return (
@@ -30,10 +61,10 @@ const ProfilePage = () => {
           <div className={styles.backgroundImage} style={{ backgroundImage: `url(${backgroundImageUrl})` }}></div>
 
           {/* Avatar and Edit Button */}
-          <div className={styles.avatarEditContainer}>
+          <div className={styles.profileImageEditContainer}>
             {/* Avatar */}
-            <div className={styles.avatarContainer}>
-              <div className={styles.avatar} style={{ backgroundImage: `url(${avatarUrl})` }}></div>
+            <div className={styles.profileImageContainer}>
+              <div className={styles.profileImage} style={{ backgroundImage: `url(${profileImageUrl})` }}></div>
             </div>
 
             {/* Edit Profile Button */}

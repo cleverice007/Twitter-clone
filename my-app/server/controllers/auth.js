@@ -69,3 +69,29 @@ module.exports.updateProfile = async (req, res) => {
   }
 };
 
+// 獲取用戶個人資料
+module.exports.getProfile = async (req, res) => {
+  try {
+    // 從請求標頭中檢索令牌，並解碼以獲取用戶ID
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, secretKey);
+    const userId = decoded.user_id; // 取得目前登入的用戶ID
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // 將用戶的個人資料傳回
+    return res.status(200).json({
+      profileImage: user.profileImage,
+      backgroundImage: user.backgroundImage,
+      introduction: user.introduction
+    });
+
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    return res.status(500).json({ message: 'An unexpected error occurred' });
+  }
+};

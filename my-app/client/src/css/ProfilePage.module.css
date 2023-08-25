@@ -35,7 +35,7 @@
     opacity: 0.5;
   }
   
-  .avatarEditContainer {
+  .profileImageEditContainer {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -43,7 +43,7 @@
     margin-top: 100px; /* 調整上方間距 */
   }
   
-  .avatarContainer {
+  .profileImageContainer {
     width: 150px;
     height: 150px;
     overflow: hidden;
@@ -53,7 +53,7 @@
     margin: 0 auto 10px;
   }
   
-  .avatar {
+  .profileImage {
     width: 100%;
     height: 100%;
     background-size: cover;

@@ -20,6 +20,9 @@ router.get('/logout',authControllers.logout)
 router.put('/updateprofile', authControllers.updateProfile);
 
 
+//獲取個人資料
+router.get('/profile', authControllers.getProfile);
+
 
 module.exports = router;
 
