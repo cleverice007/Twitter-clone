@@ -16,6 +16,9 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
 //登出
 router.get('/logout',authControllers.logout)
 
+//更新個人資料
+router.put('/updateprofile', authControllers.updateProfile);
+
 
 
 module.exports = router;
