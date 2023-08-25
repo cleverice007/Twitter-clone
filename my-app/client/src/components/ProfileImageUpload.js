@@ -8,13 +8,13 @@ function ProfileImageUpload(props) {
 
     return (
         <div className={styles.profileImageUpload}>
-            { profileImageUrl ? ( 
-                <img
-                    src={profileImageUrl}
-                    alt="Profile"
-                    className={styles.backgroundImage}
-                />
-            ) : null}
+                {profileImageUrl ? (
+                    <img
+                        src={profileImageUrl}
+                        alt="Profile"
+                        className={styles.profileImage}
+                    />
+                ) : null}
             <input
                 type="file"
                 accept="image/*"

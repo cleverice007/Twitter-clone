@@ -6,7 +6,7 @@ function BackgroundImageUpload(props) {
     
   
     return (
-        <div className={styles.profileImageUpload}>
+        <div className={styles.backgroundImageUpload}>
             {backgroundImageUrl ? ( 
                 <img
                     src={backgroundImageUrl}
