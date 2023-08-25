@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import styles from '../css/ProfileImageUpload.module.css';
 
 function ProfileImageUpload(props) {
-    const { onImageChange, profileImageUrl } = props;
+    const { onImageChange, profileImageURL } = props;
 
 
 
     return (
         <div className={styles.profileImageUpload}>
-                {profileImageUrl ? (
+                {profileImageURL ? (
                     <img
-                        src={profileImageUrl}
+                        src={profileImageURL}
                         alt="Profile"
                         className={styles.profileImage}
                     />

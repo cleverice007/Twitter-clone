@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const secretKey = 'your-secret-key'; // 自訂的密鑰，請保持安全
+const secretKey = 'your-secret-key'; 
+
 
 module.exports.register = async (req, res) => {
   const { username, password } = req.body;
@@ -45,19 +46,20 @@ module.exports.updateProfile = async (req, res) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, secretKey);
-    const userId = decoded.user_id; // 取得目前登入的用戶ID
+    const userId = decoded.user_id;
 
-    // 從請求主體中提取表單數據
-    const { profileImage, backgroundImage, introduction } = req.body;
+    // 從請求中提取圖像和介紹
+    const profileImagePath = req.files['profileImage'][0].path;
+    const backgroundImagePath = req.files['backgroundImage'][0].path;
+    const introduction = req.body.introduction;
 
     // 找到並更新對應的用戶
     const user = await User.findByIdAndUpdate(
       userId,
-      { profileImage, backgroundImage, introduction },
-      { new: true }     // 返回更新後的用戶
+      { profileImage: profileImagePath, backgroundImage: backgroundImagePath, introduction },
+      { new: true }
     );
 
-    // 如果找不到用戶，則返回錯誤
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -68,6 +70,7 @@ module.exports.updateProfile = async (req, res) => {
     res.status(500).json({ error: 'An unexpected error occurred' });
   }
 };
+
 
 // 獲取用戶個人資料
 module.exports.getProfile = async (req, res) => {

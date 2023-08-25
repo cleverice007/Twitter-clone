@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import styles from '../css/BackgroundImageUpload.module.css';
 
 function BackgroundImageUpload(props) {
-    const { onImageChange, backgroundImageUrl } = props;
+    const { onImageChange, backgroundImageURL } = props;
     
   
     return (
         <div className={styles.backgroundImageUpload}>
-            {backgroundImageUrl ? ( 
+            {backgroundImageURL ? ( 
                 <img
-                    src={backgroundImageUrl}
+                    src={backgroundImageURL}
                     alt="Profile"
                     className={styles.backgroundImage}
                 />
