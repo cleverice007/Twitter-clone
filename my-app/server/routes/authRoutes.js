@@ -39,6 +39,9 @@ router.put('/updateprofile', upload.fields([{ name: 'profileImage' }, { name: 'b
 //獲取個人資料
 router.get('/profile', authControllers.getProfile);
 
+// 跟隨、取消跟隨用戶
+router.put('/{userId}/follow', authControllers.followUnfollowUser);
+
 
 module.exports = router;
 

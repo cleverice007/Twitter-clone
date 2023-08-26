@@ -1,38 +1,43 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../css/ProfilePage.module.css';
 import Sidebar from '../components/Sidebar';
 import TweetBox from '../components/TweetBox';
 import Tweets from '../components/Tweets';
 import RecommendedUsers from '../components/RecommendedUsers';
-import { useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 
 const ProfilePage = () => {
   const location = useLocation();
- // const { otherUsername } = useParams();
- const [profileImageUrl, setProfileImageUrl] = useState('');
- const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
- const [introduction, setIntroduction] = useState('');
+  // const { otherUsername } = useParams();
+  const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
+  const [introduction, setIntroduction] = useState('');
+  const [followers, setfollowers] = useState([]);
+  const [following, setfollowing] = useState([]);
 
   const username = localStorage.getItem('username');
-  const token = localStorage.getItem('token'); 
-  
+  const token = localStorage.getItem('token');
+
 
   const fetchUserProfile = async () => {
     try {
       const response = await fetch(`http://localhost:4000/auth/profile`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}` // 如果需要的話
+          'Authorization': `Bearer ${token}`
         }
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setProfileImageUrl(`http://localhost:4000/${data.profileImage}`);
         setBackgroundImageUrl(`http://localhost:4000/${data.backgroundImage}`);
         setIntroduction(data.introduction);
+        setfollowers(data.followers);
+        setfollowing(data.following);
         console.log(introduction)
-  
+
       } else {
         // 處理錯誤情況
         console.error('Error fetching profile:', await response.text());
@@ -41,13 +46,16 @@ const ProfilePage = () => {
       console.error('An unexpected error occurred:', error);
     }
   };
-  
+
   useEffect(() => {
     fetchUserProfile();
-  }, []); 
+  }, []);
+
+
+
+
 
   
-
 
   return (
     <div className={styles.profileContainer}>
@@ -78,8 +86,9 @@ const ProfilePage = () => {
           <h2>{username ? `@${username}` : 'Welcome to Twitter Clone'}</h2>
           <p>{introduction}</p>
           <div className={styles.followStats}>
-            <p>Followers: 100</p>
-            <p>Following: 50</p>
+            <p>Followers: {followers?.length || 0}</p>
+            <p>Following: {following?.length || 0}</p>
+
           </div>
         </div>
 
@@ -94,8 +103,7 @@ const ProfilePage = () => {
 
       {/* Recommended Users */}
       <div className={styles.recommendedUsersWrapper}>
-        <RecommendedUsers />
-        {/* Display recommended users */}
+        <RecommendedUsers following = {following} />
       </div>
     </div>
   );

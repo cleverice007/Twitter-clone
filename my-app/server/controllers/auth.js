@@ -85,12 +85,16 @@ module.exports.getProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    const followersIds = user.followers.map(follower => follower.toString());
+    const followingIds = user.following.map(follow => follow.toString());
 
     // 將用戶的個人資料傳回
     return res.status(200).json({
       profileImage: user.profileImage,
       backgroundImage: user.backgroundImage,
-      introduction: user.introduction
+      introduction: user.introduction,
+      followers:  followersIds ,
+      following: followingIds
     });
 
   } catch (error) {
@@ -98,3 +102,50 @@ module.exports.getProfile = async (req, res) => {
     return res.status(500).json({ message: 'An unexpected error occurred' });
   }
 };
+
+
+// 跟隨、取消跟隨用戶
+
+module.exports.followUnfollowUser = async (req, res) => {
+  try {
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, secretKey);
+    const userId = decoded.user_id; // 取得目前登入的用戶ID
+
+    const user = await User.findById(userId);    
+    const followId = req.body.userId; // 要跟隨/取消跟隨的用戶的 ID
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    // 檢查要跟隨/取消跟隨的用戶是否存在
+    const followUser = await User.findById(followId);
+    if (!followUser) {
+      return res.status(404).json({ message: 'User to follow/unfollow not found' });
+    }
+
+    // 檢查 followId 是否已經在 following 陣列中
+    const index = user.following.indexOf(followId);
+    
+    if (index > -1) {
+      // 已經跟隨，所以取消跟隨
+      user.following.splice(index, 1);
+      followUser.followers.splice(followUser.followers.indexOf(userId), 1);
+    } else {
+      // 還未跟隨，所以新增
+      user.following.push(followId);
+      followUser.followers.push(userId);
+    }
+    
+    // 保存變更
+    await user.save();
+    await followUser.save();
+    
+    return res.status(200).json({ message: 'Follow/Unfollow successful', following: user.following });
+  } catch (error) {
+    console.error('Error in follow/unfollow:', error);
+    return res.status(500).json({ message: 'An unexpected error occurred' });
+  }
+};
+
