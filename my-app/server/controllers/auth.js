@@ -113,7 +113,7 @@ module.exports.followUnfollowUser = async (req, res) => {
     const userId = decoded.user_id; // 取得目前登入的用戶ID
 
     const user = await User.findById(userId);    
-    const followId = req.body.userId; // 要跟隨/取消跟隨的用戶的 ID
+    const followId = req.params.userId; // 要跟隨/取消跟隨的用戶的 ID
     
     if (!user) {
       return res.status(404).json({ message: 'User not found' });

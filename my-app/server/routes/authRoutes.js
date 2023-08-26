@@ -40,7 +40,7 @@ router.put('/updateprofile', upload.fields([{ name: 'profileImage' }, { name: 'b
 router.get('/profile', authControllers.getProfile);
 
 // 跟隨、取消跟隨用戶
-router.put('/{userId}/follow', authControllers.followUnfollowUser);
+router.put('/:userId/follow', authControllers.followUnfollowUser);
 
 
 module.exports = router;

@@ -34,7 +34,7 @@ const RecommendedUsers = (following) => {
 
 
   // 跟隨、取消跟隨用戶的request
-  const followUnfollowUser = async (followingId) => {
+  const followUnfollowUser = async (userId) => {
     try {
       const token = localStorage.getItem('token');
 
@@ -45,15 +45,14 @@ const RecommendedUsers = (following) => {
       };
 
       const payload = {
-        userId: followingId // 要跟隨或取消跟隨的用戶 ID
+        followingId: userId // 要跟隨或取消跟隨的用戶 ID
       };
 
-      const response = await axios.put('http://localhost:4000/${userId}/follow', payload, config);
+      const response = await axios.put(`http://localhost:4000/auth/${userId}/follow`, payload, config);
 
       if (response.status === 200) {
         console.log('Follow/Unfollow successful', response.data.following);
 
-        // 更新前端的狀態（比如更新 following 陣列）
       }
     } catch (error) {
       console.error('Error in follow/unfollow:', error);
