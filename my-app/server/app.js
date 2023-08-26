@@ -4,6 +4,7 @@ const session = require('express-session');
 const flash = require('connect-flash')
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const path = require('path');
 
 const app = express();
 
@@ -68,6 +69,8 @@ const recommendRoutes = require('./routes/recommendRoutes');
 app.use('/auth', authRoutes); 
 app.use('/tweets',tweetRoutes);
 app.use('/recommend',recommendRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 
 app.listen(4000, () => {

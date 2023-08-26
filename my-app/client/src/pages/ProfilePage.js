@@ -28,9 +28,10 @@ const ProfilePage = () => {
       
       if (response.ok) {
         const data = await response.json();
-        setProfileImageUrl(data.profileImage);
-        setBackgroundImageUrl(data.backgroundImage);
+        setProfileImageUrl(`http://localhost:4000/${data.profileImage}`);
+        setBackgroundImageUrl(`http://localhost:4000/${data.backgroundImage}`);
         setIntroduction(data.introduction);
+        console.log(introduction)
   
       } else {
         // 處理錯誤情況
