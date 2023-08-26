@@ -65,19 +65,27 @@ const RecommendedUsers = (following) => {
       <h2 className={userCardStyles.title}>推薦用戶</h2>
       <div className={`${userCardStyles['recommended-users-container']} ${userCardStyles.container}`}>
         {recommendedUsers.map(user => (
-          <Link to={`/profile/${user.username}`} key={user._id}>
-            <div className={`${userCardStyles['user-card']} ${userCardStyles.userCard}`}>
-              <img src={user.profileImage} alt={`Profile of ${user.username}`} />
-              <h3>{user.username}</h3>
-              <button onClick={()=>followUnfollowUser(user._id)}>
-                {following.followingids && following.followingids.includes(user._id) ? '已跟隨' : '跟隨'}
-              </button>
-            </div>
-          </Link>
+          <div style={{ position: 'relative' }} key={user._id}>
+            <Link to={`/profile/${user.username}`}>
+              <div className={`${userCardStyles['user-card']} ${userCardStyles.userCard}`}>
+                <img src={user.profileImage} alt={`Profile of ${user.username}`} />
+                <h3>{user.username}</h3>
+              </div>
+            </Link>
+            <button  className= {` ${userCardStyles.followBtn}`}
+              onClick={() => followUnfollowUser(user._id)}
+            >
+              {following.followingids && following.followingids.includes(user._id) ? '已跟隨' : '跟隨'}
+            </button>
+          </div>
         ))}
       </div>
     </div>
   );
+  
+  
+  
+  
 
 };
 
