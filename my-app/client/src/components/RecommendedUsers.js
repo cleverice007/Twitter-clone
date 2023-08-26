@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import userCardStyles from '../css/RecommendedUsers.module.css';
 import axios from 'axios';
+import { useUser } from './contexts/UserContext';
+
 
 const RecommendedUsers = (following) => {
   const [recommendedUsers, setRecommendedUsers] = useState([]);
@@ -9,6 +11,8 @@ const RecommendedUsers = (following) => {
   useEffect(() => {
     fetchRecommendedUsers();
   }, []);
+
+  const { username, profileImage, followers, following } = useUser();
 
   const fetchRecommendedUsers = async () => {
     try {

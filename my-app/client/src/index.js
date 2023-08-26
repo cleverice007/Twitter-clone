@@ -11,6 +11,7 @@ import EditProfilePage from './pages/EditProfilePage';
 
 const root = document.getElementById('root');
 ReactDOM.createRoot(root).render(
+  <UserProvider>
   <Router>
     <Routes>
       <Route path="/register" element={<RegisterPage />} />
@@ -20,6 +21,7 @@ ReactDOM.createRoot(root).render(
       <Route path="/profile/:username" element={<ProfilePage />} />
     </Routes>
   </Router>
+</UserProvider>
 );
 
 reportWebVitals();
