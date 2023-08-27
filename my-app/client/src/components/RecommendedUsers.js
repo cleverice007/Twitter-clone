@@ -72,11 +72,11 @@ const RecommendedUsers = () => {
           <div style={{ position: 'relative' }} key={user._id}>
             <Link to={`/profile/${user.username}`}>
               <div className={`${userCardStyles['user-card']} ${userCardStyles.userCard}`}>
-                <img src={user.profileImage} alt={`Profile of ${user.username}`} />
+                <img src={`http://localhost:4000/${user.profileImage}`} alt={`Profile of ${user.username}`} />
                 <h3>{user.username}</h3>
               </div>
             </Link>
-            <button  className= {` ${userCardStyles.followBtn}`}
+            <button className={`${userCardStyles.followBtn}`}
               onClick={() => followUnfollowUser(user._id)}
             >
               {following && following.includes(user._id) ? '已跟隨' : '跟隨'}

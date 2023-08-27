@@ -37,7 +37,7 @@ const ProfilePage = () => {
           <div className={styles.profileImageEditContainer}>
             {/* Avatar */}
             <div className={styles.profileImageContainer}>
-              <div className={styles.profileImage} style={{ backgroundImage: `url(${profileImageUrl})` }}></div>
+              <div className={styles.profileImage} style={{ profileImage: `url(${profileImageUrl})` }}></div>
             </div>
 
             {/* Edit Profile Button */}
