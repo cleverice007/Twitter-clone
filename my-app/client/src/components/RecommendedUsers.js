@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import userCardStyles from '../css/RecommendedUsers.module.css';
 import axios from 'axios';
-import { useUser } from './contexts/UserContext';
+import { useUser } from '../contexts/UserContext';
 
 
 const RecommendedUsers = (following) => {

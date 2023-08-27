@@ -10,46 +10,9 @@ import { useLocation } from 'react-router-dom';
 const ProfilePage = () => {
   const location = useLocation();
   // const { otherUsername } = useParams();
-  const [profileImageUrl, setProfileImageUrl] = useState('');
-  const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
-  const [introduction, setIntroduction] = useState('');
-  const [followers, setfollowers] = useState([]);
-  const [following, setfollowing] = useState([]);
-
+  const { profileImageUrl, backgroundImageUrl, introduction, followers, following } = useUser();
   const username = localStorage.getItem('username');
   const token = localStorage.getItem('token');
-
-
-  const fetchUserProfile = async () => {
-    try {
-      const response = await fetch(`http://localhost:4000/auth/profile`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setProfileImageUrl(`http://localhost:4000/${data.profileImage}`);
-        setBackgroundImageUrl(`http://localhost:4000/${data.backgroundImage}`);
-        setIntroduction(data.introduction);
-        setfollowers(data.followers);
-        setfollowing(data.following);
-        console.log(introduction)
-
-      } else {
-        // 處理錯誤情況
-        console.error('Error fetching profile:', await response.text());
-      }
-    } catch (error) {
-      console.error('An unexpected error occurred:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
 
 
 
