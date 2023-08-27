@@ -12,7 +12,7 @@ const RecommendedUsers = () => {
     fetchRecommendedUsers();
   }, []);
 
-  const { username, profileImage, followers, following } = useUser();
+  const { username, profileImageUrl, followers, following } = useUser();
 
   const fetchRecommendedUsers = async () => {
     try {

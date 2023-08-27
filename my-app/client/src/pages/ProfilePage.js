@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
 
 
-  
+
 
   return (
     <div className={styles.profileContainer}>
@@ -37,8 +37,9 @@ const ProfilePage = () => {
           <div className={styles.profileImageEditContainer}>
             {/* Avatar */}
             <div className={styles.profileImageContainer}>
-              <div className={styles.profileImage} style={{ profileImage: `url(${profileImageUrl})` }}></div>
+              <div className={styles.profileImage} style={{ backgroundImage: `url(${profileImageUrl})` }}></div>
             </div>
+
 
             {/* Edit Profile Button */}
             <button className={styles.editButton}>編輯個人資料</button>
@@ -67,7 +68,7 @@ const ProfilePage = () => {
 
       {/* Recommended Users */}
       <div className={styles.recommendedUsersWrapper}>
-        <RecommendedUsers  />
+        <RecommendedUsers />
       </div>
     </div>
   );
