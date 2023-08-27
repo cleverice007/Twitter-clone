@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
 
 
-const RecommendedUsers = (following) => {
+const RecommendedUsers = () => {
   const [recommendedUsers, setRecommendedUsers] = useState([]);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const RecommendedUsers = (following) => {
             <button  className= {` ${userCardStyles.followBtn}`}
               onClick={() => followUnfollowUser(user._id)}
             >
-              {following.followingids && following.followingids.includes(user._id) ? '已跟隨' : '跟隨'}
+              {following && following.includes(user._id) ? '已跟隨' : '跟隨'}
             </button>
           </div>
         ))}

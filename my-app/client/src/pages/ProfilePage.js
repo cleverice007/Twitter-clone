@@ -5,6 +5,7 @@ import TweetBox from '../components/TweetBox';
 import Tweets from '../components/Tweets';
 import RecommendedUsers from '../components/RecommendedUsers';
 import { useLocation } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
 
 
 const ProfilePage = () => {
@@ -66,7 +67,7 @@ const ProfilePage = () => {
 
       {/* Recommended Users */}
       <div className={styles.recommendedUsersWrapper}>
-        <RecommendedUsers following = {following} />
+        <RecommendedUsers  />
       </div>
     </div>
   );
