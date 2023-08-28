@@ -26,7 +26,7 @@ const RegisterForm = () => {
   
       if (response.ok) {
         const data = await response.json();
-        window.location.href = '/home';
+        window.location.href = '/editprofile';
         localStorage.removeItem('token');
         localStorage.removeItem('username');
         localStorage.setItem('token', data.token);
