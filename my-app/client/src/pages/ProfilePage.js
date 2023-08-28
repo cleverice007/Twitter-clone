@@ -21,10 +21,20 @@ const ProfilePage = () => {
     const otherUser = followingUsersInfo.find(user => user.username === otherUsername);
     
     if (otherUser) {
+      // 在這裡修改 backgroundImage 和 profileImage
+      if (otherUser.backgroundImage && !otherUser.backgroundImage.startsWith('http://localhost:4000')) {
+        otherUser.backgroundImage = `http://localhost:4000/${otherUser.backgroundImage}`;
+      }
+
+      if (otherUser.profileImage && !otherUser.profileImage.startsWith('http://localhost:4000')) {
+        otherUser.profileImage = `http://localhost:4000/${otherUser.profileImage}`;
+      }
+
       userForProfile = otherUser;
       username = otherUsername;
     }
   }
+
 
   return (
     <div className={styles.profileContainer}>
@@ -61,7 +71,6 @@ const ProfilePage = () => {
 
         {/* Tweet Section */}
         <div className={styles.tweets}>
-          <h1>Welcome {username ? username : 'to Twitter Clone'}</h1>
           {location.pathname.startsWith('/profile/') ? null : <TweetBox />}
           <Tweets tweets />
         </div>
