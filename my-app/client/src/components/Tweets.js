@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
 import { useLocation } from 'react-router-dom';
+import  { useUser }from '../contexts/UserContext';
 
 
 const Tweets = () => {
@@ -12,6 +13,7 @@ const Tweets = () => {
   const [selectedTweet, setSelectedTweet] = useState(null);
   const [commentText, setCommentText] = useState('');
   const location = useLocation();
+  const { profileImageUrl, backgroundImageUrl, introduction, followers, following, followingUsersInfo } =useUser();
 
 
 
@@ -24,8 +26,10 @@ const Tweets = () => {
     } else if (location.pathname.startsWith('/profile/')) {
       const username = location.pathname.split('/').pop();
       fetchOtherTweets(username);
+    } else if (location.pathname === '/home') {
+      fetchFollowingTweets(following);
     }
-  }, [location.pathname]);
+  }, [location.pathname, following]);
 
   const fetchTweets = async () => {
     try {
@@ -48,6 +52,45 @@ const Tweets = () => {
       console.error('Error:', error.message);
     }
   };
+
+
+  const fetchOtherTweets = async (username) => {
+    try {
+      const response = await fetch(`http://localhost:4000/tweets/${username}`);
+  
+      if (!response.ok) {
+        console.error('Server Error');
+        return;
+      }
+  
+      const data = await response.json();
+      const otherUserTweets = data.otherUserTweets.map(tweet => ({ ...tweet, isLiked: false }));
+      setTweets(otherUserTweets);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
+
+  const fetchFollowingTweets = async (following) => {
+    try {
+      const response = await fetch("http://localhost:4000/tweets/followingTweets", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ following }),
+      });
+  
+      const data = await response.json();
+      const followingTweets = data.followingTweets.map(tweet => ({ ...tweet, isLiked: false }));
+      setTweets(followingTweets);
+  
+    } catch (error) {
+      console.error("Failed to fetch following tweets:", error);
+    }
+  };
+  
   
 
   const handleCommentButtonClick = (tweetId) => {
@@ -132,22 +175,6 @@ const Tweets = () => {
     }
   };
   
-  const fetchOtherTweets = async (username) => {
-    try {
-      const response = await fetch(`http://localhost:4000/tweets/${username}`);
-  
-      if (!response.ok) {
-        console.error('Server Error');
-        return;
-      }
-  
-      const data = await response.json();
-      const otherUserTweets = data.otherUserTweets.map(tweet => ({ ...tweet, isLiked: false }));
-      setTweets(otherUserTweets);
-    } catch (error) {
-      console.error('Error:', error.message);
-    }
-  };
   
 
 

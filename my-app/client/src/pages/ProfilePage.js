@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from '../css/ProfilePage.module.css';
 import Sidebar from '../components/Sidebar';
-import TweetBox from '../components/TweetBox';
 import Tweets from '../components/Tweets';
 import RecommendedUsers from '../components/RecommendedUsers';
 import  { useUser }from '../contexts/UserContext';
@@ -71,7 +70,6 @@ const ProfilePage = () => {
 
         {/* Tweet Section */}
         <div className={styles.tweets}>
-          {location.pathname.startsWith('/profile/') ? null : <TweetBox />}
           <Tweets tweets />
         </div>
 

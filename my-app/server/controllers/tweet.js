@@ -64,6 +64,28 @@ module.exports.getOtherTweets = async (req, res) => {
   }
 };
 
+module.exports.getFollowingTweets = async (req, res) => {
+  try {
+    const { following } = req.body;
+
+    if (!following || following.length === 0) {
+      return res.status(404).json({ message: 'You are not following anyone' });
+    }
+
+    // 查詢用戶正在追蹤的所有用戶的 tweets
+    const followingTweets = await Tweet.find({ author: { $in: following } })
+      .populate('author')
+      .populate({
+        path: 'comments.userId',
+        select: 'username'
+      })
+      .sort({ createdAt: -1 });  // 按 createdAt 降序排序
+
+    res.json({ followingTweets });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 
 
