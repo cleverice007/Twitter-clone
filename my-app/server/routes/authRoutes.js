@@ -42,6 +42,9 @@ router.get('/profile', authControllers.getProfile);
 // 跟隨、取消跟隨用戶
 router.put('/:userId/follow', authControllers.followUnfollowUser);
 
+// 獲取用戶的追蹤中用戶資料
+router.get('/followingProfile', authControllers.getOtherUserInfo);
+
 
 module.exports = router;
 
