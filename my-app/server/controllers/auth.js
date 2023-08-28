@@ -149,3 +149,68 @@ module.exports.followUnfollowUser = async (req, res) => {
   }
 };
 
+// 獲取其他用戶個人資料
+module.exports.getOtherUserInfo = async (req, res) => {
+  try {
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, secretKey);
+    const userId = decoded.user_id;
+
+    // 查詢特定使用者
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // 查詢特定用戶的追蹤中的用戶
+    const followingUsers = await User.find({ _id: { $in: user.following } });
+
+    // 組合每個追蹤中用戶的資訊
+    const followingUsersInfo = await Promise.all(followingUsers.map(async followingUser => {
+      
+      // 查詢這個追蹤中的用戶的 tweets
+      const userTweets = await Tweet.find({ author: followingUser._id })
+        .populate({
+          path: 'author',
+          select: 'username'
+        })
+        .populate({
+          path: 'likes',
+          select: 'username'
+        })
+        .populate({
+          path: 'comments.userId',
+          select: 'username'
+        });
+
+      // 組合這個用戶的 tweets 的資訊
+      const userTweetsInfo = userTweets.map(tweet => ({
+        author: tweet.author.username,
+        content: tweet.content,
+        likes: tweet.likes.map(like => like.username),
+        comments: tweet.comments.map(comment => ({
+          username: comment.userId.username,
+          content: comment.content,
+          createdAt: comment.createdAt
+        }))
+      }));
+
+      return {
+        profileImage: followingUser.profileImage,
+        backgroundImage: followingUser.backgroundImage,
+        username: followingUser.username,
+        introduction: followingUser.introduction,
+        followers: followingUser.followers,
+        following: followingUser.following,
+        tweets: userTweetsInfo
+      };
+    }));
+
+    res.json({ followingUsers: followingUsersInfo });
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+

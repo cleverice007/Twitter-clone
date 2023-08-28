@@ -1,11 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-
-// 創建 context
+// Create context
 const UserContext = createContext();
 
-// 自訂的 hook，方便其他組件使用這個 context
+// Custom hook for other components to use this context
 export const useUser = () => {
   const context = useContext(UserContext);
   if (!context) {
@@ -13,7 +12,6 @@ export const useUser = () => {
   }
   return context;
 };
-
 
 const fetchFromAPI = async () => {
   try {
@@ -34,40 +32,61 @@ const fetchFromAPI = async () => {
   }
 };
 
-
 export const UserProvider = ({ children }) => {
   const [username, setUsername] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState(null);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const [followingUsersInfo, setFollowingUsersInfo] = useState([]);
 
   useEffect(() => {
-    // 這是一個獲取用戶資訊的函數
+    // This is a function to fetch user information
     const fetchUserInfo = async () => {
       const data = await fetchFromAPI(); 
       if (data) {
         setUsername(data.username); 
         setProfileImageUrl(`http://localhost:4000/${data.profileImage}`);
-        setBackgroundImageUrl(`http://localhost:4000/${data.backgroundImage}`);      
+        setBackgroundImageUrl(`http://localhost:4000/${data.backgroundImage}`);
         setFollowing(data.following);
       }
     };
 
-    fetchUserInfo();
-  }, []);
+    // This is a function to fetch user's follwing users information
 
+    const fetchFollowingUsersInfo = async () => {
+      try {
+        const token = localStorage.getItem('token');
+    
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        };
+    
+        const response = await axios.get('http://localhost:4000/auth/followingProfile', config);
+    
+        if (response.data) {
+          setFollowingUsersInfo(response.data.followingUsers);
+        }
+      } catch (error) {
+        console.error('Error fetching followed users info:', error);
+      }
+    };
+    
+
+    
+    fetchUserInfo();
+    fetchFollowingUsersInfo();
+  }, []); 
+
+  // Assuming "value" includes all the states and methods you want to provide
   const value = {
     username,
-    setUsername,
     profileImageUrl,
-    setProfileImageUrl,
-    followers,
-    setFollowers,
-    following,
-    setFollowing,
     backgroundImageUrl,
-    setBackgroundImageUrl
+    followers,
+    following,
   };
 
   return (

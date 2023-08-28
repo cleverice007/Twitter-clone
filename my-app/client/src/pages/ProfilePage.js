@@ -16,11 +16,6 @@ const ProfilePage = () => {
   const token = localStorage.getItem('token');
 
 
-
-
-
-
-
   return (
     <div className={styles.profileContainer}>
       {/* Sidebar */}
