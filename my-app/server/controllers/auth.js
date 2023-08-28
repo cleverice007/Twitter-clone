@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Tweet = require('../models/tweet');
 const jwt = require('jsonwebtoken');
 const secretKey = 'your-secret-key'; 
 
@@ -149,43 +150,63 @@ module.exports.followUnfollowUser = async (req, res) => {
   }
 };
 
-// 獲取其他用戶個人資料
 module.exports.getOtherUserInfo = async (req, res) => {
   try {
+    // Token 解析
     const token = req.header('Authorization').replace('Bearer ', '');
-    const decoded = jwt.verify(token, secretKey);
+    let decoded;
+    try {
+      decoded = jwt.verify(token, secretKey);
+    } catch (e) {
+      return res.status(401).json({ message: 'Invalid Token', error: e.toString() });
+    }
+    
     const userId = decoded.user_id;
 
-    // 查詢特定使用者
-    const user = await User.findById(userId);
+    // 查找用戶
+    let user;
+    try {
+      user = await User.findById(userId);
+    } catch (e) {
+      console.error('Error finding user:', e);
+      return res.status(500).json({ message: 'Error finding user', error: e.toString() });
+    }
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // 查詢特定用戶的追蹤中的用戶
-    const followingUsers = await User.find({ _id: { $in: user.following } });
+    // 查找用戶的追蹤
+    let followingUsers;
+    try {
+      followingUsers = await User.find({ _id: { $in: user.following } });
+    } catch (e) {
+      console.error('Error finding following users:', e);
+      return res.status(500).json({ message: 'Error finding following users', error: e.toString() });
+    }
 
-    // 組合每個追蹤中用戶的資訊
-    const followingUsersInfo = await Promise.all(followingUsers.map(async followingUser => {
-      
-      // 查詢這個追蹤中的用戶的 tweets
-      const userTweets = await Tweet.find({ author: followingUser._id })
-        .populate({
-          path: 'author',
-          select: 'username'
-        })
-        .populate({
-          path: 'likes',
-          select: 'username'
-        })
-        .populate({
-          path: 'comments.userId',
-          select: 'username'
-        });
+    const followingUsersInfo = await Promise.all(followingUsers.map(async (followingUser) => {
+      let userTweets;
+      try {
+        // 查找 tweets
+        userTweets = await Tweet.find({ author: followingUser._id })
+          .populate({
+            path: 'author',
+            select: 'username'
+          })
+          .populate({
+            path: 'likes',
+            select: 'username'
+          })
+          .populate({
+            path: 'comments.userId',
+            select: 'username'
+          });
+      } catch (e) {
+        console.error('Error finding tweets for user:', e);
+      }
 
-      // 組合這個用戶的 tweets 的資訊
-      const userTweetsInfo = userTweets.map(tweet => ({
+      const userTweetsInfo = userTweets.map((tweet) => ({
         author: tweet.author.username,
         content: tweet.content,
         likes: tweet.likes.map(like => like.username),
@@ -209,8 +230,8 @@ module.exports.getOtherUserInfo = async (req, res) => {
 
     res.json({ followingUsers: followingUsersInfo });
   } catch (error) {
-    console.error('Error fetching user info:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('General error fetching user info:', error);
+    res.status(500).json({ message: 'Server error', error: error.toString() });
   }
 };
 

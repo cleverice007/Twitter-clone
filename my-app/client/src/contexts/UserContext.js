@@ -70,7 +70,7 @@ export const UserProvider = ({ children }) => {
           setFollowingUsersInfo(response.data.followingUsers);
         }
       } catch (error) {
-        console.error('Error fetching followed users info:', error);
+        console.error('Error fetching following users info:', error);
       }
     };
     
@@ -87,6 +87,7 @@ export const UserProvider = ({ children }) => {
     backgroundImageUrl,
     followers,
     following,
+    followingUsersInfo
   };
 
   return (
