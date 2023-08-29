@@ -1,14 +1,17 @@
-import React, { useState } from 'react'; // 引入 useState
+import React, { useState, useRef } from 'react';
 import ProfileImageUpload from './ProfileImageUpload';
 import BackgroundImageUpload from './BackgroundImageUpload';
 import styles from '../css/EditProfileForm.module.css';
 
 function EditProfileForm() {
+  // 創建一個表單參考
+  const formRef = useRef(null);
 
   const defaultProfileImageURL = '/images/default_profileimage.png';
   const defaultBackgroundImageURL = '/images/default_backgroundimage.png';
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [backgroundImageFile, setBackgroundImageFile] = useState(null);
+  const [introduction, setIntroduction] = useState(null);
   const [profileImageURL, setProfileImageURL] = useState(defaultProfileImageURL);
   const [backgroundImageURL, setBackgroundImageURL] = useState(defaultBackgroundImageURL);
 
@@ -33,15 +36,16 @@ function EditProfileForm() {
 
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    const form = formRef.current;
+    if (!form) return;
 
     const token = localStorage.getItem('token');
 
     // 收集表單數據
-    const formData = new FormData();
+    const formData = new FormData(form);
     formData.append('profileImage', profileImageFile);
     formData.append('backgroundImage', backgroundImageFile);
-    formData.append('introduction', event.target.introduction.value);
+    formData.append('introduction', introduction);
 
     try {
       const response = await fetch(`http://localhost:4000/auth/updateProfile`, {
@@ -69,24 +73,38 @@ function EditProfileForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="imageContainer">
-        <BackgroundImageUpload onImageChange={handleBackgroundImageChange} backgroundImageURL={backgroundImageURL} />
-        <ProfileImageUpload onImageChange={handleProfileImageChange} profileImageURL={profileImageURL} />
+    <>
+      <nav className={styles.navbar}>
+        <div></div>
+        <div>編輯個人資料</div>
+        <input type="button" value="儲存" onClick={handleSubmit} />
+      </nav>
+
+      <div className={styles['center-form']}>
+        <form ref={formRef}>
+          <div className={styles.imageContainer}>
+            <BackgroundImageUpload onImageChange={handleBackgroundImageChange} backgroundImageURL={backgroundImageURL} />
+            <ProfileImageUpload onImageChange={handleProfileImageChange} profileImageURL={profileImageURL} />
+          </div>
+
+          <h2>Introduction</h2>
+          <textarea
+            name="introduction"
+            rows="4"
+            cols="50"
+            value={introduction} 
+            onChange={(e) => setIntroduction(e.target.value)}
+            placeholder="Introduce yourself..."
+            style={{ border: 'none' }}
+          />
+        </form>
       </div>
-  
-      <h2>Introduction</h2>
-      <textarea
-        name="introduction"
-        rows="4"
-        cols="50"
-        placeholder="Introduce yourself..."
-        style={{ border: 'none' }}
-      />
-      <input type="submit" onSubmit={handleSubmit} />
-    </form>
+    </>
   );
-  
+
+
+
+
 }
 
 

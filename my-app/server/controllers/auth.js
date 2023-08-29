@@ -52,7 +52,7 @@ module.exports.updateProfile = async (req, res) => {
     // 從請求中提取圖像和介紹
     const profileImagePath = req.files['profileImage'][0].path;
     const backgroundImagePath = req.files['backgroundImage'][0].path;
-    const introduction = req.body.introduction;
+    const introduction = req.body.introduction.introduction;
 
     // 找到並更新對應的用戶
     const user = await User.findByIdAndUpdate(

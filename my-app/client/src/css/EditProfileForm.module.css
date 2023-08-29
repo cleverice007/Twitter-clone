@@ -1,4 +1,30 @@
 .imageContainer {
     position: relative;
   }
+
+/* 移動 form 到畫面中央 */
+.center-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
+}
+
+/* Navbar 的樣式 */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #eee;
+}
+.navbar div:nth-child(2) {
+  font-weight: bold; /* 使用粗體字 */
+}
+
+.navbar input[type="button"] {
+  border: none; 
+  color: #333; 
+  background-color: transparent; /* 使用透明的背景色 */
+  font-weight: bold;
+  cursor: pointer; 
+}
