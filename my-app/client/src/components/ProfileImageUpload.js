@@ -8,26 +8,20 @@ function ProfileImageUpload(props) {
 
     return (
         <div className={styles.profileImageUpload}>
-                {profileImageURL ? (
-                    <img
-                        src={profileImageURL}
-                        alt="Profile"
-                        className={styles.profileImage}
-                    />
-                ) : null}
-            <input
-                type="file"
-                accept="image/*"
-                onChange={onImageChange}
-                className={styles.input}
-                id="profileImage"
-            />
-
-            <label htmlFor="profileImage" className={styles.uploadButton}>
-                Upload Image
-            </label>
-
-        </div>
+        {profileImageURL ? (
+          <img src={profileImageURL} alt="Profile" className={styles.profileImage} />
+        ) : null}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={onImageChange}
+          className={styles.profileInput}
+          id="profileImage"
+        />
+        <label htmlFor="profileImage" className={styles.uploadButton}>
+          Upload Image
+        </label>
+      </div>
     );
 
 }

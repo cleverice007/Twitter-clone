@@ -1,22 +1,26 @@
+
+.backgroundImageUpload {
+  position: relative;
+}
+
 .backgroundImage {
-    width: 500px; 
-    height: 300px; 
-    object-fit: cover; 
-  }
-  
-  
-  .input {
-    opacity: 0;
-    position: absolute;
-    width: 0;
-    height: 0;
+  width: 500px;
+  height: 300px;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.backgroundInput {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 300px;
+  cursor: pointer;
+  z-index: 2;
 }
 
 .uploadButton {
-  display: inline-block;
-  padding: 10px 20px;
-  cursor: pointer;
-  background: #007BFF;
-  color: white;
-  border: none;
+  display: none;
 }

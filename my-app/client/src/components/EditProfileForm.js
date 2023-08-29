@@ -1,14 +1,16 @@
 import React, { useState } from 'react'; // 引入 useState
 import ProfileImageUpload from './ProfileImageUpload';
 import BackgroundImageUpload from './BackgroundImageUpload';
+import styles from '../css/EditProfileForm.module.css';
 
 function EditProfileForm() {
 
-  const defaultProfileImageURL = 'client/public/images/default_profileimage.png';
-  const [profileImageFile, setProfileImageFile] = useState(defaultProfileImageURL);
+  const defaultProfileImageURL = '/images/default_profileimage.png';
+  const defaultBackgroundImageURL = '/images/default_backgroundimage.png';
+  const [profileImageFile, setProfileImageFile] = useState(null);
   const [backgroundImageFile, setBackgroundImageFile] = useState(null);
-  const [profileImageURL, setProfileImageURL] = useState(null);
-  const [backgroundImageURL, setBackgroundImageURL] = useState(null);
+  const [profileImageURL, setProfileImageURL] = useState(defaultProfileImageURL);
+  const [backgroundImageURL, setBackgroundImageURL] = useState(defaultBackgroundImageURL);
 
   const handleProfileImageChange = (event) => {
     const file = event.target.files[0];
@@ -19,7 +21,7 @@ function EditProfileForm() {
 
     }
   };
-  
+
   const handleBackgroundImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -28,7 +30,7 @@ function EditProfileForm() {
       setBackgroundImageURL(previewUrl);
     }
   };
-  
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -68,22 +70,23 @@ function EditProfileForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Profile Image</h2>
-      <ProfileImageUpload onImageChange={handleProfileImageChange} profileImageURL={profileImageURL} />
-
-      <h2>Background Image</h2>
-      <BackgroundImageUpload onImageChange={handleBackgroundImageChange} backgroundImageURL={backgroundImageURL} />
-
+      <div className="imageContainer">
+        <BackgroundImageUpload onImageChange={handleBackgroundImageChange} backgroundImageURL={backgroundImageURL} />
+        <ProfileImageUpload onImageChange={handleProfileImageChange} profileImageURL={profileImageURL} />
+      </div>
+  
       <h2>Introduction</h2>
       <textarea
         name="introduction"
         rows="4"
         cols="50"
         placeholder="Introduce yourself..."
+        style={{ border: 'none' }}
       />
       <input type="submit" onSubmit={handleSubmit} />
     </form>
   );
+  
 }
 
 
