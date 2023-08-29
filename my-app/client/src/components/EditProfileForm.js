@@ -3,7 +3,9 @@ import ProfileImageUpload from './ProfileImageUpload';
 import BackgroundImageUpload from './BackgroundImageUpload';
 
 function EditProfileForm() {
-  const [profileImageFile, setProfileImageFile] = useState(null);
+
+  const defaultProfileImageURL = 'client/public/images/default_profileimage.png';
+  const [profileImageFile, setProfileImageFile] = useState(defaultProfileImageURL);
   const [backgroundImageFile, setBackgroundImageFile] = useState(null);
   const [profileImageURL, setProfileImageURL] = useState(null);
   const [backgroundImageURL, setBackgroundImageURL] = useState(null);
