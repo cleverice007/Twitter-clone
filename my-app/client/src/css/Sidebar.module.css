@@ -1,4 +1,13 @@
-.sidebar {
-    width: 20%;
+
+  
+  .item {
+    cursor: pointer;
   }
   
+  .icon {
+    margin-right: 8px;
+  }
+  
+  .active {
+    color: blue; 
+  }
