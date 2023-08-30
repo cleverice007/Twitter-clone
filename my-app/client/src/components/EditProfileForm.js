@@ -16,8 +16,17 @@ function EditProfileForm() {
 
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [backgroundImageFile, setBackgroundImageFile] = useState(null);
-  const [profileImageURL, setProfileImageURL] = useState(profileImageUrl || defaultProfileImageURL);
-  const [backgroundImageURL, setBackgroundImageURL] = useState(backgroundImageUrl || defaultBackgroundImageURL);
+  const [profileImageURL, setProfileImageURL] = useState(
+    profileImageUrl.startsWith('http://localhost:4000') 
+      ? profileImageUrl 
+      : `http://localhost:4000${profileImageUrl || defaultProfileImageURL}`
+  );
+  
+  const [backgroundImageURL, setBackgroundImageURL] = useState(
+    backgroundImageUrl.startsWith('http://localhost:4000') 
+      ? backgroundImageUrl 
+      : `http://localhost:4000${backgroundImageUrl || defaultBackgroundImageURL}`
+  );
   const [introduction, setIntroduction] = useState(userIntroduction || '');
 
   const handleProfileImageChange = (event) => {

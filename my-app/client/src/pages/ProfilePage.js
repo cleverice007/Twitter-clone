@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import styles from '../css/ProfilePage.module.css';
 import Sidebar from '../components/Sidebar';
 import Tweets from '../components/Tweets';
+import TweetBox from '../components/TweetBox';
 import RecommendedUsers from '../components/RecommendedUsers';
 import  { useUser }from '../contexts/UserContext';
 
@@ -68,6 +69,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Tweet Section */}
+        { location.pathname.endsWith('/profile') && <TweetBox /> }
         <div className={styles.tweets}>
           <Tweets tweets />
         </div>

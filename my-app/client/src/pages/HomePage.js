@@ -7,8 +7,7 @@ import  { useUser }from '../contexts/UserContext';
 
 
 const HomePage = () => {
-  const location = useLocation(); // 你忘記了這一行，以獲取 location 物件
-
+  const location = useLocation(); 
   return (
     <div className={styles.homePage}>
       {/* Tweet Section */}
