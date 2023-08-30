@@ -62,6 +62,7 @@ const ProfilePage = () => {
         {/* Introduction */}
         <div className={styles.introduction}>
           <p>{userForProfile.introduction}</p>
+          {console.log(userForProfile.introduction)}
           <div className={styles.followStats}>
             <p>Followers: {followers?.length || 0}</p>
             <p>Following: {following?.length || 0}</p>

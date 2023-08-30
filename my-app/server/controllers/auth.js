@@ -49,15 +49,28 @@ module.exports.updateProfile = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
     const userId = decoded.user_id;
 
-    // 從請求中提取圖像和介紹
-    const profileImagePath = req.files['profileImage'][0].path;
-    const backgroundImagePath = req.files['backgroundImage'][0].path;
-    const introduction = req.body.introduction.introduction;
+    // Initialize update fields
+    const updateFields = {};
 
-    // 找到並更新對應的用戶
+    // Check for profileImage
+    if (req.files && req.files['profileImage'] && req.files['profileImage'][0]) {
+      updateFields.profileImage = req.files['profileImage'][0].path;
+    }
+
+    // Check for backgroundImage
+    if (req.files && req.files['backgroundImage'] && req.files['backgroundImage'][0]) {
+      updateFields.backgroundImage = req.files['backgroundImage'][0].path;
+    }
+
+    // Check for introduction
+    if (req.body.introduction) {
+      updateFields.introduction = req.body.introduction.introduction;
+    }
+
+    // Update the user
     const user = await User.findByIdAndUpdate(
       userId,
-      { profileImage: profileImagePath, backgroundImage: backgroundImagePath, introduction },
+      updateFields,
       { new: true }
     );
 
@@ -71,6 +84,7 @@ module.exports.updateProfile = async (req, res) => {
     res.status(500).json({ error: 'An unexpected error occurred' });
   }
 };
+
 
 
 // 獲取用戶個人資料

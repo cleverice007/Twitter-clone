@@ -28,3 +28,16 @@
   font-weight: bold;
   cursor: pointer; 
 }
+
+/* 使名稱和它的值在同一行 */
+.inline-text {
+  display: flex;
+  margin-top: 75px;  /* 往下移動整個區塊 */
+}
+
+/* 調整 textarea 的樣式 */
+.inline-textarea {
+  border: none;
+  margin-left: 10px; /* 在名稱和 textarea 之間添加一些間距 */
+  display: inline-block;  /* 使 textarea 在同一行 */
+}

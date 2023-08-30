@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import ProfileImageUpload from './ProfileImageUpload';
 import BackgroundImageUpload from './BackgroundImageUpload';
 import styles from '../css/EditProfileForm.module.css';
+import  { useUser }from '../contexts/UserContext';
 
 function EditProfileForm() {
   // 創建一個表單參考
@@ -9,11 +10,15 @@ function EditProfileForm() {
 
   const defaultProfileImageURL = '/images/default_profileimage.png';
   const defaultBackgroundImageURL = '/images/default_backgroundimage.png';
+  const username = localStorage.getItem('username');
+  const { profileImageUrl, backgroundImageUrl, introduction: userIntroduction, followers, following, followingUsersInfo } =useUser();
+
+
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [backgroundImageFile, setBackgroundImageFile] = useState(null);
-  const [introduction, setIntroduction] = useState(null);
-  const [profileImageURL, setProfileImageURL] = useState(defaultProfileImageURL);
-  const [backgroundImageURL, setBackgroundImageURL] = useState(defaultBackgroundImageURL);
+  const [profileImageURL, setProfileImageURL] = useState(profileImageUrl || defaultProfileImageURL);
+  const [backgroundImageURL, setBackgroundImageURL] = useState(backgroundImageUrl || defaultBackgroundImageURL);
+  const [introduction, setIntroduction] = useState(userIntroduction || '');
 
   const handleProfileImageChange = (event) => {
     const file = event.target.files[0];
@@ -35,7 +40,7 @@ function EditProfileForm() {
   };
 
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async () => {
     const form = formRef.current;
     if (!form) return;
 
@@ -79,29 +84,35 @@ function EditProfileForm() {
         <div>編輯個人資料</div>
         <input type="button" value="儲存" onClick={handleSubmit} />
       </nav>
-
+  
       <div className={styles['center-form']}>
         <form ref={formRef}>
           <div className={styles.imageContainer}>
             <BackgroundImageUpload onImageChange={handleBackgroundImageChange} backgroundImageURL={backgroundImageURL} />
             <ProfileImageUpload onImageChange={handleProfileImageChange} profileImageURL={profileImageURL} />
           </div>
-
-          <h2>Introduction</h2>
-          <textarea
-            name="introduction"
-            rows="4"
-            cols="50"
-            value={introduction} 
-            onChange={(e) => setIntroduction(e.target.value)}
-            placeholder="Introduce yourself..."
-            style={{ border: 'none' }}
-          />
+  
+          <div className={styles['inline-text']}> 
+            <span>名稱：</span>
+            <span>{username}</span>
+          </div>
+  
+          <div className={styles['inline-text']}> 
+            <span>Introduction: </span>
+            <textarea
+              className={styles['inline-textarea']} 
+              name="introduction"
+              rows="5" 
+              cols="50"
+              value={introduction}
+              onChange={(e) => setIntroduction(e.target.value)}
+              placeholder="Introduce yourself..."
+            />
+          </div>
         </form>
       </div>
     </>
   );
-
 
 
 
