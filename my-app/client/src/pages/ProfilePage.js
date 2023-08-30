@@ -54,15 +54,13 @@ const ProfilePage = () => {
               <div className={styles.profileImage} style={{ backgroundImage: `url(${userForProfile.profileImage})` }}></div>
             </div>
 
-            {/* Edit Profile Button */}
-            <button className={styles.editButton}>編輯個人資料</button>
+        
           </div>
         </div>
 
         {/* Introduction */}
         <div className={styles.introduction}>
           <p>{userForProfile.introduction}</p>
-          {console.log(userForProfile.introduction)}
           <div className={styles.followStats}>
             <p>Followers: {followers?.length || 0}</p>
             <p>Following: {following?.length || 0}</p>

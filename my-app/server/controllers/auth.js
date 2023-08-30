@@ -64,7 +64,7 @@ module.exports.updateProfile = async (req, res) => {
 
     // Check for introduction
     if (req.body.introduction) {
-      updateFields.introduction = req.body.introduction.introduction;
+      updateFields.introduction = req.body.introduction[0];
     }
 
     // Update the user

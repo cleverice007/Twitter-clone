@@ -36,6 +36,7 @@ export const UserProvider = ({ children }) => {
   const [username, setUsername] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState(null);
+  const [introduction, setIntroduction] = useState(null); 
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [followingUsersInfo, setFollowingUsersInfo] = useState([]);
@@ -49,6 +50,7 @@ export const UserProvider = ({ children }) => {
         setProfileImageUrl(`http://localhost:4000/${data.profileImage}`);
         setBackgroundImageUrl(`http://localhost:4000/${data.backgroundImage}`);
         setFollowing(data.following);
+        setIntroduction(data.introduction);
       }
     };
 
@@ -87,7 +89,8 @@ export const UserProvider = ({ children }) => {
     backgroundImageUrl,
     followers,
     following,
-    followingUsersInfo
+    followingUsersInfo,
+    introduction
   };
 
   return (
