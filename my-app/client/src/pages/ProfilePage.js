@@ -39,7 +39,9 @@ const ProfilePage = () => {
   return (
     <div className={styles.profileContainer}>
       {/* Sidebar */}
+      <div className={styles.sidebarWrapper}>
       <Sidebar />
+      </div>
 
       {/* Profile Info */}
       <div className={styles.profileInfo}>
