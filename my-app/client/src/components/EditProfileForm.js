@@ -17,16 +17,17 @@ function EditProfileForm() {
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [backgroundImageFile, setBackgroundImageFile] = useState(null);
   const [profileImageURL, setProfileImageURL] = useState(
-    profileImageUrl.startsWith('http://localhost:4000') 
+    profileImageUrl && profileImageUrl.startsWith('http://localhost:4000') 
       ? profileImageUrl 
       : `http://localhost:4000${profileImageUrl || defaultProfileImageURL}`
   );
   
   const [backgroundImageURL, setBackgroundImageURL] = useState(
-    backgroundImageUrl.startsWith('http://localhost:4000') 
+    backgroundImageUrl && backgroundImageUrl.startsWith('http://localhost:4000') 
       ? backgroundImageUrl 
       : `http://localhost:4000${backgroundImageUrl || defaultBackgroundImageURL}`
   );
+  
   const [introduction, setIntroduction] = useState(userIntroduction || '');
 
   const handleProfileImageChange = (event) => {
@@ -93,6 +94,7 @@ function EditProfileForm() {
         <div>編輯個人資料</div>
         <input type="button" value="儲存" onClick={handleSubmit} />
       </nav>
+
   
       <div className={styles['center-form']}>
         <form ref={formRef}>
