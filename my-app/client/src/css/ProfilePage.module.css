@@ -4,7 +4,7 @@
   }
   
   .sidebarWrapper {
-    flex: 0.5;
+    flex: 1;
     }
   
   .profileInfo {
@@ -44,7 +44,7 @@
   
   .profileImageContainer {
     position: absolute;
-    right: 300px;
+    right: 250px;
     top: 75px;
     width: 150px;
     height: 150px;
