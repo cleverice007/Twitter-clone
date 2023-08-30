@@ -17,15 +17,14 @@ function EditProfileForm() {
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [backgroundImageFile, setBackgroundImageFile] = useState(null);
   const [profileImageURL, setProfileImageURL] = useState(
-    profileImageUrl && profileImageUrl.startsWith('http://localhost:4000') 
-      ? profileImageUrl 
-      : `http://localhost:4000${profileImageUrl || defaultProfileImageURL}`
+    profileImageUrl 
+      ? profileImageUrl
+      : defaultProfileImageURL
   );
-  
   const [backgroundImageURL, setBackgroundImageURL] = useState(
-    backgroundImageUrl && backgroundImageUrl.startsWith('http://localhost:4000') 
-      ? backgroundImageUrl 
-      : `http://localhost:4000${backgroundImageUrl || defaultBackgroundImageURL}`
+    backgroundImageUrl 
+      ? backgroundImageUrl
+      : defaultBackgroundImageURL
   );
   
   const [introduction, setIntroduction] = useState(userIntroduction || '');
