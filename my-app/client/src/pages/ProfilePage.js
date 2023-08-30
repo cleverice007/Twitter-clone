@@ -69,7 +69,8 @@ const ProfilePage = () => {
         </div>
 
         {/* Tweet Section */}
-        { location.pathname.endsWith('/profile') && <TweetBox /> }
+                { location.pathname.endsWith('/profile') && <TweetBox /> }
+
         <div className={styles.tweets}>
           <Tweets tweets />
         </div>
