@@ -2,7 +2,6 @@
   .recommended-users-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
     width: 20%;
   }
   
@@ -10,18 +9,18 @@
     border: 1px solid #ccc;
     padding: 20px;
     width: 200px;
-    text-align: center;
+    display: flex;
   }
   
   .userCard img {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-bottom: 10px;
   }
   
   .userCard h3 {
-    margin: 0;
+    margin-left: 10px;
   }
   
   .userCard p {
@@ -38,16 +37,17 @@
     background-color: #007bff;
     border: none;
     color: white;
-    padding: 5px 10px;
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    border-radius: 5px;
+    border-radius: 20px;
     margin-top: 10px;
     position: absolute;  
     bottom: 0;  
     right: 0;  
+    cursor: pointer;
   }
   
   
