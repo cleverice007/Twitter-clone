@@ -5,21 +5,21 @@ import Sidebar from '../components/Sidebar';
 import Tweets from '../components/Tweets';
 import TweetBox from '../components/TweetBox';
 import RecommendedUsers from '../components/RecommendedUsers';
-import  { useUser }from '../contexts/UserContext';
+import { useUser } from '../contexts/UserContext';
 
 const ProfilePage = () => {
   const location = useLocation();
-  const { profileImageUrl, backgroundImageUrl, introduction, followers, following, followingUsersInfo } =useUser();
-  
+  const { profileImageUrl, backgroundImageUrl, introduction, followers, following, followingUsersInfo } = useUser();
+
   let username = localStorage.getItem('username');
   let userForProfile = { profileImage: profileImageUrl, backgroundImage: backgroundImageUrl, introduction }; // default 是 user 自己的資料
-  
+
   if (location.pathname.startsWith('/profile/')) {
     // 從URL 得到其他用戶username
     const otherUsername = location.pathname.split('/').pop();
-    
+
     const otherUser = followingUsersInfo.find(user => user.username === otherUsername);
-    
+
     if (otherUser) {
       // 在這裡修改 backgroundImage 和 profileImage
       if (otherUser.backgroundImage && !otherUser.backgroundImage.startsWith('http://localhost:4000')) {
@@ -40,7 +40,7 @@ const ProfilePage = () => {
     <div className={styles.profileContainer}>
       {/* Sidebar */}
       <div className={styles.sidebarWrapper}>
-      <Sidebar />
+        <Sidebar />
       </div>
 
       {/* Profile Info */}
@@ -57,21 +57,21 @@ const ProfilePage = () => {
               <div className={styles.profileImage} style={{ backgroundImage: `url(${userForProfile.profileImage})` }}></div>
             </div>
 
-        
+
           </div>
         </div>
 
         {/* Introduction */}
         <div className={styles.introduction}>
           <p>{userForProfile.introduction}</p>
-          <div className={styles.followStats}>
+        </div>
+        <div className={styles.followStats}>
             <p>Followers: {followers?.length || 0}</p>
             <p>Following: {following?.length || 0}</p>
-          </div>
         </div>
 
         {/* Tweet Section */}
-                { location.pathname.endsWith('/profile') && <TweetBox /> }
+        {location.pathname.endsWith('/profile') && <TweetBox />}
 
         <div className={styles.tweets}>
           <Tweets tweets />

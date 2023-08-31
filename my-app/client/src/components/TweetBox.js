@@ -46,9 +46,11 @@ const TweetBox = () => {
         onChange={(e) => setTweetInput(e.target.value)}
         className={styles.tweetInput}
       />
-      <button onClick={handlePost}>Post</button>
+      <button onClick={handlePost} className={styles.tweetButton}>Tweet</button>
     </div>
   );
+  
+  
 }
 
 export default TweetBox;

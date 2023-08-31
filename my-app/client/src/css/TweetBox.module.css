@@ -1,6 +1,34 @@
 .tweetInput {
-    width: 100%;
-    min-height: 100px;
-    margin-bottom: 10px;
-  }
-  
+  width: 100%;
+  min-height: 100px;
+  margin-bottom: 10px;
+  background-color: hsl(203, 89%, 53%);
+  /* 設置背景顏色 */
+  border: 0.5px solid white;
+}
+
+.tweetInput::placeholder {
+  color: grey;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.tweetBox {
+  position: relative;
+}
+
+.tweetButton {
+  position: absolute;
+  bottom: -40px;
+  right: 10px;
+  background-color: hsl(203, 89%, 65%);
+  /* 設置背景顏色 */
+  padding: 15px 60px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tweetButton:hover {
+  background-color: #005cbf;
+}

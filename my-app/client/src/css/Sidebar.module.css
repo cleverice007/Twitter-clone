@@ -1,34 +1,40 @@
 
-  
+.twitterLogo img {
+  width: 100px; /* 控制寬度 */
+  height: auto; /* 保持寬高比 */
+}
+
+
+/* 項目間距 */
+ul {
+  padding: 20px;
+  list-style-type: none;
+    font-size: 18px;
+
+}
+
 .item {
   cursor: pointer;
   transition: background-color 0.3s ease, border-radius 0.3s ease; /* 添加過渡效果 */
+  font-size: 24px;
+  font-weight: bold;
 }
-
 .item:hover {
-  background-color: blue; /* 藍色背景 */
+  background-color: #005cbf; /* 深藍色背景 */
   border-radius: 12px; /* 圓弧狀邊緣 */
   color: white; /* 文字變為白色 */
 }
 
-.icon {
-  margin-right: 8px;
-  font-size: 24px; /* 放大圖標 */
-}
-.iconBlack {
-  color: white;
-  background-color: black;
-  border-radius: 50%;  /* 如果你想要讓它呈現為圓形 */
-  padding: 5px;        /* 為了讓背景顏色有一個好看的邊界 */
-  font-size: 1.5em;    /* 字體大小 */
-}
-
-
 .active {
-  color: blue; 
+  background-color: #005cbf;
+  color: white;
+  border-radius: 12px;
+}
+.icon {
+  margin-right: 16px;
+  font-size: 30px; 
 }
 
-/* 放大整個列表項目的字體 */
-.item {
-  font-size: 18px;
-}
+
+
+

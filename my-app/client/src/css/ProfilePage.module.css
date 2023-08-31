@@ -1,11 +1,17 @@
 .profileContainer {
     display: flex;
     flex-direction: row;
-  }
+    background-color: hsl(203, 89%, 53%);
+      color: white; /* 將文字設為白色 */
+    }
+    
   
   .sidebarWrapper {
     flex: 1;
+      display: flex;
+      justify-content: center;
     }
+    
   
   .profileInfo {
     flex: 3;
@@ -31,7 +37,6 @@
     bottom: 0;
     background-size: cover;
     background-position: center;
-    opacity: 0.5;
   }
   
   .profileImageEditContainer {
@@ -45,7 +50,7 @@
   .profileImageContainer {
     position: absolute;
     right: 250px;
-    top: 75px;
+    top: 25px;
     width: 150px;
     height: 150px;
     overflow: hidden;
@@ -61,12 +66,20 @@
     background-size: cover;
     background-position: center;
   }
-  
-  
   .introduction {
-    text-align: center;
-    margin: 0 auto;
+    display: flex;
     padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 200px;
+  }
+  .followStats{
+    display: flex;
+    margin-left:200px;
+  }
+
+  .followStats p{
+    margin-left: 10px;
   }
   
   .tweets {

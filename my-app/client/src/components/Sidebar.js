@@ -11,18 +11,21 @@ const Sidebar = () => {
   const isCurrentPage = (pageName) => currentPage === pageName ? styles.active : '';
 
   return (
-    <div>
+    <div className='sidebar'>
+      <div className={styles.twitterLogo}>
+        <img src="/images/twitter-logo.png" alt="Twitter" /> 
+      </div>
       <ul>
         <li className={`${isCurrentPage('home')} ${styles.item}`} onClick={() => navigate('/home')}>
-          <span className={`${styles.icon} ${styles.iconBlack}`}>🏠</span>首頁
+          <span className={`${styles.icon} `}>🏠</span>首頁
         </li>
         <li className={`${isCurrentPage('editprofile')} ${styles.item}`} onClick={() => navigate('/editprofile')}>
-          <span className={`${styles.icon} ${styles.iconBlack}`}>👤</span>個人資料
-
+          <span className={`${styles.icon} `}>👤</span>個人資料
         </li>
       </ul>
     </div>
   );
+  
 };
 
 export default Sidebar;
