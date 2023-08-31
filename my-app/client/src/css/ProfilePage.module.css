@@ -45,6 +45,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 100px; /* 調整上方間距 */
+    min-height: 125px;
   }
   
   .profileImageContainer {
@@ -81,10 +82,14 @@
   .followStats p{
     margin-left: 10px;
   }
+  .tweetBox{
+    min-height: 100px;
+    }
   
   .tweets {
     flex: 1; /* Expand to fill available space */
     padding: 10px;
+    flex-grow: 1;
   }
   
   .recommendedUsersWrapper {
