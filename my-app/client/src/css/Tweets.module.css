@@ -1,7 +1,13 @@
 .tweets {
-    width: 60%;
-    padding: 10px;
+    width: 100%;
   }
+
+.tweets li {
+  border: 1px solid white;
+  padding: 10px 20px; 
+  box-sizing: border-box;  
+}
+
   
 .iconContainer {
   display: flex;

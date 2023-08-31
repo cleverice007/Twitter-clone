@@ -25,7 +25,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
   }
   
@@ -88,9 +87,10 @@
   
   .tweets {
     flex: 1; /* Expand to fill available space */
-    padding: 10px;
     flex-grow: 1;
+    margin-right: 100px;
   }
+
   
   .recommendedUsersWrapper {
     flex: 1;
