@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import styles from '../css/TweetBox.module.css';
+import { useUser } from '../contexts/UserContext';
+
 
 const TweetBox = () => { 
   const [tweetInput, setTweetInput] = useState("");
+  const { profileImageUrl, backgroundImageUrl, introduction, followers, following, followingUsersInfo } = useUser();
+
 
   const handlePost = async () => {
     if (!tweetInput.trim()) {
@@ -40,6 +44,11 @@ const TweetBox = () => {
 
   return (
     <div className={styles.tweetBox}>
+      <img 
+        src={profileImageUrl} 
+        alt="Profile" 
+        className={styles.profileImage}
+      />
       <textarea 
         placeholder="What's happening?"
         value={tweetInput}

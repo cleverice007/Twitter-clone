@@ -9,8 +9,12 @@
 ul {
   padding: 20px;
   list-style-type: none;
-    font-size: 18px;
+  font-size: 18px;
 
+}
+
+li{
+  margin-top: 20px;
 }
 
 .item {

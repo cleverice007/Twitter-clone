@@ -4,7 +4,7 @@
     flex-wrap: wrap;
     width: 20%;
   }
-  
+
   .userCard {
     border: 1px solid #ccc;
     padding: 20px;
@@ -21,6 +21,7 @@
   
   .userCard h3 {
     margin-left: 10px;
+    font-size: 16px;
   }
   
   .userCard p {
@@ -44,10 +45,11 @@
     font-size: 12px;
     border-radius: 20px;
     margin-top: 10px;
-    position: absolute;  
-    bottom: 0;  
+    cursor: pointer;  position: absolute;  
+    bottom: 40px;  
     right: 0;  
-    cursor: pointer;
   }
   
-  
+  .followBtn:hover {
+    background-color: #0056b3;  /* 更深的蓝色背景 */
+  }

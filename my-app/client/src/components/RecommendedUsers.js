@@ -66,7 +66,7 @@ const RecommendedUsers = () => {
 
   return (
     <div>
-      <h2 className={userCardStyles.title}>推薦用戶</h2>
+      <h3 className={userCardStyles.title}>推薦用戶</h3>
       <div className={`${userCardStyles['recommended-users-container']} ${userCardStyles.container}`}>
         {recommendedUsers.map(user => (
           <div style={{ position: 'relative' }} key={user._id}>

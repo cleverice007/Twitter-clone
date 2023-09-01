@@ -3,14 +3,13 @@
   min-height: 100px;
   margin-bottom: 10px;
   background-color: hsl(203, 89%, 53%);
-  /* 設置背景顏色 */
+  padding-left: 75px; 
   border: 0.5px solid white;
 }
 
 .tweetInput::placeholder {
   color: grey;
-  font-weight: bold;
-  font-size: 24px;
+  font-size: 16px;
 }
 
 .tweetBox {
@@ -27,8 +26,19 @@
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border: none;
+  color: white;
 }
 
 .tweetButton:hover {
   background-color: #005cbf;
+}
+
+.profileImage {
+  position: absolute; 
+  top: 5px;  
+  left: 5px; 
+  border-radius: 50%;  
+  width: 50px; 
+  height: 50px; 
 }

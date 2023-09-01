@@ -37,6 +37,7 @@ const ProfilePage = () => {
 
 
   return (
+    <div class="bg-blue-900">
     <div className={styles.profileContainer}>
       {/* Sidebar */}
       <div className={styles.sidebarWrapper}>
@@ -47,6 +48,7 @@ const ProfilePage = () => {
       <div className={styles.profileInfo}>
         {/* Profile Info Upper */}
         <div className={styles.profileInfoUpper}>
+          
           {/* Background Image */}
           <div className={styles.backgroundImage} style={{ backgroundImage: `url(${userForProfile.backgroundImage})` }}></div>
 
@@ -83,6 +85,7 @@ const ProfilePage = () => {
       <div className={styles.recommendedUsersWrapper}>
         <RecommendedUsers />
       </div>
+    </div>
     </div>
   );
 };
