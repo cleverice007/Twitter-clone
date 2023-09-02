@@ -176,14 +176,15 @@ const Tweets = () => {
   };
   
   
-
-
   return (
     <div className={styles.tweets}>
       <h2>貼文</h2>
       <ul>
         {tweets.map((tweet) => (
           <li key={tweet._id}>
+            <div className={styles.profileImageContainer}>
+              <img src={`http://localhost:4000/${tweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
+            </div>
             <p>{tweet.content}</p>
             <p>作者：{tweet.author.username}</p>
             <p>
@@ -210,42 +211,11 @@ const Tweets = () => {
             </div>
           </li>
         ))}
-      </ul>  
-      {/* Comment Modal */}
-      <Modal
-        isOpen={showCommentModal}
-        onRequestClose={handleCloseModal}
-        contentLabel="Comment Modal"
-      >
-        <h3>內容</h3>
-        <p>{selectedTweet?.content}</p>
-        <h3>評論</h3>
-        <div>
-          {selectedTweet && selectedTweet.comments.map((comment, index) => (
-            <div key={index}>
-              <p>{comment.content}</p>
-              <p>評論者：{comment.userId.username}</p>
-              <p>評論時間：{new Date(comment.createdAt).toLocaleString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric'
-              })}</p>
-            </div>
-          ))}
-        </div>
-        <textarea
-          value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
-        />
-        <button onClick={() =>handleCommentSubmit(selectedTweet._id)}>提交評論</button>
-        <button onClick={handleCloseModal}>關閉</button>
-      </Modal>
-
-
+      </ul>
     </div>
   );
+  
+  
 
 }
 

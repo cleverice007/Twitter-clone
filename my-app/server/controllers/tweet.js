@@ -5,53 +5,38 @@ const secretKey = 'your-secret-key';
 
 module.exports.getTweets = async (req, res) => {
   try {
-      const token = req.header('Authorization').replace('Bearer ', '');
-      const decoded = jwt.verify(token, secretKey);
-      const userId = decoded.user_id; // 取得目前登入的用戶ID
-      
-      // 查詢用戶自己的貼文
-      const userTweets = await Tweet.find({ author: userId })
-          .populate('author')
-          .populate({
-              path: 'comments.userId',
-              select: 'username'
-          })
-          .sort({ createdAt: -1 });
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, secretKey);
+    const userId = decoded.user_id;
 
-      // 獲得用戶的跟隨者ID列表
-      const user = await User.findById(userId);
-      const followersIds = user.followers;
-
-      // 查詢跟隨者的貼文
-      const followersTweets = await Tweet.find({
-          author: { $in: followersIds }
-      }).populate('author')
+    const userTweets = await Tweet.find({ author: userId })
+      .populate({ path: 'author', select: 'username profileImage' }) 
       .populate({
-          path: 'comments.userId',
-          select: 'username'
+        path: 'comments.userId',
+        select: 'username'
       })
       .sort({ createdAt: -1 });
 
-      res.json({ userTweets, followersTweets });
+
+    res.json({ userTweets});
   } catch (error) {
-      res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 module.exports.getOtherTweets = async (req, res) => {
   try {
     const { username } = req.params;
 
-    // 查詢特定使用者
     const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // 查詢特定用戶的貼文
     const otherUserTweets = await Tweet.find({ author: user._id })
-      .populate('author')
+      .populate({ path: 'author', select: 'username profileImage' })  
       .populate({
         path: 'comments.userId',
         select: 'username'
@@ -63,6 +48,7 @@ module.exports.getOtherTweets = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 module.exports.getFollowingTweets = async (req, res) => {
   try {
