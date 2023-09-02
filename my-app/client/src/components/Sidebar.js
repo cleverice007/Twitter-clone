@@ -15,13 +15,13 @@ const Sidebar = () => {
       <div className={styles.twitterLogo}>
         <img src="/images/twitter-logo.png" alt="Twitter" /> 
       </div>
-      <ul>
-        <li className={`${isCurrentPage('home')} ${styles.item}`} onClick={() => navigate('/home')}>
+      <ul className='styles.item-list'>
+        <ul className={`${isCurrentPage('home')} ${styles.item}`} onClick={() => navigate('/home')}>
           <span className={`${styles.icon} `}>🏠</span>首頁
-        </li>
-        <li className={`${isCurrentPage('editprofile')} ${styles.item}`} onClick={() => navigate('/editprofile')}>
+        </ul>
+        <ul className={`${isCurrentPage('editprofile')} ${styles.item}`} onClick={() => navigate('/editprofile')}>
           <span className={`${styles.icon} `}>👤</span>個人資料
-        </li>
+        </ul>
       </ul>
     </div>
   );

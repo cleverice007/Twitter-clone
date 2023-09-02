@@ -182,21 +182,25 @@ const Tweets = () => {
       <ul>
         {tweets.map((tweet) => (
           <li key={tweet._id}>
+            <div className={styles.tweetContainer}>
             <div className={styles.profileImageContainer}>
               <img src={`http://localhost:4000/${tweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
             </div>
-            <p>{tweet.content}</p>
-            <p>作者：{tweet.author.username}</p>
-            <p>
-              {new Date(tweet.createdAt).toLocaleString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric'
-              })}
-            </p>
-            <div className={styles.iconContainer}>
+            <div className={styles.tweetContent}>
+              <div className={styles.tweetHeader}>
+                <p>{tweet.author.username}</p>
+                <p>
+                  {new Date(tweet.createdAt).toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric'
+                  })}
+                </p>
+              </div>
+              <p>{tweet.content}</p>
+              <div className={styles.iconContainer}>
               <button
                 className={`${styles.iconButton} ${tweet.isLiked ? styles.liked : ''}`}
                 onClick={() => handleLike(tweet._id)}
@@ -209,6 +213,9 @@ const Tweets = () => {
                 {tweet.comments.length}
               </button>
             </div>
+            </div>
+          </div>
+            
           </li>
         ))}
       </ul>
