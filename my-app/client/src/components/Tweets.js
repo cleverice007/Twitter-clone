@@ -13,7 +13,7 @@ const Tweets = () => {
   const [selectedTweet, setSelectedTweet] = useState(null);
   const [commentText, setCommentText] = useState('');
   const location = useLocation();
-  const { profileImageUrl, backgroundImageUrl, introduction, followers, following, followingUsersInfo } = useUser();
+  const { profileImageUrl, backgroundImageUrl, introduction, followers, following, followingUsersInfo,username } = useUser();
 
 
 
@@ -69,7 +69,7 @@ const Tweets = () => {
       const data = await response.json();
       const otherUserTweets = data.otherUserTweets.map(tweet => ({
         ...tweet,
-        isLiked: tweet.likes.some(like => like.username === tweet.username) // 判斷是否已經按過贊
+        isLiked: tweet.likes.some(like => like.username === username) // 判斷是否已經按過贊
       }));
       setTweets(otherUserTweets);
     } catch (error) {

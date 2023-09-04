@@ -39,7 +39,7 @@ module.exports.getOtherTweets = async (req, res) => {
       .populate({ path: 'likes', select: 'username' })
       .populate({
         path: 'comments.userId',
-        select: 'username'
+        select: 'username profileImage'
       })
       .sort({ createdAt: -1 });
     res.json({ otherUserTweets });
@@ -63,7 +63,7 @@ module.exports.getFollowingTweets = async (req, res) => {
       .populate({ path: 'likes', select: 'username' })
       .populate({
         path: 'comments.userId',
-        select: 'username'
+        select: 'username profileImage'
       })
       .sort({ createdAt: -1 });  // 按 createdAt 降序排序
     res.json({ followingTweets });
