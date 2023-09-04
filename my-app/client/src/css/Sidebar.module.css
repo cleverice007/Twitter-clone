@@ -1,8 +1,13 @@
+.twitterLogo{
+  display: flex;
+  justify-content: center;
+}
 
 .twitterLogo img {
   width: 100px; /* 控制寬度 */
   height: auto; /* 保持寬高比 */
 }
+
 
 
 /* 項目間距 */
@@ -34,7 +39,6 @@
   border-radius: 12px;
 }
 .icon {
-  margin-right: 16px;
   font-size: 30px; 
 }
 

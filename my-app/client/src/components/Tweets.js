@@ -220,58 +220,82 @@ const Tweets = () => {
         ))}
         {/* Comment Modal */}
         <Modal
+          className={styles.modal}
           isOpen={showCommentModal}
           onRequestClose={handleCloseModal}
           contentLabel="Comment Modal"
         >
-          <h3>內容</h3>
-          {selectedTweet ? (
-            <div className={styles.tweetContainer}>
-              <div className={styles.profileImageContainer}>
-                <img src={`http://localhost:4000/${selectedTweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
+          <div className={styles.modalContent}>
+            {selectedTweet ? (
+              <div className={styles.tweetContainer}>
+                <div className={styles.profileImageContainer}>
+                  <img src={`http://localhost:4000/${selectedTweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
+                </div>
+                <div className={styles.tweetContent}>
+                  <div className={styles.tweetHeader}>
+                    <p>{selectedTweet.author.username}</p>
+                    <p>
+                      {new Date(selectedTweet.createdAt).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric'
+                      })}
+                    </p>
+                  </div>
+                  <p>{selectedTweet.content}</p>
+                </div>
               </div>
-              <div className={styles.tweetContent}>
-                <div className={styles.tweetHeader}>
-                  <p>{selectedTweet.author.username}</p>
-                  <p>
-                    {new Date(selectedTweet.createdAt).toLocaleString('en-US', {
+            ) : (
+              <div>Loading or tweet not found...</div>
+            )}
+
+            {/* Comment Textarea */}
+
+            <div className={styles.tweetBox}>
+              <img
+                src={profileImageUrl}
+                alt="Profile"
+                className={styles.profileImage}
+              />
+              <textarea
+                placeholder="Leave your comment"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                className={styles.tweetInput}
+              />
+              <button onClick={() => handleCommentSubmit(selectedTweet._id)}>提交評論</button>
+              <button onClick={handleCloseModal}>關閉</button>
+            </div>
+
+            {/* Comment Display*/}
+
+            <h3>評論</h3>
+            <div>
+              {selectedTweet && selectedTweet.comments.map((comment, index) => (
+                <div key={index} className={styles.commentContainer}>
+                  <img
+                    src={`http://localhost:4000/${comment.userId.profileImage}`}
+                    alt="commenter profile"
+                    className={styles.commentProfileImage}
+                  />
+                  <div className={styles.commentContent}>
+                    <p>{comment.content}</p>
+                    <p>評論者：{comment.userId.username}</p>
+                    <p>評論時間：{new Date(comment.createdAt).toLocaleString('en-US', {
                       year: 'numeric',
                       month: 'short',
                       day: 'numeric',
                       hour: 'numeric',
                       minute: 'numeric'
-                    })}
-                  </p>
+                    })}</p>
+                  </div>
                 </div>
-                <p>{selectedTweet.content}</p>
-              </div>
+              ))}
             </div>
-          ) : (
-            <div>Loading or tweet not found...</div>
-          )}
 
-          <h3>評論</h3>
-          <div>
-            {selectedTweet && selectedTweet.comments.map((comment, index) => (
-              <div key={index}>
-                <p>{comment.content}</p>
-                <p>評論者：{comment.userId.username}</p>
-                <p>評論時間：{new Date(comment.createdAt).toLocaleString('en-US', {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric'
-                })}</p>
-              </div>
-            ))}
           </div>
-          <textarea
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
-          />
-          <button onClick={() => handleCommentSubmit(selectedTweet._id)}>提交評論</button>
-          <button onClick={handleCloseModal}>關閉</button>
         </Modal>
 
       </ul>

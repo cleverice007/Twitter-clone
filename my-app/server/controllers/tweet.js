@@ -13,7 +13,7 @@ module.exports.getTweets = async (req, res) => {
       .populate({ path: 'author', select: 'username profileImage' }) 
       .populate({
         path: 'comments.userId',
-        select: 'username'
+        select: 'username profileImage'
       })
       .sort({ createdAt: -1 });
 

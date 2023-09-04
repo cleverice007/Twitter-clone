@@ -68,3 +68,33 @@
 
 
 
+/* modal 裝飾 */
+
+
+.modalContent .tweetContainer {
+  border: 0.5px solid hsl(203, 89%, 53%);
+}
+
+.tweetInput {
+  width: 90%;
+  min-height: 100px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 75px; 
+  border: 0.5px solid hsl(203, 89%, 53%);
+}
+
+.tweetInput::placeholder {
+  color: grey;
+  font-size: 16px;
+}
+
+.tweetBox{
+  position: relative;
+}
+
+.tweetBox .profileImage{
+  position:absolute;
+  top: 10px;
+  left: 0;
+}
