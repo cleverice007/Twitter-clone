@@ -67,7 +67,11 @@ const Tweets = () => {
       }
 
       const data = await response.json();
-      setTweets(data.otherUserTweets);
+      const otherUserTweets = data.otherUserTweets.map(tweet => ({
+        ...tweet,
+        isLiked: tweet.likes.some(like => like.username === tweet.username) // 判斷是否已經按過贊
+      }));
+      setTweets(otherUserTweets);
     } catch (error) {
       console.error('Error:', error.message);
     }
@@ -85,7 +89,11 @@ const Tweets = () => {
       });
 
       const data = await response.json();
-      setTweets(data.followingTweets);
+      const followingTweets = data.followingTweets.map(tweet => ({
+        ...tweet,
+        isLiked: tweet.likes.some(like => like.username === tweet.username) // 判斷是否已經按過贊
+      }));
+      setTweets(followingTweets);
 
     } catch (error) {
       console.error("Failed to fetch following tweets:", error);

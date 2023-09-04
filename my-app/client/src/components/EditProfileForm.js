@@ -101,24 +101,24 @@ function EditProfileForm() {
             <BackgroundImageUpload onImageChange={handleBackgroundImageChange} backgroundImageURL={backgroundImageURL} />
             <ProfileImageUpload onImageChange={handleProfileImageChange} profileImageURL={profileImageURL} />
           </div>
-  
           <div className={styles['inline-text']}> 
-            <span>名稱：</span>
-            <span>{username}</span>
+            <span >名稱：</span>
+            <span className={styles['rounded-span']}>{username || ' '}</span>
           </div>
-  
           <div className={styles['inline-text']}> 
             <span>Introduction: </span>
-            <textarea
-              className={styles['inline-textarea']} 
-              name="introduction"
-              rows="5" 
-              cols="50"
-              value={introduction}
-              onChange={(e) => setIntroduction(e.target.value)}
-              placeholder="Introduce yourself..."
-            />
           </div>
+          <div className={styles.textAreaContainer}>
+          <textarea
+            className={`${styles['rounded-textarea']} ${!introduction && styles.placeholder}`}
+            name="introduction"
+            rows="5" 
+            cols="50"
+            value={introduction}
+            onChange={(e) => setIntroduction(e.target.value)}
+            placeholder="Introduce yourself..."
+          />
+        </div>
         </form>
       </div>
     </>

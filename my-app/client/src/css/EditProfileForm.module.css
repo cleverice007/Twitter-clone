@@ -29,15 +29,44 @@
   cursor: pointer; 
 }
 
-/* 使名稱和它的值在同一行 */
 .inline-text {
   display: flex;
-  margin-top: 75px;  /* 往下移動整個區塊 */
+  margin-top: 75px;  
 }
 
 /* 調整 textarea 的樣式 */
 .inline-textarea {
   border: none;
-  margin-left: 10px; /* 在名稱和 textarea 之間添加一些間距 */
-  display: inline-block;  /* 使 textarea 在同一行 */
+  margin-left: 10px; 
+  display: inline-block;  
+}
+
+.textInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px; 
+}
+.rounded-span {
+  border-radius: 12px;
+  background-color: #eee;
+  padding: 10px;
+  min-width: 200px; 
+  display: inline-block; 
+}
+
+.inline-text {
+  display: flex;
+  flex-direction: column;  
+}
+
+.rounded-textarea {
+  border-radius: 15px; 
+  background-color: #eee;
+  padding: 10px;  
+}
+
+.placeholder {
+  background-color: #eee;
+  border: 1px solid #ccc;
 }
