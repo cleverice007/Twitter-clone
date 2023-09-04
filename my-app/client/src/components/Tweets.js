@@ -46,8 +46,11 @@ const Tweets = () => {
       }
 
       const data = await response.json();
-      const initialTweets = data.userTweets.map(tweet => ({ ...tweet, isLiked: false })); // 初始時每則貼文都設定為未按讚
-      setTweets(initialTweets);
+      const initialTweets = data.userTweets.map(tweet => ({
+        ...tweet,
+        isLiked: tweet.likes.some(like => like.username === tweet.username) // 判斷是否已經按過贊
+      }));
+      setTweets(initialTweets);      
     } catch (error) {
       console.error('Error:', error.message);
     }
@@ -64,8 +67,7 @@ const Tweets = () => {
       }
 
       const data = await response.json();
-      const otherUserTweets = data.otherUserTweets.map(tweet => ({ ...tweet, isLiked: false }));
-      setTweets(otherUserTweets);
+      setTweets(data.otherUserTweets);
     } catch (error) {
       console.error('Error:', error.message);
     }
@@ -83,8 +85,7 @@ const Tweets = () => {
       });
 
       const data = await response.json();
-      const followingTweets = data.followingTweets.map(tweet => ({ ...tweet, isLiked: false }));
-      setTweets(followingTweets);
+      setTweets(data.followingTweets);
 
     } catch (error) {
       console.error("Failed to fetch following tweets:", error);
@@ -265,8 +266,9 @@ const Tweets = () => {
                 onChange={(e) => setCommentText(e.target.value)}
                 className={styles.tweetInput}
               />
-              <button onClick={() => handleCommentSubmit(selectedTweet._id)}>提交評論</button>
-              <button onClick={handleCloseModal}>關閉</button>
+              <button className={styles.commentButton} onClick={() => handleCommentSubmit(selectedTweet._id)}>提交評論</button>
+              <button className={styles.commentButton} onClick={handleCloseModal}>關閉</button>
+
             </div>
 
             {/* Comment Display*/}
@@ -281,19 +283,22 @@ const Tweets = () => {
                     className={styles.commentProfileImage}
                   />
                   <div className={styles.commentContent}>
+                    <div className={styles.commentHeader}>
+                      <p>{comment.userId.username}</p>
+                      <p>{new Date(comment.createdAt).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric'
+                      })}</p>
+                    </div>
                     <p>{comment.content}</p>
-                    <p>評論者：{comment.userId.username}</p>
-                    <p>評論時間：{new Date(comment.createdAt).toLocaleString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: 'numeric'
-                    })}</p>
                   </div>
                 </div>
               ))}
             </div>
+
 
           </div>
         </Modal>

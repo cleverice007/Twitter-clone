@@ -70,13 +70,16 @@
 
 /* modal 裝飾 */
 
+.modalContent{
+  overflow-y: auto; /* 增加垂直捲軸 */
+}
 
 .modalContent .tweetContainer {
   border: 0.5px solid hsl(203, 89%, 53%);
 }
 
 .tweetInput {
-  width: 90%;
+  width: 100%;
   min-height: 100px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -97,4 +100,43 @@
   position:absolute;
   top: 10px;
   left: 0;
+}
+
+.commentHeader {
+  display: flex;            
+  justify-content: flex-start; 
+}
+
+.commentHeader p:nth-child(2) {
+  margin-left: 20px;
+}
+.commentContainer{
+  display: flex;
+  align-items: flex-start; 
+  position: relative;
+  padding-left: 60px; 
+  border: 0.5px solid hsl(203, 89%, 53%);
+}
+
+.commentProfileImage{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; 
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.commentButton {
+  border-radius: 25px;  
+  background-color: hsl(203, 89%, 65%);  
+  color: white;  
+  padding: 15px 60px;  
+  border: none;          
+  transition: background-color 0.3s ease; 
+  margin-left: 15px;
+}
+
+.commentButton:hover {
+  background-color: #0056b3;  /* 懸停時的背景顏色 */
 }
