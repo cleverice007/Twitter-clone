@@ -57,9 +57,9 @@ const Tweets = () => {
   };
 
 
-  const fetchOtherTweets = async (username) => {
+  const fetchOtherTweets = async (otherUsername) => {
     try {
-      const response = await fetch(`http://localhost:4000/tweets/${username}`);
+      const response = await fetch(`http://localhost:4000/tweets/${otherUsername}`);
 
       if (!response.ok) {
         console.error('Server Error');

@@ -26,9 +26,9 @@ module.exports.getTweets = async (req, res) => {
 
 module.exports.getOtherTweets = async (req, res) => {
   try {
-    const { username } = req.params;
+    const { otherUsername } = req.params;
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username: otherUsername });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
