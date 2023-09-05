@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
@@ -21,7 +22,7 @@ const Tweet = require('./models/tweet');
 
 // session config
 const sessionConfig = {
-  secret: 'secret-key',
+  secret: process.env.SESSION_SECRET || 'secret-key',
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -46,7 +47,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // 連接到 MongoDB
-mongoose.connect('mongodb://localhost/twitterclone', {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/twitterclone', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -73,7 +74,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 
-app.listen(4000, () => {
-  console.log('伺服器運行在 http://localhost:4000');
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
 
