@@ -22,6 +22,9 @@ const Sidebar = () => {
         <ul className={`${isCurrentPage('editprofile')} ${styles.item}`} onClick={() => navigate('/editprofile')}>
           <span className={`${styles.icon} `}>👤</span>個人資料
         </ul>
+        <ul className={`${isCurrentPage('profile')} ${styles.item}`} onClick={() => navigate('/profile')}>
+          <span className={`${styles.icon} `}>👥</span>個人主頁
+        </ul>
       </ul>
     </div>
   );

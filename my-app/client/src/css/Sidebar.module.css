@@ -26,6 +26,8 @@
   font-size: 24px;
   font-weight: bold;
   margin-top: 20px;
+  padding-left: 10px; 
+
 }
 .item:hover {
   background-color: #005cbf; /* 深藍色背景 */

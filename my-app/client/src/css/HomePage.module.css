@@ -1,0 +1,26 @@
+.homePage {
+    display: flex;
+    flex-direction: row;
+    background-color: hsl(203, 89%, 53%);
+    color: white; /* 將文字設為白色 */
+    margin-top: 10px;
+    }
+
+.tweetWrapper{
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+}
+
+.sidebarWrapper {
+    flex: 1;
+      display: flex;
+      justify-content: flex-start;
+
+    }
+
+
+ .recommendedUsersWrapper {
+        flex: 1;
+      }
+      
