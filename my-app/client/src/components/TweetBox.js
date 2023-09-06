@@ -6,6 +6,7 @@ import { useUser } from '../contexts/UserContext';
 const TweetBox = () => { 
   const [tweetInput, setTweetInput] = useState("");
   const { profileImageUrl, backgroundImageUrl, introduction, followers, following, followingUsersInfo } = useUser();
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';
 
 
   const handlePost = async () => {
@@ -16,7 +17,7 @@ const TweetBox = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:4000/tweets/createTweet', {
+      const response = await fetch(`${API_BASE_URL}/tweets/createTweet`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

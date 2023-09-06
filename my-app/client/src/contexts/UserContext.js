@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // Create context
 const UserContext = createContext();
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';
 
 // Custom hook for other components to use this context
 export const useUser = () => {
@@ -23,7 +24,7 @@ const fetchFromAPI = async () => {
       }
     };
 
-    const response = await axios.get('http://localhost:4000/auth/profile', config);
+    const response = await axios.get(`${API_BASE_URL}/auth/profile`, config);
 
     return response.data;
   } catch (error) {
@@ -47,8 +48,8 @@ export const UserProvider = ({ children }) => {
       const data = await fetchFromAPI(); 
       if (data) {
         setUsername(data.username); 
-        setProfileImageUrl(`http://localhost:4000/${data.profileImage}`);
-        setBackgroundImageUrl(`http://localhost:4000/${data.backgroundImage}`);
+        setProfileImageUrl(`${API_BASE_URL}/${data.profileImage}`);
+        setBackgroundImageUrl(`${API_BASE_URL}/${data.backgroundImage}`);
         setFollowing(data.following);
         setIntroduction(data.introduction);
       }
@@ -66,7 +67,7 @@ export const UserProvider = ({ children }) => {
           }
         };
     
-        const response = await axios.get('http://localhost:4000/auth/followingProfile', config);
+        const response = await axios.get(`${API_BASE_URL}/auth/followingProfile`, config);
     
         if (response.data) {
           setFollowingUsersInfo(response.data.followingUsers);

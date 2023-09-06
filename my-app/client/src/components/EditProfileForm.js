@@ -7,6 +7,8 @@ import  { useUser }from '../contexts/UserContext';
 function EditProfileForm() {
   // 創建一個表單參考
   const formRef = useRef(null);
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';
+
 
   const defaultProfileImageURL = '/images/default_profileimage.png';
   const defaultBackgroundImageURL = '/images/default_backgroundimage.png';
@@ -62,7 +64,7 @@ function EditProfileForm() {
     formData.append('introduction', introduction);
 
     try {
-      const response = await fetch(`http://localhost:4000/auth/updateProfile`, {
+      const response = await fetch(`${API_BASE_URL}/auth/updateProfile`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -73,7 +75,7 @@ function EditProfileForm() {
 
       if (response.ok) {
         const data = await response.json();
-        window.location.href = 'http://localhost:3000/profile';
+        window.location.href = `${API_BASE_URL}/profile`;
 
       } else {
         const errorData = await response.json();

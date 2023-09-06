@@ -14,6 +14,7 @@ const Tweets = () => {
   const [commentText, setCommentText] = useState('');
   const location = useLocation();
   const { profileImageUrl, backgroundImageUrl, introduction, followers, following, followingUsersInfo,username } = useUser();
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';
 
 
 
@@ -33,7 +34,7 @@ const Tweets = () => {
 
   const fetchTweets = async () => {
     try {
-      const response = await fetch('http://localhost:4000/tweets/getTweets', {
+      const response = await fetch('${API_BASE_URL}/tweets/getTweets', {
         headers: {
           'Authorization': `Bearer ${token}`
         },
@@ -59,7 +60,7 @@ const Tweets = () => {
 
   const fetchOtherTweets = async (otherUsername) => {
     try {
-      const response = await fetch(`http://localhost:4000/tweets/${otherUsername}`);
+      const response = await fetch(`${API_BASE_URL}/tweets/${otherUsername}`);
 
       if (!response.ok) {
         console.error('Server Error');
@@ -80,7 +81,7 @@ const Tweets = () => {
 
   const fetchFollowingTweets = async (following) => {
     try {
-      const response = await fetch("http://localhost:4000/tweets/followingTweets", {
+      const response = await fetch("${API_BASE_URL}/tweets/followingTweets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +125,7 @@ const Tweets = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:4000/tweets/${tweetId}/comments`, {
+      const response = await fetch(`${API_BASE_URL}/tweets/${tweetId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -156,7 +157,7 @@ const Tweets = () => {
       const token = localStorage.getItem('token');
 
       // 發送按讚請求到後端
-      const response = await fetch(`http://localhost:4000/tweets/like/${tweetId}`, {
+      const response = await fetch(`${API_BASE_URL}/tweets/like/${tweetId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -193,7 +194,7 @@ const Tweets = () => {
           <li key={tweet._id}>
             <div className={styles.tweetContainer}>
               <div className={styles.profileImageContainer}>
-                <img src={`http://localhost:4000/${tweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
+                <img src={`${API_BASE_URL}/${tweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
               </div>
               <div className={styles.tweetContent}>
                 <div className={styles.tweetHeader}>
@@ -238,7 +239,7 @@ const Tweets = () => {
             {selectedTweet ? (
               <div className={styles.tweetContainer}>
                 <div className={styles.profileImageContainer}>
-                  <img src={`http://localhost:4000/${selectedTweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
+                  <img src={`${API_BASE_URL}/${selectedTweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
                 </div>
                 <div className={styles.tweetContent}>
                   <div className={styles.tweetHeader}>
@@ -286,7 +287,7 @@ const Tweets = () => {
               {selectedTweet && selectedTweet.comments.map((comment, index) => (
                 <div key={index} className={styles.commentContainer}>
                   <img
-                    src={`http://localhost:4000/${comment.userId.profileImage}`}
+                    src={`${API_BASE_URL}/${comment.userId.profileImage}`}
                     alt="commenter profile"
                     className={styles.commentProfileImage}
                   />

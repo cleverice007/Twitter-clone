@@ -10,6 +10,7 @@ import { useUser } from '../contexts/UserContext';
 const ProfilePage = () => {
   const location = useLocation();
   const { profileImageUrl, backgroundImageUrl, introduction, followers, following, followingUsersInfo } = useUser();
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';
 
   let username = localStorage.getItem('username');
   let userForProfile = { profileImage: profileImageUrl, backgroundImage: backgroundImageUrl, introduction }; // default 是 user 自己的資料
@@ -22,12 +23,12 @@ const ProfilePage = () => {
 
     if (otherUser) {
       // 在這裡修改 backgroundImage 和 profileImage
-      if (otherUser.backgroundImage && !otherUser.backgroundImage.startsWith('http://localhost:4000')) {
-        otherUser.backgroundImage = `http://localhost:4000/${otherUser.backgroundImage}`;
+      if (otherUser.backgroundImage && !otherUser.backgroundImage.startsWith(API_BASE_URL)) {
+        otherUser.backgroundImage = `${API_BASE_URL}/${otherUser.backgroundImage}`;
       }
 
-      if (otherUser.profileImage && !otherUser.profileImage.startsWith('http://localhost:4000')) {
-        otherUser.profileImage = `http://localhost:4000/${otherUser.profileImage}`;
+      if (otherUser.profileImage && !otherUser.profileImage.startsWith(API_BASE_URL)) {
+        otherUser.profileImage = `${API_BASE_URL}/${otherUser.profileImage}`;
       }
 
       userForProfile = otherUser;

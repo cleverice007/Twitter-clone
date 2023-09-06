@@ -1,5 +1,9 @@
 {
-  "dependencies": {
-    "mongosh": "^1.10.3"
+    "scripts": {
+      "heroku-postbuild": "cd client && npm install && npm run build && cd ../server && npm install",
+      "start": "node server/app.js"
+    },
+    "dependencies": {
+    }
   }
-}
+  

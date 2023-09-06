@@ -7,6 +7,7 @@ import { useUser } from '../contexts/UserContext';
 
 const RecommendedUsers = () => {
   const [recommendedUsers, setRecommendedUsers] = useState([]);
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';
 
   useEffect(() => {
     fetchRecommendedUsers();
@@ -17,7 +18,7 @@ const RecommendedUsers = () => {
   const fetchRecommendedUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:4000/recommend/recommend-users', {
+      const response = await fetch('${API_BASE_URL}/recommend/recommend-users', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -52,7 +53,7 @@ const RecommendedUsers = () => {
         followingId: userId // 要跟隨或取消跟隨的用戶 ID
       };
 
-      const response = await axios.put(`http://localhost:4000/auth/${userId}/follow`, payload, config);
+      const response = await axios.put(`${API_BASE_URL}/auth/${userId}/follow`, payload, config);
 
       if (response.status === 200) {
         console.log('Follow/Unfollow successful', response.data.following);
@@ -72,7 +73,7 @@ const RecommendedUsers = () => {
           <div style={{ position: 'relative' }} key={user._id}>
             <Link to={`/profile/${user.username}`}>
               <div className={`${userCardStyles['user-card']} ${userCardStyles.userCard}`}>
-                <img src={`http://localhost:4000/${user.profileImage}`} alt={`Profile of ${user.username}`} />
+                <img src={`${API_BASE_URL}/${user.profileImage}`} alt={`Profile of ${user.username}`} />
                 <h3>{user.username}</h3>
               </div>
             </Link>
