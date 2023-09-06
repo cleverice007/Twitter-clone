@@ -18,7 +18,7 @@ const RecommendedUsers = () => {
   const fetchRecommendedUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('${API_BASE_URL}/recommend/recommend-users', {
+      const response = await fetch(`${API_BASE_URL}/recommend/recommend-users`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`

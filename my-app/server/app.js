@@ -11,8 +11,17 @@ const app = express();
 
 app.use(express.json());
 
+const allowedOrigins = ['http://localhost:3000', 'https://twitter-clone-mason-4bfa1e4cdc08.herokuapp.com'];
+
 app.use(cors({
-  origin: 'http://localhost:3000',  
+  origin: function(origin, callback) {
+    // 如果沒有 origin 標頭，或者 origin 在我們的列表中，則允許
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 

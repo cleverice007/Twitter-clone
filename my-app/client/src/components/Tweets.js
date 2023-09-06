@@ -34,7 +34,7 @@ const Tweets = () => {
 
   const fetchTweets = async () => {
     try {
-      const response = await fetch('${API_BASE_URL}/tweets/getTweets', {
+      const response = await fetch(`${API_BASE_URL}/tweets/getTweets`, {
         headers: {
           'Authorization': `Bearer ${token}`
         },
@@ -81,7 +81,7 @@ const Tweets = () => {
 
   const fetchFollowingTweets = async (following) => {
     try {
-      const response = await fetch("${API_BASE_URL}/tweets/followingTweets", {
+      const response = await fetch(`${API_BASE_URL}/tweets/followingTweets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

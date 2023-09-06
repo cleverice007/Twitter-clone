@@ -75,7 +75,7 @@ function EditProfileForm() {
 
       if (response.ok) {
         const data = await response.json();
-        window.location.href = `${API_BASE_URL}/profile`;
+        window.location.href = '/profile';
 
       } else {
         const errorData = await response.json();
