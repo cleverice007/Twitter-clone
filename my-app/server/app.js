@@ -56,6 +56,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // 連接到 MongoDB
+
+
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/twitterclone', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -81,7 +83,13 @@ app.use('/tweets',tweetRoutes);
 app.use('/recommend',recommendRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// 引入 build 資料夾
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
+// 捕捉所有其他的請求，然後返回 React 的 index.html 檔案
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
