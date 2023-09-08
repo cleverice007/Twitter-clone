@@ -32,61 +32,60 @@ const ProfilePage = () => {
     userForProfile = otherUser;
     username = otherUsername;
     }
-  }
-
+  
 
   return (
-    <div class="bg-blue-900">
-    <div className={styles.profileContainer}>
-      {/* Sidebar */}
-      <div className={styles.sidebarWrapper}>
-        <Sidebar />
-      </div>
+    <div className="bg-blue-900">
+      <div className={styles.profileContainer}>
+        {/* Sidebar */}
+        <div className={styles.sidebarWrapper}>
+          <Sidebar />
+        </div>
 
-      {/* Profile Info */}
-      <div className={styles.profileInfo}>
-        {/* Profile Info Upper */}
-        <div className={styles.profileInfoUpper}>
-          
-          {/* Background Image */}
-          <div className={styles.backgroundImage} style={{ backgroundImage: `url(${userForProfile.backgroundImage})` }}></div>
+        {/* Profile Info */}
+        <div className={styles.profileInfo}>
+          {/* Profile Info Upper */}
+          <div className={styles.profileInfoUpper}>
+            {/* Background Image */}
+            <div className={styles.backgroundImage} style={{ backgroundImage: `url(${userForProfile.backgroundImage})` }}></div>
 
-          {/* Avatar and Edit Button */}
-          <div className={styles.profileImageEditContainer}>
-            {/* Avatar */}
-            <div className={styles.profileImageContainer}>
-              <div className={styles.profileImage} style={{ backgroundImage: `url(${userForProfile.profileImage})` }}></div>
+            {/* Avatar and Edit Button */}
+            <div className={styles.profileImageEditContainer}>
+              {/* Avatar */}
+              <div className={styles.profileImageContainer}>
+                <div className={styles.profileImage} style={{ backgroundImage: `url(${userForProfile.profileImage})` }}></div>
+              </div>
             </div>
-
-
           </div>
-        </div>
 
-        {/* Introduction */}
-        <div className={styles.introduction}>
-          <p>{userForProfile.introduction}</p>
-        </div>
-        <div className={styles.followStats}>
+          {/* Introduction */}
+          <div className={styles.introduction}>
+            <p>{userForProfile.introduction}</p>
+          </div>
+
+          {/* Follow Stats */}
+          <div className={styles.followStats}>
             <p>Followers: {followers?.length || 0}</p>
             <p>Following: {following?.length || 0}</p>
+          </div>
+
+          {/* Tweet Section */}
+          {location.pathname.endsWith('/profile') && <TweetBox />}
+
+          <div className={styles.tweets}>
+            <Tweets tweets />
+          </div>
+
         </div>
 
-        {/* Tweet Section */}
-        {location.pathname.endsWith('/profile') && <TweetBox />}
-
-        <div className={styles.tweets}>
-          <Tweets tweets />
+        {/* Recommended Users */}
+        <div className={styles.recommendedUsersWrapper}>
+          <RecommendedUsers />
         </div>
-
       </div>
-
-      {/* Recommended Users */}
-      <div className={styles.recommendedUsersWrapper}>
-        <RecommendedUsers />
-      </div>
-    </div>
     </div>
   );
+}; 
 
 
 export default ProfilePage;
