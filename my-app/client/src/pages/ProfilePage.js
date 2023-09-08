@@ -21,18 +21,16 @@ const ProfilePage = () => {
 
     const otherUser = followingUsersInfo.find(user => user.username === otherUsername);
 
-    if (otherUser) {
-      // 在這裡修改 backgroundImage 和 profileImage
-      if (otherUser.backgroundImage && !otherUser.backgroundImage.startsWith(API_BASE_URL)) {
-        otherUser.backgroundImage = `${API_BASE_URL}/${otherUser.backgroundImage}`;
-      }
-
-      if (otherUser.profileImage && !otherUser.profileImage.startsWith(API_BASE_URL)) {
-        otherUser.profileImage = `${API_BASE_URL}/${otherUser.profileImage}`;
-      }
-
-      userForProfile = otherUser;
-      username = otherUsername;
+    if (otherUser.backgroundImage && !otherUser.backgroundImage.startsWith('data:image/jpeg;base64,')) {
+      otherUser.backgroundImage = `data:image/jpeg;base64,${otherUser.backgroundImage}`;
+    }
+  
+    if (otherUser.profileImage && !otherUser.profileImage.startsWith('data:image/jpeg;base64,')) {
+      otherUser.profileImage = `data:image/jpeg;base64,${otherUser.profileImage}`;
+    }
+  
+    userForProfile = otherUser;
+    username = otherUsername;
     }
   }
 

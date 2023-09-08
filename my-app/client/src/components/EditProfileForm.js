@@ -10,8 +10,8 @@ function EditProfileForm() {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';
 
 
-  const defaultProfileImageURL = '/images/default_profileimage.png';
-  const defaultBackgroundImageURL = '/images/default_backgroundimage.png';
+  const defaultProfileImageURL = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg';
+  const defaultBackgroundImageURL = 'https://img.freepik.com/free-photo/abstract-gray-oil-paint-textured-background_53876-129925.jpg?w=2000';
   const username = localStorage.getItem('username');
   const { profileImageUrl, backgroundImageUrl, introduction: userIntroduction, followers, following, followingUsersInfo } =useUser();
 

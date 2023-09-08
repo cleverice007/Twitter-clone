@@ -37,7 +37,7 @@ export const UserProvider = ({ children }) => {
   const [username, setUsername] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState(null);
-  const [introduction, setIntroduction] = useState(null); 
+  const [introduction, setIntroduction] = useState(null);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [followingUsersInfo, setFollowingUsersInfo] = useState([]);
@@ -45,11 +45,11 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     // This is a function to fetch user information
     const fetchUserInfo = async () => {
-      const data = await fetchFromAPI(); 
+      const data = await fetchFromAPI();
       if (data) {
-        setUsername(data.username); 
-        setProfileImageUrl(`${API_BASE_URL}/${data.profileImage}`);
-        setBackgroundImageUrl(`${API_BASE_URL}/${data.backgroundImage}`);
+        setUsername(data.username);
+        setProfileImageUrl(`data:image/jpeg;base64,${data.profileImage}`);
+        setBackgroundImageUrl(`data:image/jpeg;base64,${data.backgroundImage}`);
         setFollowing(data.following);
         setIntroduction(data.introduction);
       }
@@ -60,15 +60,15 @@ export const UserProvider = ({ children }) => {
     const fetchFollowingUsersInfo = async () => {
       try {
         const token = localStorage.getItem('token');
-    
+
         const config = {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         };
-    
+
         const response = await axios.get(`${API_BASE_URL}/auth/followingProfile`, config);
-    
+
         if (response.data) {
           setFollowingUsersInfo(response.data.followingUsers);
         }
@@ -76,12 +76,12 @@ export const UserProvider = ({ children }) => {
         console.error('Error fetching following users info:', error);
       }
     };
-    
 
-    
+
+
     fetchUserInfo();
     fetchFollowingUsersInfo();
-  }, []); 
+  }, []);
 
   // Assuming "value" includes all the states and methods you want to provide
   const value = {
