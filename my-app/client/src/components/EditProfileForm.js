@@ -68,20 +68,18 @@ function EditProfileForm() {
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
   
-    const payload = {
-      profileImage: profileImageFile, 
-      backgroundImage: backgroundImageFile,
-      introduction: introduction
-    };
+    const formData = new FormData();
+    formData.append('profileImage', profileImageFile);
+    formData.append('backgroundImage', backgroundImageFile);
+    formData.append('introduction', introduction);
   
     try {
       const response = await fetch(`${API_BASE_URL}/auth/updateProfile`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(payload)
+        body: formData 
       });
   
       if (response.ok) {
