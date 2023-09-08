@@ -76,6 +76,9 @@ const authRoutes = require('./routes/authRoutes');
 const tweetRoutes = require('./routes/tweetRoutes');
 const recommendRoutes = require('./routes/recommendRoutes');
 
+//增加請求體的大小限制
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 
 app.use('/auth', authRoutes); 
@@ -86,9 +89,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // 引入 build 資料夾
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
-//增加請求體的大小限制
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
 
 
 // 捕捉所有其他的請求，然後返回 React 的 index.html 檔案
