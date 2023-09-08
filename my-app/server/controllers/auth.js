@@ -49,25 +49,12 @@ module.exports.updateProfile = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
     const userId = decoded.user_id;
 
-    // Initialize update fields
-    const updateFields = {};
+    const updateFields = {
+      profileImage: req.body.profileImage,  // Base64
+      backgroundImage: req.body.backgroundImage,  // Base64
+      introduction: req.body.introduction
+    };
 
-    // Check for profileImage
-    if (req.files && req.files['profileImage'] && req.files['profileImage'][0]) {
-      updateFields.profileImage = req.files['profileImage'][0].path;
-    }
-
-    // Check for backgroundImage
-    if (req.files && req.files['backgroundImage'] && req.files['backgroundImage'][0]) {
-      updateFields.backgroundImage = req.files['backgroundImage'][0].path;
-    }
-
-    // Check for introduction
-    if (req.body.introduction) {
-      updateFields.introduction = req.body.introduction[0];
-    }
-
-    // Update the user
     const user = await User.findByIdAndUpdate(
       userId,
       updateFields,
@@ -84,6 +71,7 @@ module.exports.updateProfile = async (req, res) => {
     res.status(500).json({ error: 'An unexpected error occurred' });
   }
 };
+
 
 
 

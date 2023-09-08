@@ -34,49 +34,59 @@ function EditProfileForm() {
   const handleProfileImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setProfileImageFile(file);
-      const previewUrl = URL.createObjectURL(file);
-      setProfileImageURL(previewUrl);
-
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = function() {
+        const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+        setProfileImageFile(base64String);
+        
+        // 預覽 URL
+        const previewUrl = URL.createObjectURL(file);
+        setProfileImageURL(previewUrl);
+      };
     }
   };
-
+  
   const handleBackgroundImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setBackgroundImageFile(file);
-      const previewUrl = URL.createObjectURL(file);
-      setBackgroundImageURL(previewUrl);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = function() {
+        const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+        setBackgroundImageFile(base64String);
+        
+        // 預覽 URL
+        const previewUrl = URL.createObjectURL(file);
+        setBackgroundImageURL(previewUrl);
+      };
     }
   };
-
+  
+  
 
   const handleSubmit = async () => {
-    const form = formRef.current;
-    if (!form) return;
-
     const token = localStorage.getItem('token');
-
-    // 收集表單數據
-    const formData = new FormData(form);
-    formData.append('profileImage', profileImageFile);
-    formData.append('backgroundImage', backgroundImageFile);
-    formData.append('introduction', introduction);
-
+  
+    const payload = {
+      profileImage: profileImageFile, 
+      backgroundImage: backgroundImageFile,
+      introduction: introduction
+    };
+  
     try {
       const response = await fetch(`${API_BASE_URL}/auth/updateProfile`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
-        body: formData, // 使用FormData作為請求主體
-        credentials: 'include'
+        body: JSON.stringify(payload)
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         window.location.href = '/profile';
-
       } else {
         const errorData = await response.json();
         console.error('Error updating profile:', errorData);
@@ -87,6 +97,7 @@ function EditProfileForm() {
       alert('An unexpected error occurred. Please try again later.');
     }
   };
+  
 
   return (
     <>
