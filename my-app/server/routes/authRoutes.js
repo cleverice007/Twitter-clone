@@ -20,16 +20,17 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
+
 const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'twitter-clone-mason',
-    acl: 'public-read', // 設置為 public-read 以讓用戶能夠看到圖片
+    acl: 'public-read',
     key: function (req, file, cb) {
-      cb(null, Date.now().toString()); // 使用日期作為文件名
+      cb(null, Date.now().toString());
     }
   })
-});
+}).fields([{ name: 'profileImage', maxCount: 1 }, { name: 'backgroundImage', maxCount: 1 }]);
 
 
 // 註冊
@@ -43,7 +44,7 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
 router.get('/logout',authControllers.logout)
 
 //更新個人資料
-router.put('/updateprofile', authControllers.updateProfile);
+router.put('/updateprofile', upload, authControllers.updateProfile);
 
 
 //獲取個人資料

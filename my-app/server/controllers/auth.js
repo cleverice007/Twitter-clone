@@ -49,11 +49,16 @@ module.exports.updateProfile = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
     const userId = decoded.user_id;
 
+  
+    const profileImage = req.files['profileImage'][0].location; // 從 S3 獲得的 URL
+    const backgroundImage = req.files['backgroundImage'][0].location; // 從 S3 獲得的 URL
+
     const updateFields = {
-      profileImage: req.body.profileImage,  // Base64
-      backgroundImage: req.body.backgroundImage,  // Base64
+      profileImage,
+      backgroundImage,
       introduction: req.body.introduction
     };
+
 
     const user = await User.findByIdAndUpdate(
       userId,

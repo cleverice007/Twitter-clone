@@ -69,8 +69,16 @@ function EditProfileForm() {
     const token = localStorage.getItem('token');
   
     const formData = new FormData();
-    formData.append('profileImage', profileImageFile);
-    formData.append('backgroundImage', backgroundImageFile);
+    
+    // 添加選擇的文件和文本字段到 FormData
+    if (profileImageFile) {
+      formData.append('profileImage', profileImageFile);
+    }
+  
+    if (backgroundImageFile) {
+      formData.append('backgroundImage', backgroundImageFile);
+    }
+    
     formData.append('introduction', introduction);
   
     try {
@@ -96,7 +104,6 @@ function EditProfileForm() {
     }
   };
   
-
   return (
     <>
       <nav className={styles.navbar}>
