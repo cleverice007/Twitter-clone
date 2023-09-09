@@ -70,6 +70,33 @@ db.once('open', () => {
 });
 
 
+// 需要在文件頂部添加以下代碼
+const AWS = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION
+});
+
+const s3 = new AWS.S3();
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'twitter-clone-mason',
+    acl: 'public-read', // 設置為 public-read 以讓用戶能夠看到圖片
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString()); // 使用日期作為文件名
+    }
+  })
+});
+
+
+
+
 
 //使用得到的路由
 const authRoutes = require('./routes/authRoutes'); 
