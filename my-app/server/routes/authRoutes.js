@@ -9,7 +9,7 @@ const passport = require('passport');
 const multer = require('multer');
 const path = require('path');
 
-const AWS = require('aws-sdk');
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const multerS3 = require('multer-s3');
 
 AWS.config.update({
@@ -18,20 +18,29 @@ AWS.config.update({
   region: process.env.AWS_REGION
 });
 
-const s3 = new AWS.S3();
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
 
 
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'twitter-clone-mason',
-    acl: 'public-read',
+    bucket: 'some-bucket',
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
     key: function (req, file, cb) {
-      cb(null, Date.now().toString());
+      cb(null, Date.now().toString())
     }
   })
-}).fields([{ name: 'profileImage', maxCount: 1 }, { name: 'backgroundImage', maxCount: 1 }]);
+});
 
+const uploadFields = upload.fields([{ name: 'profileImage', maxCount: 1 }, { name: 'backgroundImage', maxCount: 1 }]);
 
 // 註冊
 router.post('/register', authControllers.register);
@@ -44,7 +53,7 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
 router.get('/logout',authControllers.logout)
 
 //更新個人資料
-router.put('/updateprofile', upload, authControllers.updateProfile);
+router.put('/updateprofile', uploadFields, authControllers.updateProfile);
 
 
 //獲取個人資料
