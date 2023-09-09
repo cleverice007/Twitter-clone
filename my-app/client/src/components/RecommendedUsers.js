@@ -73,7 +73,7 @@ const RecommendedUsers = () => {
           <div style={{ position: 'relative' }} key={user._id}>
             <Link to={`/profile/${user.username}`}>
               <div className={`${userCardStyles['user-card']} ${userCardStyles.userCard}`}>
-                <img src={`${API_BASE_URL}/${user.profileImage}`} alt={`Profile of ${user.username}`} />
+                <img src={user.profileImage} alt={`Profile of ${user.username}`} />
                 <h3>{user.username}</h3>
               </div>
             </Link>

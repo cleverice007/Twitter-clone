@@ -194,7 +194,7 @@ const Tweets = () => {
           <li key={tweet._id}>
             <div className={styles.tweetContainer}>
               <div className={styles.profileImageContainer}>
-                <img src={`${API_BASE_URL}/${tweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
+                <img src={tweet.author.profileImage} alt="profile" className={styles.profileImage} />
               </div>
               <div className={styles.tweetContent}>
                 <div className={styles.tweetHeader}>
@@ -239,7 +239,7 @@ const Tweets = () => {
             {selectedTweet ? (
               <div className={styles.tweetContainer}>
                 <div className={styles.profileImageContainer}>
-                  <img src={`${API_BASE_URL}/${selectedTweet.author.profileImage}`} alt="profile" className={styles.profileImage} />
+                  <img src={selectedTweet.author.profileImage} alt="profile" className={styles.profileImage} />
                 </div>
                 <div className={styles.tweetContent}>
                   <div className={styles.tweetHeader}>
@@ -287,7 +287,7 @@ const Tweets = () => {
               {selectedTweet && selectedTweet.comments.map((comment, index) => (
                 <div key={index} className={styles.commentContainer}>
                   <img
-                    src={`${API_BASE_URL}/${comment.userId.profileImage}`}
+                    src={comment.userId.profileImage}
                     alt="commenter profile"
                     className={styles.commentProfileImage}
                   />
