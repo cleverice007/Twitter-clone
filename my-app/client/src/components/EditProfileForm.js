@@ -35,7 +35,7 @@ function EditProfileForm() {
   const handleProfileImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setProfileImage(file);
+      setProfileImageFile(file);
       
       // 預覽 URL
       const previewUrl = URL.createObjectURL(file);
@@ -46,7 +46,7 @@ function EditProfileForm() {
   const handleBackgroundImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setBackgroundImage(file);
+      setBackgroundImageFile(file);
       
       // 預覽 URL
       const previewUrl = URL.createObjectURL(file);
