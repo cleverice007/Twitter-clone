@@ -31,35 +31,26 @@ function EditProfileForm() {
   
   const [introduction, setIntroduction] = useState(userIntroduction || '');
 
+
   const handleProfileImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = function() {
-        const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
-        setProfileImageFile(base64String);
-        
-        // 預覽 URL
-        const previewUrl = URL.createObjectURL(file);
-        setProfileImageURL(previewUrl);
-      };
+      setProfileImage(file);
+      
+      // 預覽 URL
+      const previewUrl = URL.createObjectURL(file);
+      setProfileImageURL(previewUrl);
     }
   };
   
   const handleBackgroundImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = function() {
-        const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
-        setBackgroundImageFile(base64String);
-        
-        // 預覽 URL
-        const previewUrl = URL.createObjectURL(file);
-        setBackgroundImageURL(previewUrl);
-      };
+      setBackgroundImage(file);
+      
+      // 預覽 URL
+      const previewUrl = URL.createObjectURL(file);
+      setBackgroundImageURL(previewUrl);
     }
   };
   
