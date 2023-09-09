@@ -48,8 +48,8 @@ export const UserProvider = ({ children }) => {
       const data = await fetchFromAPI();
       if (data) {
         setUsername(data.username);
-        setProfileImageUrl(`data:image/jpeg;base64,${data.profileImage}`);
-        setBackgroundImageUrl(`data:image/jpeg;base64,${data.backgroundImage}`);
+        setProfileImageUrl(data.profileImage);
+        setBackgroundImageUrl(data.backgroundImage);
         setFollowing(data.following);
         setIntroduction(data.introduction);
       }
