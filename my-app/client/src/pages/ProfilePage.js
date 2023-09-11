@@ -18,21 +18,12 @@ const ProfilePage = () => {
   if (location.pathname.startsWith('/profile/')) {
     // 從URL 得到其他用戶username
     const otherUsername = location.pathname.split('/').pop();
-
-    const otherUser = followingUsersInfo.find(user => user.username === otherUsername);
-
-    if (otherUser.backgroundImage && !otherUser.backgroundImage.startsWith('data:image/jpeg;base64,')) {
-      otherUser.backgroundImage = `data:image/jpeg;base64,${otherUser.backgroundImage}`;
-    }
   
-    if (otherUser.profileImage && !otherUser.profileImage.startsWith('data:image/jpeg;base64,')) {
-      otherUser.profileImage = `data:image/jpeg;base64,${otherUser.profileImage}`;
-    }
+    const otherUser = followingUsersInfo.find(user => user.username === otherUsername);
   
     userForProfile = otherUser;
     username = otherUsername;
-    }
-  
+  }
 
   return (
     <div className="bg-blue-900">
