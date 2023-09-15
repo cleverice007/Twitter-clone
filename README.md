@@ -1,5 +1,6 @@
 # Twitter-clone
-復刻twitter 的主要功能，學習react、mongodb、API使用
+復刻twitter 的主要功能，學習react、mongodb、API使用，最後部署到heroku上
+[Live Demo on Heroku](https://twitter-clone-mason-4bfa1e4cdc08.herokuapp.com/register)
 
 預計完成功能：
 - 註冊
