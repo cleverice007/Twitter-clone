@@ -40,6 +40,8 @@
 
 
 # 推文功能
+![home](https://github.com/cleverice007/Twitter-clone/blob/main/%E6%88%AA%E5%9C%96%202023-10-02%20%E4%B8%8B%E5%8D%883.56.19.png?raw=true)
+![comment](https://github.com/cleverice007/Twitter-clone/blob/main/%E6%88%AA%E5%9C%96%202023-10-02%20%E4%B8%8B%E5%8D%883.56.26.png?raw=true)
 **組件結構**
 -推文發佈表單: 一個專門用於創建和發送新推文的React組件。
 -推文列表: 顯示所有用戶（或特定用戶）的推文。
