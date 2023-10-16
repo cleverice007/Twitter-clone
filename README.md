@@ -43,9 +43,9 @@
 ![home](https://github.com/cleverice007/Twitter-clone/blob/main/%E6%88%AA%E5%9C%96%202023-10-02%20%E4%B8%8B%E5%8D%883.56.19.png?raw=true)
 ![comment](https://github.com/cleverice007/Twitter-clone/blob/main/%E6%88%AA%E5%9C%96%202023-10-02%20%E4%B8%8B%E5%8D%883.56.26.png?raw=true)
 **組件結構**
--推文發佈表單: 一個專門用於創建和發送新推文的React組件。
--推文列表: 顯示所有用戶（或特定用戶）的推文。
--推文詳情頁面: 用於顯示單一推文和其相關回覆。
+- 推文發佈表單: 一個專門用於創建和發送新推文的React組件。
+- 推文列表: 顯示所有用戶（或特定用戶）的推文。
+- 推文詳情頁面: 用於顯示單一推文和其相關回覆。
 
 **功能流程**
 - 用戶輸入與交互
@@ -71,22 +71,22 @@
 - Context API：useUser 用於獲取和設置用戶資料
 
 #### 主要功能和實現：
-**圖片上傳**: 使用兩個不同的組件來分別處理個人頭像和背景圖片的上傳。
-**預覽功能**: 使用 URL.createObjectURL() 來實現上傳前的圖片預覽。
-**狀態管理**: 使用 React 的 useState 來存儲上傳的文件和用戶的自我介紹。
-**提交表單**: 在 handleSubmit 函數中使用 fetch API 發送 PUT 請求，並用 FormData 包裝上傳的文件和文本字段。
-**全局狀態管理**: 通過 Context API 的 useUser Hook 來獲取和設置用戶的資料。
+- **圖片上傳**: 使用兩個不同的組件來分別處理個人頭像和背景圖片的上傳。
+- **預覽功能**: 使用 URL.createObjectURL() 來實現上傳前的圖片預覽。
+- **狀態管理**: 使用 React 的 useState 來存儲上傳的文件和用戶的自我介紹。
+- **提交表單**: 在 handleSubmit 函數中使用 fetch API 發送 PUT 請求，並用 FormData 包裝上傳的文件和文本字段。
+- **全局狀態管理**: 通過 Context API 的 useUser Hook 來獲取和設置用戶的資料。
 
   
 **後端**
 #### 使用的技術
--Mongoose: 用於 MongoDB 資料庫的資料操作。
--AWS S3: 用於存儲用戶上傳的個人頭像和背景圖片。
+- Mongoose: 用於 MongoDB 資料庫的資料操作。
+- AWS S3: 用於存儲用戶上傳的個人頭像和背景圖片。
 
 #### 主要功能和實現：
-**身份驗證**: 使用 JWT 從 Authorization 頭部獲取並驗證用戶的身份。
-**圖片存儲**: 將用戶上傳的 profileImage 和 backgroundImage 存儲在 AWS S3 bucket中，並從 S3 獲取 URL 以存儲在 MongoDB 中。
-**資料更新**: 使用 findByIdAndUpdate 方法從 MongoDB 更新用戶資料。
+- **身份驗證**: 使用 JWT 從 Authorization 頭部獲取並驗證用戶的身份。
+- **圖片存儲**: 將用戶上傳的 profileImage 和 backgroundImage 存儲在 AWS S3 bucket中，並從 S3 獲取 URL 以存儲在 MongoDB 中。
+- **資料更新**: 使用 findByIdAndUpdate 方法從 MongoDB 更新用戶資料。
 
 # 追蹤他人（新增/取消）：
 **前端**
